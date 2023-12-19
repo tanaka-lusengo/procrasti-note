@@ -1,6 +1,8 @@
+import { Title } from "./page.styled";
+
 const Home = () => (
   <main>
-    <h1>Procrasti-Not(e)</h1>
+    <Title>Welcome 🤓</Title>
   </main>
 );
 

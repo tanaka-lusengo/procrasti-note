@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import { StyledComponentsRegistry } from "@/lib";
+import { GlobalStyles } from "@/styles";
 
 export const metadata: Metadata = {
   title: "Procrasti-Not(e)",
@@ -8,7 +9,12 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="en">
-    <body>{children}</body>
+    <body>
+      <StyledComponentsRegistry>
+        <GlobalStyles />
+        {children}
+      </StyledComponentsRegistry>
+    </body>
   </html>
 );
 
