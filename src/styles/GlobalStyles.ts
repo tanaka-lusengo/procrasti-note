@@ -18,7 +18,7 @@ html {
 
 /*
   - Set base font-size to accissible 16px
-  - Add accessible line-height
+  - Add base accessible line-height
   - Improve text rendering
 */
 body {
@@ -69,6 +69,42 @@ h4,
 h5,
 h6 {
   overflow-wrap: break-word;
+}
+
+/* Add accessible font styles */
+p {
+  font-size: 1.8rem;
+  line-height: 1.52;
+}
+
+h1 {
+  font-size: 4rem;
+  line-height: 1.375;
+}
+
+h2 {
+  font-size: 3.6rem;
+  line-height: 1.38;
+}
+
+h3 {
+  font-size: 2.8rem;
+  line-height: 1.428;
+}
+
+h4 {
+  font-size: 2.2rem;
+  line-height: 1.5;
+}
+
+h5 {
+  font-size: 1.8rem;
+  line-height: 1.3;
+}
+
+h6 {
+  font-size: 1.6rem;
+  line-height: 1.5;
 }
 
 `;
