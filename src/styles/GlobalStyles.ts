@@ -1,3 +1,9 @@
+"use client";
+
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyles = createGlobalStyle`
+
 html,
 body {
   padding: 0;
@@ -64,3 +70,7 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
+
+`;
+
+export default GlobalStyles;
