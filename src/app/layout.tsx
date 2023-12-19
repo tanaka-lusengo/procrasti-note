@@ -1,6 +1,9 @@
+"use client";
 import type { Metadata } from "next";
+import { ThemeProvider } from "styled-components";
 import { StyledComponentsRegistry } from "@/lib";
-import { GlobalStyles } from "@/styles";
+import { GlobalStyles, theme } from "@/styles";
+import { Nav, StyledContainer } from "@/components";
 
 export const metadata: Metadata = {
   title: "Procrasti-Not(e)",
@@ -12,7 +15,12 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
     <body>
       <StyledComponentsRegistry>
         <GlobalStyles />
-        {children}
+        <ThemeProvider theme={theme}>
+          <StyledContainer>
+            <Nav />
+            {children}
+          </StyledContainer>
+        </ThemeProvider>
       </StyledComponentsRegistry>
     </body>
   </html>
