@@ -23,6 +23,15 @@ export const StyledNav = styled.nav`
     margin: 0 1rem;
   }
 
+  a {
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+
+    &:hover {
+      color: #ff6161;
+    }
+  }
+
   @media only screen and (min-width: ${({ theme }) => theme.breakpoints.md}px) {
     justify-content: flex-start;
   }

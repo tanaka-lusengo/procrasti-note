@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "styled-components";
 import { StyledComponentsRegistry } from "@/lib";
 import { GlobalStyles, theme } from "@/styles";
-import { Nav, StyledContainer } from "@/components";
+import { Nav, Container } from "@/components";
 
 export const metadata: Metadata = {
   title: "Procrasti-Not(e)",
@@ -16,10 +16,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
       <StyledComponentsRegistry>
         <GlobalStyles />
         <ThemeProvider theme={theme}>
-          <StyledContainer>
+          <Container about="App content">
             <Nav />
-            {children}
-          </StyledContainer>
+            <main>{children}</main>
+          </Container>
         </ThemeProvider>
       </StyledComponentsRegistry>
     </body>

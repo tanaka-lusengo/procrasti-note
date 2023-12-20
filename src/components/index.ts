@@ -1,2 +1,5 @@
+// Functional Components
 export { default as Nav } from "./Nav";
-export { default as StyledContainer } from "./ui/StyledContainer/index.styled";
+
+// UI Components
+export { Container, Typography } from "./ui";
