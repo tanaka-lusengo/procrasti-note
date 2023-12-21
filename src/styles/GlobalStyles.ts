@@ -1,6 +1,6 @@
 "use client";
-
 import { createGlobalStyle } from "styled-components";
+import { theme } from "./index";
 
 const GlobalStyles = createGlobalStyle`
 
@@ -9,6 +9,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  color: ${theme.colors.text};
 }
 
 html {
