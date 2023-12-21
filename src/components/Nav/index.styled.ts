@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledNav = styled.nav`
+export const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,10 +25,10 @@ export const StyledNav = styled.nav`
 
   a {
     font-weight: bold;
-    transition: color 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 
     &:hover {
-      color: #ff6161;
+      color: ${({ theme }) => theme.colors.primary};
     }
   }
 

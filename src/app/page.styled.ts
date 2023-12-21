@@ -10,14 +10,14 @@ export const Section = styled.section`
   margin: 4rem 0;
 
   a {
-    color: #ff6161;
+    color: ${({ theme }) => theme.colors.primary};
     font-weight: bold;
     font-size: ${({ theme }) => theme.fontSize.h4}rem;
     border-bottom: 2px solid transparent;
     transition: border-bottom 0.3s ease-in-out;
 
     &:hover {
-      border-bottom: 2px solid #ff6161;
+      border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
     }
   }
 
