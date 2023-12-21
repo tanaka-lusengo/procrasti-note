@@ -1,23 +1,24 @@
 "use client";
 import Link from "next/link";
-import { StyledNav } from "./index.styled";
+import * as Styled from "./index.styled";
+import { Typography } from "../index";
 
 const Nav = () => (
   <header>
-    <StyledNav>
-      <h1>
+    <Styled.Nav>
+      <Typography tag="h1">
         <Link href={"/"}>Procrasti-Not(e)</Link>
-      </h1>
+      </Typography>
 
       <ul>
-        <li>
+        <Typography tag="li">
           <Link href={"/"}>Home</Link>
-        </li>
-        <li>
+        </Typography>
+        <Typography tag="li">
           <Link href={"/notes"}>Notes</Link>
-        </li>
+        </Typography>
       </ul>
-    </StyledNav>
+    </Styled.Nav>
   </header>
 );
 

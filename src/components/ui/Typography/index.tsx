@@ -1,7 +1,16 @@
 import { CSSProperties } from "react";
 import * as Styled from "./index.styled";
 
-type TagVariants = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span";
+type TagVariants =
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "h5"
+  | "h6"
+  | "p"
+  | "span"
+  | "li";
 
 export type TypographyProps = {
   tag: TagVariants;
