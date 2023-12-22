@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write --ignore-path .gitignore \"**/*.{ts,tsx,js,jsx,md}\""
+    "format": "prettier --write --ignore-path .gitignore \"**/*.{ts,tsx,js,jsx,md}\" \"!**/pb_migrations/**\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",

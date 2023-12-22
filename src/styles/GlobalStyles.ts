@@ -1,6 +1,6 @@
-"use client";
-import { createGlobalStyle } from "styled-components";
-import { theme } from "./index";
+'use client';
+import { createGlobalStyle } from 'styled-components';
+import { theme } from './index';
 
 const GlobalStyles = createGlobalStyle`
 

@@ -1,13 +1,13 @@
-"use client";
-import type { Metadata } from "next";
-import { ThemeProvider } from "styled-components";
-import { StyledComponentsRegistry } from "@/lib";
-import { GlobalStyles, theme } from "@/styles";
-import { Nav, Container } from "@/components";
+'use client';
+import type { Metadata } from 'next';
+import { ThemeProvider } from 'styled-components';
+import { StyledComponentsRegistry } from '@/lib';
+import { GlobalStyles, theme } from '@/styles';
+import { Nav, Container } from '@/components';
 
 export const metadata: Metadata = {
-  title: "Procrasti-Not(e)",
-  description: "A simple draggable notes taking app",
+  title: 'Procrasti-Not(e)',
+  description: 'A simple draggable notes taking app',
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
