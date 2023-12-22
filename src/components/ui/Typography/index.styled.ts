@@ -1,5 +1,6 @@
-import styled from 'styled-components';
 import { createElement } from 'react';
+import styled from 'styled-components';
+
 import { TypographyProps } from './index';
 
 // A styled component for creating dynamic typography elements based on the props passed to it.

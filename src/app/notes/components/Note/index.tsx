@@ -1,8 +1,10 @@
 'use client';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSeedling } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTheme } from 'styled-components';
+
 import { Typography } from '@/components';
+
 import * as Styled from './index.styled';
 
 type Category = 'personal' | 'productivity';

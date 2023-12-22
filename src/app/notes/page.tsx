@@ -1,4 +1,5 @@
 import pb from '@/lib/pocketbase';
+
 import { NotesContainer } from './components';
 
 // exporting the Route Segment Config "revalidate = 0" will, essentially, disable caching and background regeneration,

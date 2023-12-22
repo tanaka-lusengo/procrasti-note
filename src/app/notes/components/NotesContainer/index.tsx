@@ -1,9 +1,12 @@
 'use client';
-import { RecordModel } from 'pocketbase';
-import { Typography } from '@/components';
 import Image from 'next/image';
+import { RecordModel } from 'pocketbase';
+
 import boredWoman from '@/../public/images/laying-bored-woman.svg';
+import { Typography } from '@/components';
+
 import Note from '../Note';
+
 import * as Styled from './index.styled';
 
 interface NotesContainerProps {

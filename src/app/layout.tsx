@@ -1,9 +1,10 @@
 'use client';
 import type { Metadata } from 'next';
 import { ThemeProvider } from 'styled-components';
+
+import { Container, Nav } from '@/components';
 import { StyledComponentsRegistry } from '@/lib';
 import { GlobalStyles, theme } from '@/styles';
-import { Nav, Container } from '@/components';
 
 export const metadata: Metadata = {
   title: 'Procrasti-Not(e)',

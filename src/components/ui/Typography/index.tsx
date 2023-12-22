@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+
 import * as Styled from './index.styled';
 
 type TagVariants =

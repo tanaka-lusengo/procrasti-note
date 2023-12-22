@@ -1,9 +1,11 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import Typewriter from 'typewriter-effect';
+
 import coffeeGuy from '@/../public/images/coffee-guy.svg';
 import { Typography } from '@/components';
-import Typewriter from 'typewriter-effect';
+
 import * as Styled from './page.styled';
 
 const Home = () => (

@@ -1,7 +1,9 @@
 'use client';
 import Link from 'next/link';
-import * as Styled from './index.styled';
+
 import { Typography } from '../index';
+
+import * as Styled from './index.styled';
 
 const Nav = () => (
   <header>
