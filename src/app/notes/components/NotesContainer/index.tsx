@@ -1,10 +1,13 @@
-"use client";
-import { RecordModel } from "pocketbase";
-import { Typography } from "@/components";
-import Image from "next/image";
-import boredWoman from "@/../public/images/laying-bored-woman.svg";
-import Note from "../Note";
-import * as Styled from "./index.styled";
+'use client';
+import Image from 'next/image';
+import { RecordModel } from 'pocketbase';
+
+import boredWoman from '@/../public/images/laying-bored-woman.svg';
+import { Typography } from '@/components';
+
+import Note from '../Note';
+
+import * as Styled from './index.styled';
 
 interface NotesContainerProps {
   notes: RecordModel[];
@@ -18,8 +21,8 @@ const NotesContainer = ({ notes }: NotesContainerProps) => (
           Hey You <Styled.Wave>👋🏾</Styled.Wave>
         </Typography>
         <Typography tag="p">
-          You currently have{" "}
-          <Styled.Number>{notes ? notes.length : "0 😢"}</Styled.Number> Notes
+          You currently have{' '}
+          <Styled.Number>{notes ? notes.length : '0 😢'}</Styled.Number> Notes
         </Typography>
       </div>
 
