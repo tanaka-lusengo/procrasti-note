@@ -26,7 +26,7 @@ const Home = () => (
       width={400}
       height={400}
       priority
-      alt="Man hugging a giant spilling coffee cup"
+      alt="Man hugging a giant cup of spilling coffee"
     />
 
     <Typography tag="p" textalign="center">
