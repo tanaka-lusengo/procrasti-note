@@ -9,7 +9,8 @@ export const Nav = styled.nav`
 
   h1 {
     margin-right: 2rem;
-    font-size: ${({ theme }) => theme.fontSize.h4}rem;
+    font-family: ${({ theme }) => theme.typography.fontFamily.ultra};
+    font-size: ${({ theme }) => theme.typography.fontSize.h4}rem;
   }
 
   ul {

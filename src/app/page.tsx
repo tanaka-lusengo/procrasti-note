@@ -11,7 +11,7 @@ import * as Styled from './page.styled';
 
 const Home = () => (
   <Styled.Section>
-    <Typography tag="h1">
+    <Typography tag="h1" textalign="center">
       <Typewriter
         options={{
           strings: ['Time to get organised!'],
