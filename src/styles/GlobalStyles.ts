@@ -10,8 +10,9 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: ${theme.typography.fontFamily.slabo};
   color: ${theme.colors.text};
+  background-color: ${theme.colors.secondary};
 }
 
 html {

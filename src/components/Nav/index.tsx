@@ -9,7 +9,7 @@ import * as Styled from './index.styled';
 const Nav = () => (
   <header>
     <Styled.Nav>
-      <Typography tag="h1">
+      <Typography tag="h1" textalign="center">
         <Link href={'/'}>Procrasti-Not(e)</Link>
       </Typography>
 

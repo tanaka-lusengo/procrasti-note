@@ -5,23 +5,41 @@ export const Section = styled.section`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  gap: 4rem;
+  gap: 2rem;
 
   margin: 4rem 0;
 
+  h1 {
+    font-family: ${({ theme }) => theme.typography.fontFamily.slabo};
+    min-height: 11rem;
+    width: 100%;
+  }
+
   a {
-    color: ${({ theme }) => theme.colors.primary};
-    font-weight: bold;
-    font-size: ${({ theme }) => theme.fontSize.h4}rem;
-    border-bottom: 2px solid transparent;
-    transition: border-bottom 0.3s ease-in-out;
+    color: ${({ theme }) => theme.colors.secondary};
+    font-family: ${({ theme }) => theme.typography.fontFamily.ultra};
+    font-size: ${({ theme }) => theme.typography.fontSize.h5}rem;
+    border-bottom: 2.5px solid transparent;
+    background-color: ${({ theme }) => theme.colors.primary};
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    transition: 0.4s ease-in-out;
 
     &:hover {
-      border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
+      color: ${({ theme }) => theme.colors.primary};
+      background-color: ${({ theme }) => theme.colors.secondary};
+    }
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}px) {
+    h1 {
+      min-height: 0;
     }
   }
 
   @media only screen and (min-width: ${({ theme }) => theme.breakpoints.lg}px) {
+    gap: 4rem;
+
     p {
       max-width: 50%;
     }

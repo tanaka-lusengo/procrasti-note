@@ -1,4 +1,5 @@
 'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import Typewriter from 'typewriter-effect';
@@ -10,7 +11,7 @@ import * as Styled from './page.styled';
 
 const Home = () => (
   <Styled.Section>
-    <Typography tag="h1">
+    <Typography tag="h1" textalign="center">
       <Typewriter
         options={{
           strings: ['Time to get organised!'],
@@ -26,6 +27,7 @@ const Home = () => (
       width={400}
       height={400}
       priority
+      rel="preload"
       alt="Man hugging a giant cup of spilling coffee"
     />
 
