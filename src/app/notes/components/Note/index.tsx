@@ -1,6 +1,5 @@
 'use client';
-import { faSeedling } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { useTheme } from 'styled-components';
 
 import { Typography } from '@/components';
@@ -19,7 +18,12 @@ const Note = ({ title, category }: NoteProps) => {
 
   return (
     <Styled.ListCard>
-      <FontAwesomeIcon icon={faSeedling} style={{ color: colors.primary }} />
+      <span
+        className="fa-solid fa-seedling"
+        about="Seedling icon"
+        style={{ color: colors.primary }}
+      ></span>
+
       <div>
         <Typography tag="h5">{title}</Typography>
         <Typography tag="h6">- {category}</Typography>
