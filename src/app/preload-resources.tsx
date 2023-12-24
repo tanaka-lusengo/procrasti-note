@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import type { Metadata } from 'next';
+import Script from 'next/script';
 
 export const metadataContent: Metadata = {
   title: {
@@ -35,10 +36,5 @@ export const metadataContent: Metadata = {
 
 // Below are metadata types the do not currently have built-in support (as of Next "14.0.4"). However, they can still be rendered in the layout or page itself ✌🏾
 export const PreloadResources: FC = () => (
-  <script
-    src="https://kit.fontawesome.com/89f72e9d16.js"
-    crossOrigin="anonymous"
-    rel="preload"
-    async
-  ></script>
+  <Script src="https://kit.fontawesome.com/89f72e9d16.js"></Script>
 );
