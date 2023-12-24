@@ -1,0 +1,36 @@
+name: js-test
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/js-test.yml'
+      - '**/*.js'
+      - '**/*.jsx'
+      - '**/*.ts'
+      - '**/*.tsx'
+
+jobs:
+  JsTest:
+    name: Run javascript tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # Ensures the entire repo is checked out (including tags)
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Cache and install node_modules
+      - name: Yarn install dependencies with caching
+        uses: bahmutov/npm-install@v1
+        with:
+          install-command: yarn install --frozen-lockfile
+
+      - name: GitHub Action for Javascript testing
+        run: yarn test

@@ -1,10 +1,10 @@
-'use client';
 import type { Metadata } from 'next';
-import { ThemeProvider } from 'styled-components';
 
-import { Container, Nav } from '@/components';
-import { StyledComponentsRegistry } from '@/lib';
-import { GlobalStyles, theme } from '@/styles';
+import Nav from '@/components/Nav';
+import Container from '@/components/ui/Container';
+import Providers from '@/Providers';
+
+import { PreloadResources } from './preload-resources';
 
 export const metadata: Metadata = {
   title: 'Procrasti-Not(e)',
@@ -14,16 +14,15 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="en">
     <body>
-      <StyledComponentsRegistry>
-        <GlobalStyles />
-        <ThemeProvider theme={theme}>
-          <Container about="App content">
-            <Nav />
-            <main>{children}</main>
-          </Container>
-        </ThemeProvider>
-      </StyledComponentsRegistry>
+      <Providers>
+        <Container about="App content">
+          <Nav />
+          <main>{children}</main>
+        </Container>
+      </Providers>
     </body>
+
+    <PreloadResources />
   </html>
 );
 
