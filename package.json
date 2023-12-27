@@ -33,21 +33,24 @@
     "@vitejs/plugin-react": "^4.2.1",
     "@vitest/coverage-v8": "^1.1.0",
     "@vitest/ui": "^1.1.0",
+    "date-fns": "^3.0.6",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "html-react-parser": "^5.0.11",
     "husky": "^8.0.3",
     "jest-dom": "^4.0.0",
     "jsdom": "^23.0.1",
     "lint-staged": "^15.2.0",
     "prettier": "^3.1.1",
     "typescript": "^5",
+    "vite": "^5.0.10",
     "vite-tsconfig-paths": "^4.2.2",
     "vitest": "^1.1.0",
     "vitest-canvas-mock": "^0.3.3"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
+    "*.{ts,tsx,js,jsx} \"!**/pb_migrations/**\"": [
       "eslint --cache --fix",
       "yarn format"
     ]

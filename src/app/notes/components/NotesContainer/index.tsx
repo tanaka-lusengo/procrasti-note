@@ -1,4 +1,5 @@
 'use client';
+
 import Image from 'next/image';
 import { RecordModel } from 'pocketbase';
 
@@ -36,8 +37,8 @@ const NotesContainer = ({ notes }: NotesContainerProps) => (
 
     {notes ? (
       <Styled.List>
-        {notes.map(({ id, title, category }) => (
-          <Note key={id} title={title} category={category} />
+        {notes.map((note) => (
+          <Note key={note.id} note={note} />
         ))}
       </Styled.List>
     ) : (

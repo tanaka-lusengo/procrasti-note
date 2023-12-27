@@ -77,33 +77,57 @@ h6 {
 
 /* Add accessible font styles */
 p {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   line-height: 1.52;
+
+  @media (min-width: ${theme.breakpoints.sm}px) {
+    font-size: 1.8rem;
+  }
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: 3.6rem;
   line-height: 1.375;
+
+   @media (min-width: ${theme.breakpoints.sm}px) {
+    font-size: 4rem;
+  }
 }
 
 h2 {
-  font-size: 3.6rem;
+  font-size: 2.8rem;
   line-height: 1.38;
+
+   @media (min-width: ${theme.breakpoints.sm}px) {
+    font-size: 3.6rem;
+  }
 }
 
 h3 {
-  font-size: 2.8rem;
+  font-size: 2.2rem;
   line-height: 1.428;
+
+   @media (min-width: ${theme.breakpoints.sm}px) {
+    font-size: 2.8rem;
+  }
 }
 
 h4 {
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   line-height: 1.5;
+
+   @media (min-width: ${theme.breakpoints.sm}px) {
+    font-size: 2.2rem;
+  }
 }
 
 h5 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   line-height: 1.3;
+
+   @media (min-width: ${theme.breakpoints.sm}px) {
+    font-size: 1.8rem;
+  }
 }
 
 h6 {
