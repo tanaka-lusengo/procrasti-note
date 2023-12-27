@@ -1,12 +1,16 @@
+import Link from 'next/link';
 import styled from 'styled-components';
 
-export const ListCard = styled.li`
+export const CardContainer = styled.li`
+  list-style: none;
+  margin-bottom: 1.5rem;
+`;
+
+export const CardContent = styled(Link)`
   display: flex;
   justify-content: flex-start;
   gap: 2rem;
 
-  list-style: none;
-  margin: 0;
   border: 1px solid ${({ theme }) => theme.colors.secondary};
   border-radius: 10px;
   padding: 1rem;

@@ -1,11 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import Typewriter from 'typewriter-effect';
 
 import coffeeGuy from '@/../public/images/coffee-guy.svg';
-import { Typography } from '@/components';
+import { Button, Typography } from '@/components';
 
 import * as Styled from './page.styled';
 
@@ -24,8 +23,8 @@ const Home = () => (
 
     <Image
       src={coffeeGuy}
-      width={400}
-      height={400}
+      width={350}
+      height={350}
       priority
       rel="preload"
       alt="Man hugging a giant cup of spilling coffee"
@@ -33,11 +32,11 @@ const Home = () => (
 
     <Typography tag="p" textalign="center">
       <b>Procrasti-Not(e)</b> is a simple and effective &quot;to-do&quot; list
-      and task manager app which helps you manage your time and of course, not{' '}
+      and task manager app which helps you manage your time and, of course, not{' '}
       <b>procrastinate</b> 😉
     </Typography>
 
-    <Link href={'/notes'}>Lets Get Started!</Link>
+    <Button href={'/notes'}>Lets Get Started!</Button>
   </Styled.Section>
 );
 

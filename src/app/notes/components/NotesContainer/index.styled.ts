@@ -69,12 +69,6 @@ export const Number = styled.span`
 `;
 
 export const List = styled.ul`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-
   padding: 0 2rem;
   width: 100%;
 `;
