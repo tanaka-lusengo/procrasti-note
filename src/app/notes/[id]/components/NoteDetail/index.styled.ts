@@ -26,7 +26,7 @@ export const ContentContainter = styled.div`
   min-height: 50vh;
 
   background-color: ${({ theme }) => theme.colors.tertiary};
-  border-radius: 10px;
+  border-radius: 1rem;
 
   h6 {
     font-weight: bold;

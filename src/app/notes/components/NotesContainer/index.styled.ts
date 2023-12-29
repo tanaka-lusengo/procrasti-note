@@ -69,6 +69,12 @@ export const Number = styled.span`
 `;
 
 export const List = styled.ul`
-  padding: 0 2rem;
   width: 100%;
+  max-width: 55rem;
+  max-height: 50vh;
+  overflow-y: scroll;
+  padding: 1rem;
+
+  border: 1px transparent solid;
+  border-radius: 1rem;
 `;

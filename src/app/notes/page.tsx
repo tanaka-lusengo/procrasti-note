@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export const getNotes = async () => {
   const response = await pb
     .collection('notes')
-    .getFullList({ sort: 'updated' });
+    .getFullList({ sort: '-created' });
 
   return response;
 };

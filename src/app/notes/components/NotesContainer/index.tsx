@@ -1,10 +1,12 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { RecordModel } from 'pocketbase';
 
 import boredWoman from '@/../public/images/laying-bored-woman.svg';
-import { Typography } from '@/components';
+import { ButtonLink, Typography } from '@/components';
 
 import Note from '../Note';
 
@@ -14,39 +16,55 @@ interface NotesContainerProps {
   notes: RecordModel[];
 }
 
-const NotesContainer = ({ notes }: NotesContainerProps) => (
-  <Styled.Container>
-    <Styled.TopContainer>
-      <div>
-        <Typography tag="h1">
-          Hey You <Styled.Wave>👋🏾</Styled.Wave>
-        </Typography>
-        <Typography tag="p">
-          You currently have{' '}
-          <Styled.Number>{notes ? notes.length : '0 😢'}</Styled.Number> Notes
-        </Typography>
-      </div>
+const NotesContainer = ({ notes }: NotesContainerProps) => {
+  // useSearchParams hook to get the query params from the URL to render the modal for a clean Stateless, Route-Based Approach ✌🏾
+  const searchParams = useSearchParams();
+  const showForm = searchParams.get('show-form');
 
-      <Image
-        src={boredWoman}
-        alt="Woamn laying down bored on her phone"
-        height={180}
-        priority
-      />
-    </Styled.TopContainer>
+  // Dynamic import of the `CreateNote` modal component to render it only when needed
+  const CreateNote = dynamic(() => import('../CreateNote'), {
+    ssr: false,
+  });
 
-    {notes ? (
-      <Styled.List>
-        {notes.map((note) => (
-          <Note key={note.id} note={note} />
-        ))}
-      </Styled.List>
-    ) : (
-      <>
-        <Typography tag="h1">There are no notes yet 😞</Typography>
-      </>
-    )}
-  </Styled.Container>
-);
+  const notesCount = notes ? notes.length : '0 😢';
+
+  return (
+    <Styled.Container>
+      <Styled.TopContainer>
+        <div>
+          <Typography tag="h1">
+            Hey You <Styled.Wave>👋🏾</Styled.Wave>
+          </Typography>
+          <Typography tag="p">
+            You currently have <Styled.Number>{notesCount}</Styled.Number> Notes
+          </Typography>
+        </div>
+
+        <Image
+          src={boredWoman}
+          alt="Woamn laying down bored on her phone"
+          height={180}
+          priority
+        />
+      </Styled.TopContainer>
+
+      <ButtonLink href={'?show-form=true'}>New Note</ButtonLink>
+
+      {showForm ? <CreateNote showForm={showForm} /> : null}
+
+      {notes ? (
+        <Styled.List>
+          {notes.map((note) => (
+            <Note key={note.id} note={note} />
+          ))}
+        </Styled.List>
+      ) : (
+        <Typography tag="h1" textalign="center">
+          You have no notes yet 😞 Use button above to Create!
+        </Typography>
+      )}
+    </Styled.Container>
+  );
+};
 
 export default NotesContainer;
