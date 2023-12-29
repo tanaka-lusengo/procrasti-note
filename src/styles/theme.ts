@@ -32,6 +32,9 @@ const theme = {
     text: '#231f20',
     white: '#fff',
     black: '#000',
+    grey: '#ccc',
+    success: '#4caf50',
+    error: '#f44336',
   },
 };
 

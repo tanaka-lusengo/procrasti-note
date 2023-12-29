@@ -2,6 +2,9 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 export const CardContainer = styled.li`
+  display: flex;
+  justify-content: center;
+
   list-style: none;
   margin-bottom: 1.5rem;
 `;
@@ -12,7 +15,7 @@ export const CardContent = styled(Link)`
   gap: 2rem;
 
   border: 1px solid ${({ theme }) => theme.colors.secondary};
-  border-radius: 10px;
+  border-radius: 1rem;
   padding: 1rem;
   width: 100%;
   max-width: 65rem;
