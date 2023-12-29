@@ -5,6 +5,8 @@ import { RecordModel } from 'pocketbase';
 import { ButtonLink, Typography } from '@/components';
 import { convertStringToHTML, formatDateRelative } from '@/utils';
 
+import DeleteNote from '../../../components/DeleteNote';
+
 import * as Styled from './index.styled';
 
 interface NoteDetailProps {
@@ -12,7 +14,7 @@ interface NoteDetailProps {
 }
 
 const NoteDetail = ({ note }: NoteDetailProps) => {
-  const { title, category, content, updated, created } = note || {};
+  const { id, title, category, content, updated, created } = note || {};
   const today = new Date().toISOString();
 
   return (
@@ -24,6 +26,7 @@ const NoteDetail = ({ note }: NoteDetailProps) => {
         <Typography tag="h6" textalign="center">
           <b>Updated</b> - {formatDateRelative(updated ? updated : today)}
         </Typography>
+
         <Styled.ContentContainter>
           <Typography tag="h6" textalign="center">
             ~ {category} ~
@@ -32,10 +35,12 @@ const NoteDetail = ({ note }: NoteDetailProps) => {
           {convertStringToHTML(content)}
         </Styled.ContentContainter>
 
-        <Styled.ButtonContainer>
+        <Styled.BottomContainer>
           <ButtonLink href={'/notes'}>Go Back</ButtonLink>
-        </Styled.ButtonContainer>
+          <DeleteNote id={id as string} isDetailPage />
+        </Styled.BottomContainer>
       </Styled.Containter>
+
       <Typography tag="p" textalign="center">
         <b>Created:</b> {formatDateRelative(created ? created : today)}
       </Typography>

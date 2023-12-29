@@ -19,7 +19,7 @@ export const ContentContainter = styled.div`
   align-items: center;
   gap: 2rem;
 
-  margin: 2rem auto;
+  margin: 1rem auto;
   padding: 2rem;
   width: 100%;
   max-width: 65rem;
@@ -33,9 +33,13 @@ export const ContentContainter = styled.div`
   }
 `;
 
-export const ButtonContainer = styled.div`
+export const BottomContainer = styled.div`
   display: flex;
-  justify-content: center;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+
+  margin: 0 auto;
+  width: 100%;
+  max-width: 65rem;
+  padding: 0 2rem;
 `;

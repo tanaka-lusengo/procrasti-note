@@ -25,7 +25,7 @@ export const FormContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  animation: ${fadeIn} 0.4s ease-in-out;
+  animation: ${fadeIn} 0.2s ease-in-out;
 `;
 
 export const FormContent = styled.div`
@@ -40,7 +40,7 @@ export const FormContent = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  animation: ${fadeIn} 0.4s ease-in-out;
+  animation: ${fadeIn} 0.2s ease-in-out;
 `;
 
 export const ButtonsContainer = styled.div`
