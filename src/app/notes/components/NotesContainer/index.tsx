@@ -30,8 +30,6 @@ const NotesContainer = ({ notes }: NotesContainerProps) => {
 
   const notesCount = renderNotesCondition ? notes.length : '0 😢';
 
-  console.log('notes', notes);
-
   return (
     <Styled.Container>
       <Styled.TopContainer>
