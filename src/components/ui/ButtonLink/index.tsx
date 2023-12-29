@@ -1,7 +1,7 @@
+import Link from 'next/link';
 import styled from 'styled-components';
 
-const Button = styled.button`
-  border: none;
+const ButtonLink = styled(Link)`
   color: ${({ theme }) => theme.colors.secondary};
   font-family: ${({ theme }) => theme.typography.fontFamily.ultra};
   font-size: ${({ theme }) => theme.typography.fontSize.h5}rem;
@@ -10,7 +10,6 @@ const Button = styled.button`
   border-radius: 1rem;
   transition: 0.4s ease-in-out;
   display: inline-block;
-  cursor: pointer;
 
   &:hover {
     color: ${({ theme }) => theme.colors.primary};
@@ -18,4 +17,4 @@ const Button = styled.button`
   }
 `;
 
-export default Button;
+export default ButtonLink;

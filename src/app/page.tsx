@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Typewriter from 'typewriter-effect';
 
 import coffeeGuy from '@/../public/images/coffee-guy.svg';
-import { Button, Typography } from '@/components';
+import { ButtonLink, Typography } from '@/components';
 
 import * as Styled from './page.styled';
 
@@ -36,7 +36,7 @@ const Home = () => (
       <b>procrastinate</b> 😉
     </Typography>
 
-    <Button href={'/notes'}>Lets Get Started!</Button>
+    <ButtonLink href={'/notes'}>Lets Get Started!</ButtonLink>
   </Styled.Section>
 );
 

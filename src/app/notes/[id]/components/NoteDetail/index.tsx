@@ -2,7 +2,7 @@
 
 import { RecordModel } from 'pocketbase';
 
-import { Button, Typography } from '@/components';
+import { ButtonLink, Typography } from '@/components';
 import { convertStringToHTML, formatDateRelative } from '@/utils';
 
 import * as Styled from './index.styled';
@@ -33,7 +33,7 @@ const NoteDetail = ({ note }: NoteDetailProps) => {
         </Styled.ContentContainter>
 
         <Styled.ButtonContainer>
-          <Button href={'/notes'}>Go Back</Button>
+          <ButtonLink href={'/notes'}>Go Back</ButtonLink>
         </Styled.ButtonContainer>
       </Styled.Containter>
       <Typography tag="p" textalign="center">
