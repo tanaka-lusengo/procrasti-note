@@ -26,7 +26,11 @@ const NotesContainer = ({ notes }: NotesContainerProps) => {
     ssr: false,
   });
 
-  const notesCount = notes ? notes.length : '0 😢';
+  const renderNotesCondition = notes && notes.length != 0;
+
+  const notesCount = renderNotesCondition ? notes.length : '0 😢';
+
+  console.log('notes', notes);
 
   return (
     <Styled.Container>
@@ -52,15 +56,15 @@ const NotesContainer = ({ notes }: NotesContainerProps) => {
 
       {showForm ? <CreateNote showForm={showForm} /> : null}
 
-      {notes ? (
+      {renderNotesCondition ? (
         <Styled.List>
           {notes.map((note) => (
             <Note key={note.id} note={note} />
           ))}
         </Styled.List>
       ) : (
-        <Typography tag="h1" textalign="center">
-          You have no notes yet 😞 Use button above to Create!
+        <Typography tag="h5" textalign="center">
+          Oww... Looks like you have no notes yet 😞
         </Typography>
       )}
     </Styled.Container>

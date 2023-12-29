@@ -65,6 +65,7 @@ export const Wave = styled.span`
 
 export const Number = styled.span`
   font-weight: bold;
+  font-size: ${({ theme }) => theme.typography.fontSize.h3}rem;
   color: ${({ theme }) => theme.colors.primary};
 `;
 
