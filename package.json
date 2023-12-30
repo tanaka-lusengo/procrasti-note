@@ -11,6 +11,8 @@
     "test:ui": "vitest --ui",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
+    "lint:css": "stylelint './src/**/*{styled.ts,styled.tsx}'",
+    "lint:css:fix": "stylelint --fix './src/**/*{styled.ts,styled.tsx}'",
     "format": "prettier --write --ignore-path .gitignore \"**/*.{ts,tsx,js,jsx,md}\" \"!**/pb_migrations/**\"",
     "execute-husky": "npx husky install && npx husky add .husky/pre-commit \"npx --no-install lint-staged\""
   },
@@ -44,7 +46,12 @@
     "jest-dom": "^4.0.0",
     "jsdom": "^23.0.1",
     "lint-staged": "^15.2.0",
+    "postcss": "^8.4.32",
+    "postcss-styled-syntax": "^0.6.1",
     "prettier": "^3.1.1",
+    "stylelint": "^16.1.0",
+    "stylelint-config-clean-order": "^5.2.0",
+    "stylelint-config-standard": "^36.0.0",
     "typescript": "^5",
     "vite": "^5.0.10",
     "vite-tsconfig-paths": "^4.2.2",
@@ -55,6 +62,7 @@
     "*.{ts,tsx,js,jsx} \"!**/pb_migrations/**\"": [
       "eslint --cache --fix",
       "yarn format"
-    ]
+    ],
+    "./src/**/*{styled.ts,styled.tsx}": "stylelint --cache --fix"
   }
 }
