@@ -7,12 +7,15 @@ import { pb } from '@/lib';
 
 import * as Styled from './index.styled';
 
+type FaIconSize = 'fa-2xl' | 'fa-xl' | 'fa-lg' | 'fa-sm' | 'fa-xs' | 'fa-2xs';
+
 interface DeleteNoteProps {
   id: string;
   isDetailPage?: boolean;
+  iconSize?: FaIconSize;
 }
 
-const DeleteNote = ({ id, isDetailPage }: DeleteNoteProps) => {
+const DeleteNote = ({ id, isDetailPage, iconSize }: DeleteNoteProps) => {
   const router = useRouter();
   const { colors } = useTheme();
 
@@ -39,7 +42,7 @@ const DeleteNote = ({ id, isDetailPage }: DeleteNoteProps) => {
   return (
     <Styled.IconContainer onClick={() => handleDelete({ id, isDetailPage })}>
       <span
-        className="fa-solid fa-trash-can fa-2xl"
+        className={`fa-solid fa-trash-can ${iconSize}`}
         about="Trash can icon"
         style={{ color: colors.error }}
       ></span>

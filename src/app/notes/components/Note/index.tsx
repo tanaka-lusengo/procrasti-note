@@ -8,11 +8,7 @@ import DeleteNote from '../DeleteNote';
 
 import * as Styled from './index.styled';
 
-interface NoteProps {
-  note: Partial<RecordModel>;
-}
-
-const Note = ({ note }: NoteProps) => {
+const Note = ({ note }: Partial<RecordModel>) => {
   const { id, title, category } = note || {};
 
   return (
@@ -21,7 +17,7 @@ const Note = ({ note }: NoteProps) => {
         <Typography tag="h4">{title}</Typography>
         <Typography tag="h6">- {category}</Typography>
       </Styled.CardContent>
-      <DeleteNote id={id as string} />
+      <DeleteNote id={id as string} iconSize="fa-xl" />
     </Styled.CardContainer>
   );
 };
