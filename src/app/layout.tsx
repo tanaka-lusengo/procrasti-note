@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 import Nav from '@/components/Nav';
-import Container from '@/components/ui/Container';
+import Container from '@/components/ui/Container/index.styled';
 import Providers from '@/Providers';
 
 import { metadataContent, PreloadResources } from './preload-resources';
