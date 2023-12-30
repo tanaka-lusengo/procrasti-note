@@ -39,5 +39,6 @@ next-env.d.ts
 # database files
 pb_data
 
-# eslint
+# cache
 .eslintcache
+.stylelintcache
