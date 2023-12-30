@@ -2,9 +2,8 @@ import styled from 'styled-components';
 
 export const Nav = styled.nav`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-
+  justify-content: space-between;
   padding: 2rem 0;
 
   h1 {
@@ -15,13 +14,13 @@ export const Nav = styled.nav`
 
   ul {
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
+    justify-content: space-evenly;
   }
 
   li {
-    list-style: none;
     margin: 0 1rem;
+    list-style: none;
   }
 
   a {

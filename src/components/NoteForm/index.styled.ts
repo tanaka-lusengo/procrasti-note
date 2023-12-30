@@ -11,34 +11,33 @@ const fadeIn = keyframes`
 
 export const FormContainer = styled.div`
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
 
-  background-color: rgba(0, 0, 0, 0.75);
   overflow-y: auto;
-  height: 100%;
-  width: 100%;
-
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgb(0 0 0 / 75%);
 
   animation: ${fadeIn} 0.2s ease-in-out;
 `;
 
 export const FormContent = styled.div`
-  background-color: ${({ theme }) => theme.colors.tertiary};
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
-  border-radius: 1rem;
-  padding: 2rem;
-  width: 100%;
-  max-width: 45rem;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  width: 100%;
+  max-width: 45rem;
+  padding: 2rem;
+
+  background-color: ${({ theme }) => theme.colors.tertiary};
+  border-radius: 1rem;
+  box-shadow: 0 0 5px rgb(0 0 0 / 50%);
 
   animation: ${fadeIn} 0.2s ease-in-out;
 `;

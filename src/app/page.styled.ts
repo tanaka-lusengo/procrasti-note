@@ -2,17 +2,17 @@ import styled from 'styled-components';
 
 export const Section = styled.section`
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  align-items: center;
   gap: 2rem;
+  align-items: center;
+  justify-content: center;
 
   margin: 1rem 0;
 
   h1 {
-    font-family: ${({ theme }) => theme.typography.fontFamily.slabo};
-    min-height: 11rem;
     width: 100%;
+    min-height: 11rem;
+    font-family: ${({ theme }) => theme.typography.fontFamily.slabo};
   }
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}px) {
