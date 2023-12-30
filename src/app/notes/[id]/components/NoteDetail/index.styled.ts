@@ -42,4 +42,12 @@ export const BottomContainer = styled.div`
   width: 100%;
   max-width: 65rem;
   padding: 0 2rem;
+
+  svg {
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+      transform: translateY(-0.3rem);
+    }
+  }
 `;

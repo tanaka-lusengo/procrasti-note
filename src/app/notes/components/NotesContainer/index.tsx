@@ -12,16 +12,12 @@ import Note from '../Note';
 
 import * as Styled from './index.styled';
 
-interface NotesContainerProps {
-  notes: RecordModel[];
-}
-
-const NotesContainer = ({ notes }: NotesContainerProps) => {
+const NotesContainer = ({ notes }: { notes: RecordModel[] }) => {
   // useSearchParams hook to get the query params from the URL to render the modal for a clean Stateless, Route-Based Approach ✌🏾
-  const searchParams = useSearchParams();
-  const showForm = searchParams.get('show-form');
+  const searchParams = useSearchParams()?.get('show-form');
+  const showForm = Boolean(searchParams);
 
-  // Dynamic import of the `CreateNote` modal component to render it only when needed
+  // Dynamic import of the `CreateNote` modal to render only when needed
   const CreateNote = dynamic(() => import('../CreateNote'), {
     ssr: false,
   });
@@ -44,15 +40,13 @@ const NotesContainer = ({ notes }: NotesContainerProps) => {
 
         <Image
           src={boredWoman}
-          alt="Woamn laying down bored on her phone"
+          alt="A woman, lying down with her phone, procrastinating."
           height={180}
           priority
         />
       </Styled.TopContainer>
 
       <ButtonLink href={'?show-form=true'}>New Note</ButtonLink>
-
-      {showForm ? <CreateNote showForm={showForm} /> : null}
 
       {renderNotesCondition ? (
         <Styled.List>
@@ -65,6 +59,8 @@ const NotesContainer = ({ notes }: NotesContainerProps) => {
           Oww... Looks like you have no notes yet 😞
         </Typography>
       )}
+
+      {showForm ? <CreateNote showForm={showForm} /> : null}
     </Styled.Container>
   );
 };
