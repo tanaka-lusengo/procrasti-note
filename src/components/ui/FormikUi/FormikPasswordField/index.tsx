@@ -3,28 +3,25 @@ import { FieldAttributes } from 'formik';
 import { FormikContainer, FormikErrorText } from '../common.styled';
 import * as Styled from '../common.styled';
 
-type TextFieldProps = {
+type PasswordFieldProps = {
   label: string;
   name: string;
-  placeholder: string;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 } & FieldAttributes<any>;
 
-const TextField = ({
+const PasswordField = ({
   label,
   name,
-  placeholder,
   field,
   form: { touched, errors },
   ...inputProps
-}: TextFieldProps) => {
+}: PasswordFieldProps) => {
   return (
     <FormikContainer>
       <label htmlFor={name}>{label}</label>
       <Styled.CustomFormikInputField
-        type="text"
+        type="password"
         name={name}
-        placeholder={placeholder}
         value={field.value}
         {...field}
         {...inputProps}
@@ -37,4 +34,4 @@ const TextField = ({
   );
 };
 
-export default TextField;
+export default PasswordField;

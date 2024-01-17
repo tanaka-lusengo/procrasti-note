@@ -1,34 +1,22 @@
 'use client';
 
-import { Field, Form, Formik, FormikHelpers } from 'formik';
-import { useRouter } from 'next/navigation';
-
-import { Button } from '@/components';
-import * as StyledFormik from '@/components/ui/FormikUi';
+import { Form, Formik, FormikConfig } from 'formik';
 
 import * as Styled from './index.styled';
-import { initialValues as defaultInitialValues } from './initialValues';
-import { Category, FormValues } from './types';
-import { validationSchema } from './validationSchema';
 
-interface NoteFormProps {
-  initialValues?: FormValues;
-  showForm: boolean;
-  buttonLabel: string;
-  onSubmit: (
-    values: FormValues,
-    formikHelpers: FormikHelpers<FormValues>,
-  ) => void | (Promise<any> & (() => void));
-}
+type NoteFormProps<TFormValues extends object> = {
+  initialValues: TFormValues;
+  showForm?: boolean;
+  children: React.ReactNode;
+} & Pick<FormikConfig<TFormValues>, 'onSubmit' | 'validationSchema'>;
 
-const NoteForm = ({
-  initialValues = defaultInitialValues,
+const NoteForm = <TFormValues extends object>({
+  initialValues,
+  validationSchema,
   onSubmit,
   showForm,
-  buttonLabel,
-}: NoteFormProps) => {
-  const router = useRouter();
-
+  children,
+}: NoteFormProps<TFormValues>) => {
   return (
     <Formik
       initialValues={initialValues}
@@ -37,39 +25,7 @@ const NoteForm = ({
     >
       <Styled.FormContainer>
         <Styled.FormContent className={showForm ? 'visible' : ''}>
-          <Form>
-            <Field
-              label="Title"
-              name="title"
-              placeholder="Note Title"
-              component={StyledFormik.TextField}
-            />
-
-            <Field
-              label="Category"
-              name="category"
-              component={StyledFormik.SelectField}
-            >
-              <option value="">Choose an option...👇🏾</option>
-              <hr />
-              <option value={Category.Productivity}>Productivity</option>
-              <option value={Category.Personal}>Personal</option>
-            </Field>
-
-            <Field
-              label="Note content"
-              name="content"
-              placeholder="So what's the plan ?"
-              component={StyledFormik.TextareaField}
-            />
-
-            <Styled.ButtonsContainer>
-              <Button type="submit">{buttonLabel}</Button>
-              <Button onClick={router.back} type="button">
-                Close
-              </Button>
-            </Styled.ButtonsContainer>
-          </Form>
+          <Form>{children}</Form>
         </Styled.FormContent>
       </Styled.FormContainer>
     </Formik>

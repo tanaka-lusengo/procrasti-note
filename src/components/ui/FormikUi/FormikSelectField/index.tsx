@@ -4,11 +4,11 @@ import { FormikContainer, FormikErrorText } from '../common.styled';
 
 import * as Styled from './index.styled';
 
-interface SelectFieldProps extends FieldAttributes<any> {
+type SelectFieldProps = {
   label: string;
   name: string;
   selectProps?: React.InputHTMLAttributes<HTMLSelectElement>;
-}
+} & FieldAttributes<any>;
 
 const SelectField = ({
   label,
@@ -20,14 +20,14 @@ const SelectField = ({
   return (
     <FormikContainer>
       <label htmlFor={name}>{label}</label>
-      <Styled.CustomFormikField
+      <Styled.CustomFormikSelectField
         type="select"
         name={name}
         {...field}
         {...selectProps}
       >
         {selectProps.children}
-      </Styled.CustomFormikField>
+      </Styled.CustomFormikSelectField>
 
       {touched[field.name] && errors[field.name] && (
         <FormikErrorText>{errors[field.name]}</FormikErrorText>
