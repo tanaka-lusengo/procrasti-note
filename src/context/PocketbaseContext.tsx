@@ -21,8 +21,14 @@ export enum AuthProviders {
   Google = 'google',
 }
 
+type SignInFormValues = {
+  email: string;
+  password: string;
+};
+
 type PocketbaseContextType = {
   user: AuthModel;
+  signInWithPassword: (values: SignInFormValues) => Promise<void>;
   signInWithProvider: (provider: AuthProviders) => Promise<void>;
   handleEmailVerification: (token: string) => Promise<void>;
   logout: () => void;
@@ -41,6 +47,22 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
     return pb.authStore.onChange((_, newUser) => {
       setUser(newUser);
     });
+  }, []);
+
+  /**
+   * This function is used to sign in a user with an email and password.
+   *
+   * @param {string} email - The email of the user.
+   * @param {string} password - The password of the user.
+   */
+  const signInWithPassword = useCallback(async (values: SignInFormValues) => {
+    try {
+      const { email, password } = values || {};
+
+      await pb.collection('users').authWithPassword(email, password);
+    } catch (error) {
+      logErrorMessage(error, 'signing in 😿');
+    }
   }, []);
 
   /**
@@ -109,11 +131,18 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
   const contextValue: PocketbaseContextType = useMemo(
     () => ({
       user,
+      signInWithPassword,
       signInWithProvider,
       handleEmailVerification,
       logout,
     }),
-    [user, signInWithProvider, handleEmailVerification, logout],
+    [
+      user,
+      signInWithPassword,
+      signInWithProvider,
+      handleEmailVerification,
+      logout,
+    ],
   );
 
   return (
