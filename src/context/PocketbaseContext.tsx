@@ -31,6 +31,7 @@ type PocketbaseContextType = {
   signInWithPassword: (values: SignInFormValues) => Promise<void>;
   signInWithProvider: (provider: AuthProviders) => Promise<void>;
   handleEmailVerification: (token: string) => Promise<void>;
+  handleRequestPasswordReset: (values: { email: string }) => Promise<void>;
   logout: () => void;
 };
 
@@ -117,6 +118,23 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
   );
 
   /**
+   * This function is used to handle a request for password reset.
+   *
+   * @param {string} email - The email of the user who wants to reset their password.
+   */
+  const handleRequestPasswordReset = useCallback(
+    async (values: { email: string }) => {
+      try {
+        const { email } = values || {};
+        await pb.collection('users').requestPasswordReset(email);
+      } catch (error) {
+        logErrorMessage(error, 'requesting new password 😿');
+      }
+    },
+    [],
+  ); // Add an empty array as the second argument
+
+  /**
    * This function handles user logout.
    */
   const logout = useCallback(() => {
@@ -134,6 +152,7 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
       signInWithPassword,
       signInWithProvider,
       handleEmailVerification,
+      handleRequestPasswordReset,
       logout,
     }),
     [
@@ -141,6 +160,7 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
       signInWithPassword,
       signInWithProvider,
       handleEmailVerification,
+      handleRequestPasswordReset,
       logout,
     ],
   );
