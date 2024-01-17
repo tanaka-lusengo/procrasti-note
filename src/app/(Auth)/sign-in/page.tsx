@@ -8,8 +8,8 @@ import { useTheme } from 'styled-components';
 
 import { Button, NoteForm, Typography } from '@/components';
 import * as StyledFormik from '@/components/ui/FormikUi';
-import { AuthProviders } from '@/context/PocketbaseContext';
 import { usePocket } from '@/context/PocketbaseContext';
+import { AuthProviders } from '@/context/types';
 import { toastConfig } from '@/utils';
 
 import * as Styled from './page.styled';

@@ -16,24 +16,12 @@ import type { AuthModel } from 'pocketbase';
 import { pb } from '@/lib';
 import { logErrorMessage, toastConfig } from '@/utils';
 
-export enum AuthProviders {
-  Github = 'github',
-  Google = 'google',
-}
-
-type SignInFormValues = {
-  email: string;
-  password: string;
-};
-
-type PocketbaseContextType = {
-  user: AuthModel;
-  signInWithPassword: (values: SignInFormValues) => Promise<void>;
-  signInWithProvider: (provider: AuthProviders) => Promise<void>;
-  handleEmailVerification: (token: string) => Promise<void>;
-  handleRequestPasswordReset: (values: { email: string }) => Promise<void>;
-  logout: () => void;
-};
+import {
+  type AuthProviders,
+  type ConfirmPasswordResetFormValues,
+  type PocketbaseContextType,
+  type SignInFormValues,
+} from './types';
 
 const PocketbaseContext = createContext<PocketbaseContextType | undefined>(
   undefined,
@@ -132,7 +120,28 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
       }
     },
     [],
-  ); // Add an empty array as the second argument
+  );
+
+  /**
+   * This function is used to handle the confirmation of a password reset.
+   *
+   * @param {string} token - The one-time code sent to the user's email for password reset.
+   * @param {string} values - The new password that the user wants to set.
+   */
+  const handleConfirmPasswordReset = useCallback(
+    async (token: string, values: ConfirmPasswordResetFormValues) => {
+      try {
+        const { password, passwordConfirm } = values || {};
+
+        await pb
+          .collection('users')
+          .confirmPasswordReset(token, password, passwordConfirm);
+      } catch (error) {
+        logErrorMessage(error, 'confirming new password 😿');
+      }
+    },
+    [],
+  );
 
   /**
    * This function handles user logout.
@@ -153,6 +162,7 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
       signInWithProvider,
       handleEmailVerification,
       handleRequestPasswordReset,
+      handleConfirmPasswordReset,
       logout,
     }),
     [
@@ -161,6 +171,7 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
       signInWithProvider,
       handleEmailVerification,
       handleRequestPasswordReset,
+      handleConfirmPasswordReset,
       logout,
     ],
   );
