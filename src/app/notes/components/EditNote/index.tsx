@@ -1,11 +1,17 @@
 'use client';
 
+import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { RecordModel } from 'pocketbase';
 
-import { NoteForm } from '@/components';
-import { FormValues } from '@/components/NoteForm/types';
+import { Button, NoteForm } from '@/components';
 import { pb } from '@/lib';
+import { logErrorMessage, toastConfig } from '@/utils';
+
+import { CommonButtonsContainer } from '../common.styled';
+import CreateAndEditFormFields from '../CreateAndEditFormFields';
+import { FormValues } from '../CreateAndEditFormFields/types';
+import { validationSchema } from '../CreateAndEditFormFields/validationSchema';
 
 interface EditNoteProps {
   note: Partial<RecordModel>;
@@ -24,13 +30,12 @@ const handleEditNote = async (id: string, values: FormValues) => {
 
     await pb.collection('notes').update(id, editNoteData);
   } catch (error) {
-    if (error instanceof Error) {
-      console.error('Error Editing note 😿', error.message, error.cause);
-    } else {
-      console.error('Unknown error Editing note 😿', error);
-    }
+    logErrorMessage(error, 'editing note 😿');
   }
 };
+
+const notifyError = () =>
+  toast.error('There was an error editing a note 🥺', toastConfig);
 
 const EditNote = ({ note, showForm }: EditNoteProps) => {
   const { id, title, category, content } = note || {};
@@ -44,15 +49,30 @@ const EditNote = ({ note, showForm }: EditNoteProps) => {
   return (
     <NoteForm
       initialValues={initialValues}
+      validationSchema={validationSchema}
       onSubmit={(values, formik) => {
-        handleEditNote(id as string, values);
-        formik.resetForm();
-        router.refresh();
-        router.back();
+        try {
+          handleEditNote(id as string, values);
+          formik.resetForm();
+          router.refresh();
+        } catch (error) {
+          notifyError();
+        } finally {
+          router.back();
+        }
       }}
-      buttonLabel="Edit Note"
       showForm={showForm}
-    />
+    >
+      <CreateAndEditFormFields />
+      <CommonButtonsContainer>
+        <Button type="submit">Edit Note</Button>
+        <Button onClick={router.back} type="button">
+          Close
+        </Button>
+      </CommonButtonsContainer>
+
+      <Toaster />
+    </NoteForm>
   );
 };
 

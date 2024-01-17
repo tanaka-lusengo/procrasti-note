@@ -1,13 +1,27 @@
 'use client';
 
+import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
-import { NoteForm } from '@/components';
-import { initialValues } from '@/components/NoteForm/initialValues';
-import { FormValues } from '@/components/NoteForm/types';
+import { Button, NoteForm } from '@/components';
 import { pb } from '@/lib';
+import { logErrorMessage, toastConfig } from '@/utils';
 
-const handleCreateNote = async (values: FormValues = initialValues) => {
+import { CommonButtonsContainer } from '../common.styled';
+import CreateAndEditFormFields from '../CreateAndEditFormFields';
+import { initialValues } from '../CreateAndEditFormFields/initialValues';
+import { FormValues } from '../CreateAndEditFormFields/types';
+import { validationSchema } from '../CreateAndEditFormFields/validationSchema';
+
+interface CreateNoteProps {
+  id: string;
+  showForm: boolean;
+}
+
+const handleCreateNote = async (
+  id: string,
+  values: FormValues = initialValues,
+) => {
   try {
     const { title, category, content } = values || {};
 
@@ -15,32 +29,48 @@ const handleCreateNote = async (values: FormValues = initialValues) => {
       title,
       category,
       content,
+      author: id,
     };
 
     await pb.collection('notes').create(newNoteData);
   } catch (error) {
-    if (error instanceof Error) {
-      console.error('Error creating note 😿', error.message, error.cause);
-    } else {
-      console.error('Unknown error creating note 😿', error);
-    }
+    logErrorMessage(error, 'creating note 😿');
   }
 };
 
-const CreateNote = ({ showForm }: { showForm: boolean }) => {
+const notifyError = () =>
+  toast.error('There was an error creating a note 🥺', toastConfig);
+
+const CreateNote = ({ id, showForm }: CreateNoteProps) => {
   const router = useRouter();
 
   return (
     <NoteForm
+      initialValues={initialValues}
+      validationSchema={validationSchema}
       onSubmit={(values, formik) => {
-        handleCreateNote(values);
-        formik.resetForm();
-        router.refresh();
-        router.back();
+        try {
+          handleCreateNote(id, values);
+          formik.resetForm();
+          router.refresh();
+        } catch (error) {
+          notifyError();
+        } finally {
+          router.back();
+        }
       }}
-      buttonLabel="Add Note"
       showForm={showForm}
-    />
+    >
+      <CreateAndEditFormFields />
+      <CommonButtonsContainer>
+        <Button type="submit">Add Note</Button>
+        <Button onClick={router.back} type="button">
+          Close
+        </Button>
+      </CommonButtonsContainer>
+
+      <Toaster />
+    </NoteForm>
   );
 };
 
