@@ -9,11 +9,12 @@ import {
   useMemo,
   useState,
 } from 'react';
+import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import type { AuthModel } from 'pocketbase';
 
 import { pb } from '@/lib';
-import { logErrorMessage } from '@/utils';
+import { logErrorMessage, toastConfig } from '@/utils';
 
 export enum AuthProviders {
   Github = 'github',
@@ -23,6 +24,7 @@ export enum AuthProviders {
 type PocketbaseContextType = {
   user: AuthModel;
   signInWithProvider: (provider: AuthProviders) => Promise<void>;
+  handleEmailVerification: (token: string) => Promise<void>;
   logout: () => void;
 };
 
@@ -41,6 +43,11 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
     });
   }, []);
 
+  /**
+   * This function handles sign in with a specific provider.
+   *
+   * @param {string} provider - The provider to sign in with.
+   */
   const signInWithProvider = useCallback(
     async (provider: AuthProviders) => {
       try {
@@ -54,6 +61,42 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
     [router],
   );
 
+  /**
+   * This function handles email verification.
+   *
+   * Remember to add a <Toaster> component from 'react-hot-toast' into your component
+   *
+   * @param {string} token
+   */
+  const handleEmailVerification = useCallback(
+    async (token: string) => {
+      const notifyError = () =>
+        toast.error(
+          'There was an error verifying your email 😿, please try again!',
+          toastConfig,
+        );
+      const notifySuccess = () =>
+        toast.success(
+          'Your email has been successfully verified 🎉, now sign in!',
+          toastConfig,
+        );
+
+      try {
+        await pb.collection('users').confirmVerification(token);
+        notifySuccess();
+      } catch (error) {
+        logErrorMessage(error, 'verifiying email address 😿');
+        notifyError();
+      } finally {
+        router.push('/sign-in');
+      }
+    },
+    [router],
+  );
+
+  /**
+   * This function handles user logout.
+   */
   const logout = useCallback(() => {
     try {
       pb.authStore.clear();
@@ -67,9 +110,10 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
     () => ({
       user,
       signInWithProvider,
+      handleEmailVerification,
       logout,
     }),
-    [user, signInWithProvider, logout],
+    [user, signInWithProvider, handleEmailVerification, logout],
   );
 
   return (
@@ -79,6 +123,11 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+/**
+ * This function provides access to the Pocket context.
+ *
+ * @returns Returns the current context of the Pocket.
+ */
 export const usePocket = () => {
   const context = useContext(PocketbaseContext);
   if (!context) {
