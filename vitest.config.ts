@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   test: {
     environment: 'jsdom',
-    setupFiles: ['./src/tests/vitest.setup.ts'],
+    setupFiles: ['./src/utils/test-utils/vitest.setup.ts'],
     server: {
       deps: {
         inline: ['vitest-canvas-mock'],
