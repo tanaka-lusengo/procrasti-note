@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useTheme } from 'styled-components';
 
 import { pb } from '@/lib';
+import { logErrorMessage } from '@/utils';
 
 import * as Styled from './index.styled';
 
@@ -31,11 +32,7 @@ const DeleteNote = ({ id, isDetailPage, iconSize }: DeleteNoteProps) => {
         router.refresh();
       }
     } catch (error) {
-      if (error instanceof Error) {
-        console.error('Error Deleting note 😿', error.message, error.cause);
-      } else {
-        console.error('Unknown error Deleting note 😿', error);
-      }
+      logErrorMessage(error, 'deleting note 😿');
     }
   };
 

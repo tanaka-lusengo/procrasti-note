@@ -2,12 +2,14 @@ import styled from 'styled-components';
 
 export const Nav = styled.nav`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
+
   padding: 2rem 0;
 
   h1 {
-    margin-right: 2rem;
+    margin: 0 2rem 2rem 0;
     font-family: ${({ theme }) => theme.typography.fontFamily.ultra};
     font-size: ${({ theme }) => theme.typography.fontSize.h4}rem;
   }
@@ -15,7 +17,13 @@ export const Nav = styled.nav`
   ul {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
   }
 
   li {
@@ -32,7 +40,16 @@ export const Nav = styled.nav`
     }
   }
 
+  button {
+    background-color: ${({ theme }) => theme.colors.tertiaryDark};
+  }
+
   @media only screen and (min-width: ${({ theme }) => theme.breakpoints.md}px) {
-    justify-content: flex-start;
+    flex-direction: row;
+
+    h1 {
+      width: 35rem;
+      margin-bottom: 0;
+    }
   }
 `;

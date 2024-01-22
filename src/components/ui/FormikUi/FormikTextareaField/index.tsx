@@ -4,30 +4,25 @@ import { FormikContainer, FormikErrorText } from '../common.styled';
 
 import * as Styled from './index.styled';
 
-interface TeaxtareaFieldProps extends FieldAttributes<any> {
+type TeaxtareaFieldProps = {
   label: string;
   name: string;
-  selectProps?: React.InputHTMLAttributes<HTMLSelectElement>;
-}
+  children: React.ReactNode;
+} & FieldAttributes<any>;
 
 const TeaxtareaField = ({
   label,
   name,
   field,
   form: { touched, errors },
-  ...selectProps
+  children,
 }: TeaxtareaFieldProps) => {
   return (
     <FormikContainer>
       <label htmlFor={name}>{label}</label>
-      <Styled.CustomFormikField
-        type="textarea"
-        name={name}
-        {...field}
-        {...selectProps}
-      >
-        {selectProps.children}
-      </Styled.CustomFormikField>
+      <Styled.CustomFormikTextareaField type="textarea" name={name} {...field}>
+        {children}
+      </Styled.CustomFormikTextareaField>
 
       {touched[field.name] && errors[field.name] && (
         <FormikErrorText>{errors[field.name]}</FormikErrorText>

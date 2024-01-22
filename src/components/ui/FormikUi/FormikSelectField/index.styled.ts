@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const CustomFormikField = styled.select`
+export const CustomFormikSelectField = styled.select`
   cursor: pointer;
   padding: 0.5rem;
   border: 1px solid ${({ theme }) => theme.colors.grey};

@@ -6,6 +6,8 @@ import Providers from '@/Providers';
 
 import { metadataContent, PreloadResources } from './preload-resources';
 
+const MAIN_CONTENT_ID = 'main-app-content';
+
 export const metadata: Metadata = {
   ...metadataContent,
 };
@@ -14,7 +16,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="en">
     <body>
       <Providers>
-        <Container about="App content">
+        <Container id={MAIN_CONTENT_ID}>
           <Nav />
           <main>{children}</main>
         </Container>

@@ -1,15 +1,14 @@
 import { FieldAttributes } from 'formik';
 
 import { FormikContainer, FormikErrorText } from '../common.styled';
+import * as Styled from '../common.styled';
 
-import * as Styled from './index.styled';
-
-interface TextFieldProps extends FieldAttributes<any> {
+type TextFieldProps = {
   label: string;
   name: string;
   placeholder: string;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
-}
+} & FieldAttributes<any>;
 
 const TextField = ({
   label,
@@ -22,7 +21,7 @@ const TextField = ({
   return (
     <FormikContainer>
       <label htmlFor={name}>{label}</label>
-      <Styled.CustomFormikField
+      <Styled.CustomFormikInputField
         type="text"
         name={name}
         placeholder={placeholder}
