@@ -9,19 +9,19 @@ import {
   useMemo,
   useState,
 } from 'react';
-import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import type { AuthModel } from 'pocketbase';
 
 import { pb } from '@/lib';
-import { logErrorMessage, toastConfig } from '@/utils';
+import { logErrorMessage } from '@/utils';
 
 import {
   type AuthProviders,
   type ConfirmPasswordResetFormValues,
+  type EmailPasswordFormValues,
   type PocketbaseContextType,
-  type SignInFormValues,
 } from './types';
+import { notifyUser } from './utils';
 
 const PocketbaseContext = createContext<PocketbaseContextType | undefined>(
   undefined,
@@ -38,66 +38,69 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
     });
   }, []);
 
-  /**
-   * This function is used to sign in a user with an email and password.
-   *
-   * @param {string} email - The email of the user.
-   * @param {string} password - The password of the user.
-   */
-  const signInWithPassword = useCallback(async (values: SignInFormValues) => {
-    try {
-      const { email, password } = values || {};
+  const signInWithPassword = useCallback(
+    async (values: EmailPasswordFormValues) => {
+      try {
+        const { email, password } = values || {};
 
-      await pb.collection('users').authWithPassword(email, password);
-    } catch (error) {
-      logErrorMessage(error, 'signing in 😿');
-    }
-  }, []);
+        await pb.collection('users').authWithPassword(email, password);
+        router.push('/notes');
+      } catch (error) {
+        notifyUser('error', 'signing in, wrong password maybe? 🥺');
+        logErrorMessage(error, 'signing in 😿');
+      }
+    },
+    [router],
+  );
 
-  /**
-   * This function handles sign in with a specific provider.
-   *
-   * @param {string} provider - The provider to sign in with.
-   */
   const signInWithProvider = useCallback(
     async (provider: AuthProviders) => {
       try {
         await pb.collection('users').authWithOAuth2({ provider });
         router.push('/notes');
       } catch (error) {
+        notifyUser('error', `signing in with Provider: ${provider} 🥺`);
         logErrorMessage(error, `signing in with Provider: ${provider} 😿`);
-        router.back();
       }
     },
     [router],
   );
 
-  /**
-   * This function handles email verification.
-   *
-   * Remember to add a <Toaster> component from 'react-hot-toast' into your component
-   *
-   * @param {string} token
-   */
+  const signUpWithPassword = useCallback(
+    async (values: EmailPasswordFormValues) => {
+      try {
+        const { email, password } = values || {};
+
+        const userData = {
+          email,
+          password,
+          passwordConfirm: password,
+        };
+
+        await pb.collection('users').create(userData);
+        await pb.collection('users').requestVerification(email);
+        notifyUser('success', 'Sign up successful 🎉, now verify your email!');
+      } catch (error) {
+        notifyUser('error', 'signing up 🥺');
+        logErrorMessage(error, 'signing up 😿');
+      } finally {
+        router.push('?check-email=true');
+      }
+    },
+    [router],
+  );
+
   const handleEmailVerification = useCallback(
     async (token: string) => {
-      const notifyError = () =>
-        toast.error(
-          'There was an error verifying your email 😿, please try again!',
-          toastConfig,
-        );
-      const notifySuccess = () =>
-        toast.success(
-          'Your email has been successfully verified 🎉, now sign in!',
-          toastConfig,
-        );
-
       try {
         await pb.collection('users').confirmVerification(token);
-        notifySuccess();
+        notifyUser(
+          'success',
+          'Your email has been successfully verified 🎉, now sign in!',
+        );
       } catch (error) {
+        notifyUser('error', 'verifying your email 🥺');
         logErrorMessage(error, 'verifiying email address 😿');
-        notifyError();
       } finally {
         router.push('/sign-in');
       }
@@ -105,29 +108,22 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
     [router],
   );
 
-  /**
-   * This function is used to handle a request for password reset.
-   *
-   * @param {string} email - The email of the user who wants to reset their password.
-   */
   const handleRequestPasswordReset = useCallback(
     async (values: { email: string }) => {
       try {
         const { email } = values || {};
         await pb.collection('users').requestPasswordReset(email);
+        notifyUser('success', 'Email sent successfully 🎉');
       } catch (error) {
+        notifyUser('error', 'requesting a new password 🥺');
         logErrorMessage(error, 'requesting new password 😿');
+      } finally {
+        router.back();
       }
     },
-    [],
+    [router],
   );
 
-  /**
-   * This function is used to handle the confirmation of a password reset.
-   *
-   * @param {string} token - The one-time code sent to the user's email for password reset.
-   * @param {string} values - The new password that the user wants to set.
-   */
   const handleConfirmPasswordReset = useCallback(
     async (token: string, values: ConfirmPasswordResetFormValues) => {
       try {
@@ -136,21 +132,23 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
         await pb
           .collection('users')
           .confirmPasswordReset(token, password, passwordConfirm);
+        notifyUser('success', 'Your password has been changed successfully 🎉');
       } catch (error) {
+        notifyUser('error', 'confirming your password 🥺');
         logErrorMessage(error, 'confirming new password 😿');
+      } finally {
+        router.push('/sign-in');
       }
     },
-    [],
+    [router],
   );
 
-  /**
-   * This function handles user logout.
-   */
   const logout = useCallback(() => {
     try {
       pb.authStore.clear();
       router.push('/');
     } catch (error) {
+      notifyUser('error', 'logging out 🥺');
       logErrorMessage(error, 'logging out 😿');
     }
   }, [router]);
@@ -160,6 +158,7 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
       user,
       signInWithPassword,
       signInWithProvider,
+      signUpWithPassword,
       handleEmailVerification,
       handleRequestPasswordReset,
       handleConfirmPasswordReset,
@@ -169,6 +168,7 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
       user,
       signInWithPassword,
       signInWithProvider,
+      signUpWithPassword,
       handleEmailVerification,
       handleRequestPasswordReset,
       handleConfirmPasswordReset,
@@ -186,7 +186,9 @@ export const PocketbaseProvider = ({ children }: { children: ReactNode }) => {
 /**
  * This function provides access to the Pocket context.
  *
- * @returns Returns the current context of the Pocket.
+ * Also, remember to add a "Toaster" component from 'react-hot-toast' into your component to display error messages for methods that use the notifyUser function. Refer to the PocketbaseContext.tsx file for more information.
+ *
+ * @returns Returns the current context of the Pocketbase Context.
  */
 export const usePocket = () => {
   const context = useContext(PocketbaseContext);

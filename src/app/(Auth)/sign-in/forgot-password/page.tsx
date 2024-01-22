@@ -1,14 +1,12 @@
 'use client';
 
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import { Field } from 'formik';
-import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 
 import { Button, NoteForm, Typography } from '@/components';
 import * as StyledFormik from '@/components/ui/FormikUi';
 import { usePocket } from '@/context/PocketbaseContext';
-import { toastConfig } from '@/utils';
 
 import * as Styled from './page.styled';
 
@@ -19,16 +17,7 @@ const validationSchema = yup.object().shape({
     .required('Email is required'),
 });
 
-const notifyError = () =>
-  toast.error(
-    'There was an error requesting a new password 😿, please try again!',
-    toastConfig,
-  );
-const notifySuccess = () =>
-  toast.success('Email sent successfully 🎉', toastConfig);
-
 const ForgotPasswordForm = () => {
-  const router = useRouter();
   const { handleRequestPasswordReset } = usePocket();
 
   return (
@@ -36,15 +25,8 @@ const ForgotPasswordForm = () => {
       initialValues={{ email: '' }}
       validationSchema={validationSchema}
       onSubmit={async (values, formik) => {
-        try {
-          await handleRequestPasswordReset(values);
-          formik.resetForm();
-          notifySuccess();
-        } catch (error) {
-          notifyError();
-        } finally {
-          router.back();
-        }
+        await handleRequestPasswordReset(values);
+        formik.resetForm();
       }}
     >
       <Styled.Container>

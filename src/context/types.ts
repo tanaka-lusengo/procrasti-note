@@ -5,7 +5,7 @@ export enum AuthProviders {
   Google = 'google',
 }
 
-export type SignInFormValues = {
+export type EmailPasswordFormValues = {
   email: string;
   password: string;
 };
@@ -17,8 +17,9 @@ export type ConfirmPasswordResetFormValues = {
 
 export type PocketbaseContextType = {
   user: AuthModel;
-  signInWithPassword: (values: SignInFormValues) => Promise<void>;
+  signInWithPassword: (values: EmailPasswordFormValues) => Promise<void>;
   signInWithProvider: (provider: AuthProviders) => Promise<void>;
+  signUpWithPassword: (values: EmailPasswordFormValues) => Promise<void>;
   handleEmailVerification: (token: string) => Promise<void>;
   handleRequestPasswordReset: (values: { email: string }) => Promise<void>;
   handleConfirmPasswordReset: (

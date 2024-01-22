@@ -1,28 +1,19 @@
 'use client';
 
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import { Field } from 'formik';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useTheme } from 'styled-components';
 
 import { Button, NoteForm, Typography } from '@/components';
 import * as StyledFormik from '@/components/ui/FormikUi';
 import { usePocket } from '@/context/PocketbaseContext';
 import { AuthProviders } from '@/context/types';
-import { toastConfig } from '@/utils';
 
 import * as Styled from './page.styled';
 import validationSchema from './validationSchema';
 
-const notifyError = () =>
-  toast.error(
-    'There was an error Signing in 🥺, please try again!',
-    toastConfig,
-  );
-
 const SignInForm = () => {
-  const router = useRouter();
   const { colors } = useTheme();
   const { signInWithPassword, signInWithProvider } = usePocket();
 
@@ -34,14 +25,8 @@ const SignInForm = () => {
       }}
       validationSchema={validationSchema}
       onSubmit={async (values, formik) => {
-        try {
-          await signInWithPassword(values);
-          formik.resetForm();
-        } catch (error) {
-          notifyError();
-        } finally {
-          router.push('/notes');
-        }
+        await signInWithPassword(values);
+        formik.resetForm();
       }}
     >
       <Styled.Title>Sign in</Styled.Title>
