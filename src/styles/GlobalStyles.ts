@@ -37,6 +37,12 @@ a {
   text-decoration: none;
 }
 
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 /* Use a more-intuitive box-sizing model. */
 *,
 *::before,
