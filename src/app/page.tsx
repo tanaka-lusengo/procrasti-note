@@ -5,13 +5,10 @@ import Typewriter from 'typewriter-effect';
 
 import coffeeGuy from '@/../public/images/coffee-guy.svg';
 import { ButtonLink, Typography } from '@/components';
-import { usePocket } from '@/context/PocketbaseContext';
 
 import * as Styled from './page.styled';
 
 const Home = () => {
-  const { user } = usePocket();
-
   return (
     <Styled.Section>
       <Typography tag="h1" textalign="center">
@@ -40,9 +37,7 @@ const Home = () => {
         not <b>procrastinate</b> 😉
       </Typography>
 
-      <ButtonLink href={user ? '/notes' : '/sign-in'}>
-        Lets get started!
-      </ButtonLink>
+      <ButtonLink href={'/notes'}>Lets get started!</ButtonLink>
     </Styled.Section>
   );
 };

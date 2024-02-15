@@ -1,3 +1,5 @@
+'use client';
+
 import { createElement } from 'react';
 import styled from 'styled-components';
 

@@ -20,7 +20,7 @@ const Container = styled.div`
   }
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}px) {
-    max-width: 135rem;
+    max-width: 115rem;
   }
 `;
 

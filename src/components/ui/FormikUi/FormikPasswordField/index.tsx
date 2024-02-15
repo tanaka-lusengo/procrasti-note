@@ -1,3 +1,5 @@
+'use client';
+
 import { FieldAttributes } from 'formik';
 
 import { FormikContainer, FormikErrorText } from '../common.styled';
