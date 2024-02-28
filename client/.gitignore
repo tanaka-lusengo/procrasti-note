@@ -36,9 +36,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# database files
-pb_data
-
 # cache
 .eslintcache
 .stylelintcache
