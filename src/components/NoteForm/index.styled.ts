@@ -10,7 +10,7 @@ const fadeIn = keyframes`
 `;
 
 export const FormContainer = styled.div`
-  position: fixed;
+  position: absolute;
   inset: 0;
 
   display: flex;

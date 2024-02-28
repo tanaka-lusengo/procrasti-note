@@ -1,12 +1,12 @@
-import { pb } from '@/lib';
-
 import { NoteDetail } from './components';
 
 export const revalidate = 10;
 
 const getNote = async (noteId: string) => {
-  const response = await pb.collection('notes').getOne(noteId);
-  return response;
+  // TODO: This is a temporary console.log
+  // eslint-disable-next-line no-console
+  console.log('Handle get single note', noteId);
+  return {};
 };
 
 interface NoteDetailPageProps {
@@ -22,9 +22,9 @@ const NoteDetailPage = async ({ params }: NoteDetailPageProps) => {
 export default NoteDetailPage;
 
 export async function generateStaticParams() {
-  const notes = await pb.collection('notes').getFullList({ sort: 'updated' });
+  // TODO: This is a temporary console.log
+  // eslint-disable-next-line no-console
+  console.log('Handle get all notes here, to generate static paths');
 
-  return notes.map(({ id }) => ({
-    params: { id },
-  }));
+  return [];
 }

@@ -30,7 +30,7 @@ describe('./HomePage.tsx', async () => {
 
     // Check for link
     const link = screen.getByRole('link', { name: 'Lets get started!' });
-    expect(link).toHaveAttribute('href', '/sign-in');
+    expect(link).toHaveAttribute('href', '/notes');
     expect(link).toBeInTheDocument();
   });
 });

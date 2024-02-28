@@ -2,27 +2,15 @@
 
 import { Toaster } from 'react-hot-toast';
 import { Field } from 'formik';
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 
 import { Button, NoteForm } from '@/components';
 import * as StyledFormik from '@/components/ui/FormikUi';
-import { usePocket } from '@/context/PocketbaseContext';
 
 import * as Styled from './page.styled';
 import validationSchema from './validationSchema';
 
 const SignUpForm = () => {
-  const searchParams = useSearchParams()?.get('check-email');
-  const showStandByModal = Boolean(searchParams);
-
-  const StandByModal = dynamic(() => import('./components/StandbyModal'), {
-    ssr: false,
-  });
-
-  const { signUpWithPassword } = usePocket();
-
   return (
     <NoteForm
       initialValues={{
@@ -31,7 +19,9 @@ const SignUpForm = () => {
       }}
       validationSchema={validationSchema}
       onSubmit={async (values, formik) => {
-        await signUpWithPassword(values);
+        // TODO: This is a temporary console.log
+        // eslint-disable-next-line no-console
+        console.log('Handle sign-up', values);
         formik.resetForm();
       }}
     >
@@ -59,8 +49,6 @@ const SignUpForm = () => {
           Close
         </Link>
       </Styled.LowerButtonContainer>
-
-      {showStandByModal ? <StandByModal /> : null}
 
       <Toaster />
     </NoteForm>

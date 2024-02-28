@@ -2,44 +2,31 @@
 
 import Link from 'next/link';
 
-import { usePocket } from '@/context/PocketbaseContext';
-
-import { Button, ButtonLink, Typography } from '../index';
-
 import * as Styled from './index.styled';
+import { DropdownItem, NavItemDropdown } from './subComponents';
 
 const Nav = () => {
-  const { user, logout } = usePocket();
-
   return (
     <header>
       <Styled.Nav>
-        <Typography tag="h1" textalign="center">
+        <Styled.NavItemContainer>
+          <NavItemDropdown title="Menu">
+            <DropdownItem href={'/'}>Home</DropdownItem>
+            <DropdownItem href={'/notes'}>Notes</DropdownItem>
+          </NavItemDropdown>
+        </Styled.NavItemContainer>
+
+        <Styled.Logo>
           <Link href={'/'}>Procrasti-Not(e)</Link>
-        </Typography>
+        </Styled.Logo>
 
-        <ul>
-          <div>
-            <Typography tag="li">
-              <Link href={'/'}>Home</Link>
-            </Typography>
-            {user ? (
-              <Typography tag="li">
-                <Link href={'/notes'}>Notes</Link>
-              </Typography>
-            ) : null}
-          </div>
-
-          {/* TODO: Add account drop down menu */}
-          {user ? (
-            <Button onClick={logout}>sign out</Button>
-          ) : (
-            <ButtonLink href={'/sign-in'}>Sign in</ButtonLink>
-          )}
-        </ul>
+        <Styled.NavItemContainer>
+          <NavItemDropdown title="Account">
+            <DropdownItem href={'/sign-in'}>Sign In</DropdownItem>
+          </NavItemDropdown>
+        </Styled.NavItemContainer>
       </Styled.Nav>
     </header>
   );
 };
-
 export default Nav;
