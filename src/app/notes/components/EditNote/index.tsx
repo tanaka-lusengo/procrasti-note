@@ -1,12 +1,10 @@
 'use client';
 
-import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { RecordModel } from 'pocketbase';
 
 import { Button, NoteForm } from '@/components';
-import { pb } from '@/lib';
-import { logErrorMessage, toastConfig } from '@/utils';
+import { logErrorMessage } from '@/utils';
 
 import { CommonButtonsContainer } from '../common.styled';
 import CreateAndEditFormFields from '../CreateAndEditFormFields';
@@ -28,14 +26,13 @@ const handleEditNote = async (id: string, values: FormValues) => {
       content,
     };
 
-    await pb.collection('notes').update(id, editNoteData);
+    // TODO: This is a temporary console.log
+    // eslint-disable-next-line no-console
+    console.log('Handle edit note', id, editNoteData);
   } catch (error) {
     logErrorMessage(error, 'editing note 😿');
   }
 };
-
-const notifyError = () =>
-  toast.error('There was an error editing a note 🥺', toastConfig);
 
 const EditNote = ({ note, showForm }: EditNoteProps) => {
   const { id, title, category, content } = note || {};
@@ -50,17 +47,7 @@ const EditNote = ({ note, showForm }: EditNoteProps) => {
     <NoteForm
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values, formik) => {
-        try {
-          handleEditNote(id as string, values);
-          formik.resetForm();
-          router.refresh();
-        } catch (error) {
-          notifyError();
-        } finally {
-          router.back();
-        }
-      }}
+      onSubmit={(values) => handleEditNote(id as string, values)}
       showForm={showForm}
     >
       <CreateAndEditFormFields />
@@ -70,8 +57,6 @@ const EditNote = ({ note, showForm }: EditNoteProps) => {
           Close
         </Button>
       </CommonButtonsContainer>
-
-      <Toaster />
     </NoteForm>
   );
 };

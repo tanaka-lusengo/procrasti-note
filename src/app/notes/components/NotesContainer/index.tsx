@@ -7,7 +7,6 @@ import { RecordModel } from 'pocketbase';
 
 import boredWoman from '@/../public/images/laying-bored-woman.svg';
 import { ButtonLink, Typography } from '@/components';
-import { usePocket } from '@/context/PocketbaseContext';
 
 import Note from '../Note';
 
@@ -27,14 +26,12 @@ const NotesContainer = ({ notes }: { notes: RecordModel[] }) => {
 
   const notesCount = renderNotesCondition ? notes.length : '0 😢';
 
-  const { user } = usePocket();
-
   return (
     <Styled.Container>
       <Styled.TopContainer>
         <div>
           <Typography tag="h1">
-            Hey {user?.username || 'You'} <Styled.Wave>👋🏾</Styled.Wave>
+            Hey You <Styled.Wave>👋🏾</Styled.Wave>
           </Typography>
           <Typography tag="p">
             You currently have <Styled.Number>{notesCount}</Styled.Number> Notes
@@ -63,7 +60,7 @@ const NotesContainer = ({ notes }: { notes: RecordModel[] }) => {
         </Typography>
       )}
 
-      {showForm ? <CreateNote id={user?.id} showForm={showForm} /> : null}
+      {showForm ? <CreateNote showForm={showForm} /> : null}
     </Styled.Container>
   );
 };

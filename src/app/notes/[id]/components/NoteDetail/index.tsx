@@ -7,15 +7,14 @@ import { RecordModel } from 'pocketbase';
 import { useTheme } from 'styled-components';
 
 import { ButtonLink, Typography } from '@/components';
-import { convertStringToHTML, formatDateRelative } from '@/utils';
+import { convertStringToHTML } from '@/utils';
 
 import DeleteNote from '../../../components/DeleteNote';
 
 import * as Styled from './index.styled';
 
 const NoteDetail = ({ note }: Partial<RecordModel>) => {
-  const { id, title, category, content, updated, created } = note || {};
-  const today = new Date().toISOString();
+  const { id, title, category, content } = note || {};
 
   const { colors } = useTheme();
 
@@ -33,9 +32,6 @@ const NoteDetail = ({ note }: Partial<RecordModel>) => {
       <Styled.Containter>
         <Typography tag="h1" textalign="center">
           {title}
-        </Typography>
-        <Typography tag="h6" textalign="center">
-          <b>Updated</b> - {formatDateRelative(updated ? updated : today)}
         </Typography>
 
         <Styled.ContentContainter>
@@ -58,10 +54,6 @@ const NoteDetail = ({ note }: Partial<RecordModel>) => {
           <DeleteNote id={id as string} isDetailPage iconSize="fa-xl" />
         </Styled.BottomContainer>
       </Styled.Containter>
-
-      <Typography tag="p" textalign="center">
-        <b>Created:</b> {formatDateRelative(created ? created : today)}
-      </Typography>
 
       {showForm ? <EditNote note={note} showForm={showForm} /> : null}
     </>

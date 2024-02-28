@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'styled-components';
 
-import { pb } from '@/lib';
 import { logErrorMessage } from '@/utils';
 
 import * as Styled from './index.styled';
@@ -22,7 +21,9 @@ const DeleteNote = ({ id, isDetailPage, iconSize }: DeleteNoteProps) => {
 
   const handleDelete = async ({ id, isDetailPage }: DeleteNoteProps) => {
     try {
-      await pb.collection('notes').delete(id);
+      // TODO: This is a temporary console.log
+      // eslint-disable-next-line no-console
+      console.log('Handle delete note', id);
 
       if (isDetailPage) {
         // To route away from deleted note

@@ -1,7 +1,5 @@
 import { Metadata } from 'next';
 
-import pb from '@/lib/pocketbase';
-
 import { NotesContainer } from './components';
 
 // exporting the Route Segment Config "revalidate = 0" will, essentially, disable caching and background regeneration,
@@ -13,11 +11,10 @@ export const metadata: Metadata = {
 };
 
 export const getNotes = async () => {
-  const response = await pb
-    .collection('notes')
-    .getFullList({ sort: '-created' });
-
-  return response;
+  // TODO: This is a temporary console.log
+  // eslint-disable-next-line no-console
+  console.log('Handle get all notes');
+  return [];
 };
 
 const NotesPage = async () => {
