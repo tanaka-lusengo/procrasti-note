@@ -4,10 +4,10 @@ on:
   pull_request:
     paths:
       - ".github/workflows/js-lint.yml"
-      - "**/*.js"
-      - "**/*.jsx"
-      - "**/*.ts"
-      - "**/*.tsx"
+      - "client/**/*.js"
+      - "client/**/*.jsx"
+      - "client/**/*.ts"
+      - "client/**/*.tsx"
 
 jobs:
   JsLint:
