@@ -3,11 +3,11 @@ name: js-lint
 on:
   pull_request:
     paths:
-      - '.github/workflows/js-lint.yml'
-      - '**/*.js'
-      - '**/*.jsx'
-      - '**/*.ts'
-      - '**/*.tsx'
+      - ".github/workflows/js-lint.yml"
+      - "**/*.js"
+      - "**/*.jsx"
+      - "**/*.ts"
+      - "**/*.tsx"
 
 jobs:
   JsLint:
@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: "18"
 
       # Ensures the entire repo is checked out (including tags)
       - name: Checkout repository
@@ -31,6 +31,8 @@ jobs:
         uses: bahmutov/npm-install@v1
         with:
           install-command: yarn install --frozen-lockfile
+          working-directory: client
 
       - name: GitHub Action for Javascript linting
         run: yarn lint:fix
+        working-directory: client

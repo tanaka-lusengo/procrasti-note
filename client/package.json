@@ -60,7 +60,7 @@
     "vitest-canvas-mock": "^0.3.3"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx} \"!**/pb_migrations/**\"": [
+    "*.{ts,tsx,js,jsx}": [
       "eslint --cache --fix",
       "yarn format"
     ],
