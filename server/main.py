@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from database import engine
 from starlette import status
-from models import models
+from models import schemas
 from routers import notes
 
 
@@ -9,7 +9,7 @@ from routers import notes
 app = FastAPI(title="Procrasti-not(e) API ☕️", version="0.1.0")
 
 # Create the database tables
-models.Base.metadata.create_all(bind=engine)
+schemas.Base.metadata.create_all(bind=engine)
 
 # Import routers
 app.include_router(notes.router)
