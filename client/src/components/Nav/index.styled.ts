@@ -10,12 +10,9 @@ export const Nav = styled.nav`
 `;
 
 export const Logo = styled.h1`
-  flex-basis: 50%;
-
   font-family: ${({ theme }) => theme.typography.fontFamily.ultra};
   font-size: ${({ theme }) => theme.typography.fontSize.h6}rem;
   text-align: center;
-
   transition: 0.3s ease-in-out;
 
   &:hover {
@@ -23,15 +20,19 @@ export const Logo = styled.h1`
   }
 
   @media only screen and (min-width: ${({ theme }) => theme.breakpoints.md}px) {
-    font-size: ${({ theme }) => theme.typography.fontSize.h4}rem;
+    font-size: ${({ theme }) => theme.typography.fontSize.h3}rem;
   }
 `;
 
 export const NavItemContainer = styled.div`
   a {
-    flex-basis: 25%;
-    margin: 0 1rem;
+    display: block;
+
+    width: 8rem;
+
     font-weight: bold;
+    text-align: center;
+
     transition: 0.3s ease-in-out;
 
     &:hover {
@@ -41,7 +42,7 @@ export const NavItemContainer = styled.div`
 
   @media only screen and (min-width: ${({ theme }) => theme.breakpoints.md}px) {
     a {
-      font-size: ${({ theme }) => theme.typography.fontSize.body1}rem;
+      font-size: ${({ theme }) => theme.typography.fontSize.h4}rem;
     }
   }
 `;
