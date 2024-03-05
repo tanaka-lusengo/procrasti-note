@@ -1,7 +1,8 @@
 from fastapi import APIRouter, HTTPException, Path
 from starlette import status
 from database import db_dependency
-from models.schemas import Notes, NotesCreate, NotesUpdate
+from schemas.schemas import Notes, NotesCreate, NotesUpdate
+from models.models import Notes as NotesModel
 
 router = APIRouter(
     prefix='/notes',
@@ -9,14 +10,14 @@ router = APIRouter(
 )
 
 
-@router.get('', status_code=status.HTTP_200_OK)
+@router.get('', status_code=status.HTTP_200_OK, response_model=list[Notes])
 async def get_all_notes(db: db_dependency):
-    return db.query(Notes).all()
+    return db.query(NotesModel).all()
 
 
-@router.get('/{note_id}', status_code=status.HTTP_200_OK)
+@router.get('/{note_id}', status_code=status.HTTP_200_OK, response_model=Notes)
 async def get_one_note(db: db_dependency, note_id: int = Path(gt=0)):
-    single_note = db.query(Notes).filter(Notes.id == note_id).first()
+    single_note = db.query(NotesModel).filter(NotesModel.id == note_id).first()
 
     if single_note is None:
         raise HTTPException(status_code=404, detail="Note not found")
@@ -26,7 +27,7 @@ async def get_one_note(db: db_dependency, note_id: int = Path(gt=0)):
 
 @router.post('', status_code=status.HTTP_201_CREATED)
 async def create_note(db: db_dependency, notes_create: NotesCreate):
-    new_note_model = Notes(**notes_create.model_dump())
+    new_note_model = NotesModel(**notes_create.model_dump())
     db.add(new_note_model)
     db.commit()
     db.refresh(new_note_model)
@@ -35,7 +36,8 @@ async def create_note(db: db_dependency, notes_create: NotesCreate):
 
 @router.put('/{note_id}', status_code=status.HTTP_204_NO_CONTENT)
 async def update_note(db: db_dependency, notes_update: NotesUpdate, note_id: int = Path(gt=0)):
-    new_note_model = db.query(Notes).filter(Notes.id == note_id).first()
+    new_note_model = db.query(NotesModel).filter(
+        NotesModel.id == note_id).first()
 
     if new_note_model is None:
         raise HTTPException(status_code=404, detail="Note not found")
@@ -52,7 +54,7 @@ async def update_note(db: db_dependency, notes_update: NotesUpdate, note_id: int
 
 @router.delete('/{note_id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_one_note(db: db_dependency, note_id: int = Path(gt=0)):
-    single_note = db.query(Notes).filter(Notes.id == note_id).first()
+    single_note = db.query(NotesModel).filter(NotesModel.id == note_id).first()
 
     if single_note is None:
         raise HTTPException(status_code=404, detail="Note not found")
