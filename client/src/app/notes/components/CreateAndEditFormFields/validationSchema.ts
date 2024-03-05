@@ -1,15 +1,20 @@
-import * as yup from 'yup';
+import { number, object, string } from 'yup';
 
-import { Category } from './types';
+import { PriorityType, PriorityValue } from './types';
 
-export const validationSchema = yup.object().shape({
-  title: yup.string().required('A Title is required'),
-  category: yup
-    .string()
-    .required('A Category is required')
+export const validationSchema = object({
+  title: string().required('A Title is required'),
+  priority: number()
     .oneOf(
-      [Category.Productivity, Category.Personal satisfies Category],
-      'Category must be either "productivity" or "personal"',
-    ),
-  content: yup.string().required('Descriptive content is required'),
+      [
+        PriorityValue.ONE,
+        PriorityValue.TWO,
+        PriorityValue.THREE,
+        PriorityValue.FOUR,
+        PriorityValue.FIVE,
+      ] satisfies PriorityType[],
+      'Priority must be a number between 1 and 5"',
+    )
+    .required('A priority level is required'),
+  content: string().required('Descriptive content is required'),
 });

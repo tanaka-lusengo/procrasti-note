@@ -1,10 +1,9 @@
-export enum Category {
-  Productivity = 'productivity',
-  Personal = 'personal',
+export enum PriorityValue {
+  ONE = 1,
+  TWO = 2,
+  THREE = 3,
+  FOUR = 4,
+  FIVE = 5,
 }
 
-export interface FormValues {
-  title: string;
-  category: string;
-  content: string;
-}
+export type PriorityType = PriorityValue;

@@ -1,7 +1,7 @@
 import { Field } from 'formik';
 
-import { Category } from '@/app/notes/components/CreateAndEditFormFields/types';
-import * as StyledFormik from '@/components/ui/FormikUi';
+import { PriorityValue } from '@/app/notes/components/CreateAndEditFormFields/types';
+import * as StyledFormik from '@/components/FormikUi';
 
 const CreateAndEditFormFields = () => (
   <>
@@ -13,14 +13,17 @@ const CreateAndEditFormFields = () => (
     />
 
     <Field
-      label="Category"
-      name="category"
+      label="Priority"
+      name="priority"
       component={StyledFormik.SelectField}
     >
-      <option value="">Choose an option...👇🏾</option>
+      <option value="">Priority Level 👇🏾</option>
       <hr />
-      <option value={Category.Productivity}>Productivity</option>
-      <option value={Category.Personal}>Personal</option>
+      <option value={PriorityValue.ONE}>1</option>
+      <option value={PriorityValue.TWO}>2</option>
+      <option value={PriorityValue.THREE}>3</option>
+      <option value={PriorityValue.FOUR}>4</option>
+      <option value={PriorityValue.FIVE}>5</option>
     </Field>
 
     <Field
