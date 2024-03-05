@@ -4,8 +4,8 @@ import { Toaster } from 'react-hot-toast';
 import { Field } from 'formik';
 import Link from 'next/link';
 
-import { Button, NoteForm } from '@/components';
-import * as StyledFormik from '@/components/ui/FormikUi';
+import { Button, NoteForm, Typography } from '@/components';
+import * as StyledFormik from '@/components/FormikUi';
 
 import * as Styled from './page.styled';
 import validationSchema from './validationSchema';
@@ -45,6 +45,12 @@ const SignInForm = () => {
           Sign in!
         </Button>
       </Styled.UpperButtonContainer>
+
+      <Styled.Divider />
+
+      <Typography tag="p" textalign="end">
+        <i>Don&apos;t have an account?</i>
+      </Typography>
 
       <Styled.LowerButtonContainer>
         <Link href={'/'}>Close</Link>
