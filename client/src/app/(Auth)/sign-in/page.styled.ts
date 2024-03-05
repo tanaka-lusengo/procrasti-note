@@ -19,23 +19,9 @@ export const UpperButtonContainer = styled.div`
   }
 `;
 
-export const Text = styled.p`
-  margin: 3rem 0;
-  text-align: center;
-`;
-
-export const SocialContainer = styled.div`
-  display: flex;
-  gap: 2rem;
-  justify-content: center;
-`;
-
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  align-items: center;
-  justify-content: center;
+export const Divider = styled.div`
+  margin: 2rem 0;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.grey};
 `;
 
 export const LowerButtonContainer = styled.div`

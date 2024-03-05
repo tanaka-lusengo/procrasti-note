@@ -5,7 +5,7 @@ import { Field } from 'formik';
 import Link from 'next/link';
 
 import { Button, NoteForm } from '@/components';
-import * as StyledFormik from '@/components/ui/FormikUi';
+import * as StyledFormik from '@/components/FormikUi';
 
 import * as Styled from './page.styled';
 import validationSchema from './validationSchema';
