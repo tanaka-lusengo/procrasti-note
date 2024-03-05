@@ -1,50 +1,28 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useTheme } from 'styled-components';
 
-import { logErrorMessage } from '@/utils';
+import { handleDelete } from '@/services/notesServices';
 
 import * as Styled from './index.styled';
-
-type FaIconSize = 'fa-2xl' | 'fa-xl' | 'fa-lg' | 'fa-sm' | 'fa-xs' | 'fa-2xs';
+import { FaIconSize } from './types';
 
 interface DeleteNoteProps {
-  id: string;
+  id: number;
   isDetailPage?: boolean;
   iconSize?: FaIconSize;
 }
 
 const DeleteNote = ({ id, isDetailPage, iconSize }: DeleteNoteProps) => {
   const router = useRouter();
-  const { colors } = useTheme();
-
-  const handleDelete = async ({ id, isDetailPage }: DeleteNoteProps) => {
-    try {
-      // TODO: This is a temporary console.log
-      // eslint-disable-next-line no-console
-      console.log('Handle delete note', id);
-
-      if (isDetailPage) {
-        // To route away from deleted note
-        router.push('/notes');
-      } else {
-        // To refresh notes list after deleting note
-        router.refresh();
-      }
-    } catch (error) {
-      logErrorMessage(error, 'deleting note 😿');
-    }
-  };
 
   return (
-    <Styled.IconContainer onClick={() => handleDelete({ id, isDetailPage })}>
+    <Styled.IconButton onClick={() => handleDelete(id, router, isDetailPage)}>
       <span
         className={`fa-solid fa-trash-can ${iconSize}`}
         about="Trash can icon"
-        style={{ color: colors.error }}
       ></span>
-    </Styled.IconContainer>
+    </Styled.IconButton>
   );
 };
 

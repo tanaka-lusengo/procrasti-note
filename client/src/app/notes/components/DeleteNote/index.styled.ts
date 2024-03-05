@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 
-export const IconContainer = styled.div`
+export const IconButton = styled.button`
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+
   svg {
-    cursor: pointer;
+    color: ${({ theme }) => theme.colors.error};
     transition: 0.3s ease-in-out;
 
     &:hover {
