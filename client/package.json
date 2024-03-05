@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
-    "start": "next start",
+    "start": "concurrently \"cd ../server && uvicorn main:app --reload\" \"yarn dev\"",
+    "generate-openapi-client": "openapi --input ./src/lib/openapi/openapi-spec.json --output ./src/lib/openapi/generated --useUnionTypes",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
     "test:ui": "vitest --ui",
@@ -17,6 +18,7 @@
     "execute-husky": "npx husky install && npx husky add .husky/pre-commit \"npx --no-install lint-staged\""
   },
   "dependencies": {
+    "concurrently": "^8.2.2",
     "formik": "^2.4.5",
     "next": "14.0.4",
     "pocketbase": "^0.20.1",
@@ -47,6 +49,7 @@
     "jest-dom": "^4.0.0",
     "jsdom": "^23.0.1",
     "lint-staged": "^15.2.0",
+    "openapi-typescript-codegen": "^0.27.0",
     "postcss": "^8.4.32",
     "postcss-styled-syntax": "^0.6.1",
     "prettier": "^3.1.1",

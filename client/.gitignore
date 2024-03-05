@@ -39,3 +39,6 @@ next-env.d.ts
 # cache
 .eslintcache
 .stylelintcache
+
+# generated files
+/src/lib/openapi/generated
