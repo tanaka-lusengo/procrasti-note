@@ -13,6 +13,7 @@ type TeaxtareaFieldProps = {
 const TeaxtareaField = ({
   label,
   name,
+  placeholder,
   field,
   form: { touched, errors },
   children,
@@ -20,7 +21,12 @@ const TeaxtareaField = ({
   return (
     <FormikContainer>
       <label htmlFor={name}>{label}</label>
-      <Styled.CustomFormikTextareaField type="textarea" name={name} {...field}>
+      <Styled.CustomFormikTextareaField
+        type="textarea"
+        name={name}
+        placeholder={placeholder}
+        {...field}
+      >
         {children}
       </Styled.CustomFormikTextareaField>
 
