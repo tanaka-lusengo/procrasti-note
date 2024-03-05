@@ -3,16 +3,16 @@
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { RecordModel } from 'pocketbase';
 
 import boredWoman from '@/../public/images/laying-bored-woman.svg';
 import { ButtonLink, Typography } from '@/components';
+import { type Notes } from '@/lib/openapi/generated';
 
 import Note from '../Note';
 
 import * as Styled from './index.styled';
 
-const NotesContainer = ({ notes }: { notes: RecordModel[] }) => {
+const NotesContainer = ({ notes }: { notes: Notes[] }) => {
   // useSearchParams hook to get the query params from the URL to render the modal for a clean Stateless, Route-Based Approach ✌🏾
   const searchParams = useSearchParams()?.get('show-form');
   const showForm = Boolean(searchParams);
