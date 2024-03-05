@@ -6,7 +6,9 @@ export const DropdownContainer = styled.div<{ $isOpen: boolean }>`
 
   overflow: hidden;
 
-  padding: 1rem 0;
+  padding-top: 1.5rem;
+
+  text-align: center;
 
   opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
   background-color: ${({ theme }) => theme.colors.secondary};
