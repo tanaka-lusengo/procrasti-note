@@ -4,6 +4,3 @@ export { default as NoteForm } from './NoteForm';
 
 // General UI Components
 export { Button, ButtonLink, Container, Typography } from './ui';
-
-// Formik UI Components
-export { FormikSelectField, FormikTextareaField, FormikTextField } from './ui';
