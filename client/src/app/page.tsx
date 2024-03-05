@@ -17,7 +17,6 @@ const Home = () => {
             strings: ['Time to get organised!'],
             autoStart: true,
             loop: true,
-            delay: 100,
           }}
         />
       </Typography>
@@ -31,10 +30,10 @@ const Home = () => {
         alt="Man hugging a giant cup of spilling coffee"
       />
 
-      <Typography tag="p" textalign="center">
+      <Typography tag="h4" textalign="center">
         <b>Procrasti-Not(e)</b> is a simple and effective &quot;to-do&quot; list
-        and task manager app which helps you manage your time and, of course,
-        not <b>procrastinate</b> 😉
+        and task manager app which helps you manage your time and, of course,{' '}
+        <b>not procrastinate</b> 😉
       </Typography>
 
       <ButtonLink href={'/notes'}>Lets get started!</ButtonLink>

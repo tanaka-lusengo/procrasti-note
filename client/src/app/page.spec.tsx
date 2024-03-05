@@ -11,7 +11,7 @@ describe('./HomePage.tsx', async () => {
     customRender(<HomePage />);
 
     // Check the Typewriter wrapper exists
-    const title = screen.getByRole('heading');
+    const title = screen.getByTestId('typewriter-wrapper');
     expect(title).toBeInTheDocument();
 
     // Check for image
@@ -24,7 +24,7 @@ describe('./HomePage.tsx', async () => {
 
     // check for content
     const paragraphPartial = screen.getByText(
-      /is a simple and effective "to-do" list and task manager app which helps you manage your time and, of course, not/,
+      /is a simple and effective "to-do" list and task manager app which helps you manage your time and, of course,/,
     );
     expect(paragraphPartial).toBeInTheDocument();
 

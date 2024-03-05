@@ -7,7 +7,8 @@ export const metadataContent: Metadata = {
     template: '%s | Procrasti-Not(e)',
     default: 'Procrasti-Not(e)',
   },
-  description: 'A simple draggable notes taking app',
+  description:
+    'A simple (over engineered or scalable? 😏) draggable notes taking app',
   generator: 'Next.js',
   applicationName: 'Procrasti-Not(e)',
   referrer: 'origin-when-cross-origin',
@@ -18,17 +19,16 @@ export const metadataContent: Metadata = {
     'Next.js',
     'React',
     'TypeScript',
-    'JavaScript',
     'Styled Components',
     'Vitest',
     'React Testing Library',
-    'PocketBase',
+    'FastAPI',
+    'Python',
   ],
   authors: [
-    { name: 'Tanaka Lusengo' },
     {
       name: 'Tanaka Lusengo',
-      url: 'https://www.linkedin.com/in/tanakalusengo/', // << TODO: update url to personal site when in production and deployed
+      url: 'https://www.linkedin.com/in/tanakalusengo/',
     },
   ],
   creator: 'Tanaka Lusengo',
