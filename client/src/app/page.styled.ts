@@ -24,8 +24,9 @@ export const Section = styled.section`
   @media only screen and (min-width: ${({ theme }) => theme.breakpoints.lg}px) {
     gap: 4rem;
 
-    p {
-      max-width: 50%;
+    h4 {
+      max-width: 60%;
+      font-weight: 400;
     }
   }
 `;
