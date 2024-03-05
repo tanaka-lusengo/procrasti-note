@@ -1,7 +1,7 @@
-import type { FormValues } from './types';
+import type { NotesCreate } from '@/lib/openapi/generated';
 
-export const initialValues: FormValues = {
+export const initialValues: NotesCreate = {
   title: '',
-  category: '',
+  priority: 1,
   content: '',
 };
