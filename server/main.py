@@ -3,7 +3,7 @@ from middleware import setup_cors
 from database import engine
 from starlette import status
 from models import models
-from routers import notes
+from routers import note
 
 
 # Create the FastAPI app
@@ -17,7 +17,7 @@ setup_cors(app)
 models.Base.metadata.create_all(bind=engine)
 
 # Import routers
-app.include_router(notes.router)
+app.include_router(note.router)
 
 
 @app.get('/', status_code=status.HTTP_200_OK)

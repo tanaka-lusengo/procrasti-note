@@ -1,13 +1,13 @@
 from pydantic import BaseModel, Field
 
 
-class NotesBase(BaseModel):
+class NoteBase(BaseModel):
     title: str
     content: str
     priority: int
 
 
-class Notes(NotesBase):
+class Note(NoteBase):
     id: int
     complete: bool
 
@@ -24,7 +24,7 @@ class Notes(NotesBase):
         }
 
 
-class NotesCreate(NotesBase):
+class NoteCreate(NoteBase):
     title: str = Field(min_length=3)
     content: str = Field(min_length=3, max_length=100)
     priority: int = Field(ge=1, le=5)
@@ -40,7 +40,7 @@ class NotesCreate(NotesBase):
         }
 
 
-class NotesUpdate(NotesBase):
+class NoteUpdate(NoteBase):
     title: str = Field(min_length=3)
     content: str = Field(min_length=3, max_length=100)
     priority: int = Field(ge=1, le=5)
