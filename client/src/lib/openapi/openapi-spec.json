@@ -18,7 +18,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "items": { "$ref": "#/components/schemas/Notes" },
+                  "items": { "$ref": "#/components/schemas/Note" },
                   "type": "array",
                   "title": "Response Get All Notes Notes Get"
                 }
@@ -26,15 +26,118 @@
             }
           }
         }
+      }
+    },
+    "/note/{note_id}": {
+      "get": {
+        "tags": ["notes"],
+        "summary": "Get One Note",
+        "operationId": "get_one_note_note__note_id__get",
+        "parameters": [
+          {
+            "name": "note_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "title": "Note Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Note" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
       },
+      "put": {
+        "tags": ["notes"],
+        "summary": "Update Note",
+        "operationId": "update_note_note__note_id__put",
+        "parameters": [
+          {
+            "name": "note_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "title": "Note Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/NoteUpdate" }
+            }
+          }
+        },
+        "responses": {
+          "204": { "description": "Successful Response" },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["notes"],
+        "summary": "Delete One Note",
+        "operationId": "delete_one_note_note__note_id__delete",
+        "parameters": [
+          {
+            "name": "note_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "title": "Note Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Successful Response" },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/note": {
       "post": {
         "tags": ["notes"],
         "summary": "Create Note",
-        "operationId": "create_note_notes_post",
+        "operationId": "create_note_note_post",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/NotesCreate" }
+              "schema": { "$ref": "#/components/schemas/NoteCreate" }
             }
           },
           "required": true
@@ -55,103 +158,15 @@
         }
       }
     },
-    "/notes/{note_id}": {
+    "/auth": {
       "get": {
-        "tags": ["notes"],
-        "summary": "Get One Note",
-        "operationId": "get_one_note_notes__note_id__get",
-        "parameters": [
-          {
-            "name": "note_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "exclusiveMinimum": 0,
-              "title": "Note Id"
-            }
-          }
-        ],
+        "tags": ["auth"],
+        "summary": "Get User",
+        "operationId": "get_user_auth_get",
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/Notes" }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": ["notes"],
-        "summary": "Update Note",
-        "operationId": "update_note_notes__note_id__put",
-        "parameters": [
-          {
-            "name": "note_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "exclusiveMinimum": 0,
-              "title": "Note Id"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/NotesUpdate" }
-            }
-          }
-        },
-        "responses": {
-          "204": { "description": "Successful Response" },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": ["notes"],
-        "summary": "Delete One Note",
-        "operationId": "delete_one_note_notes__note_id__delete",
-        "parameters": [
-          {
-            "name": "note_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "exclusiveMinimum": 0,
-              "title": "Note Id"
-            }
-          }
-        ],
-        "responses": {
-          "204": { "description": "Successful Response" },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-              }
-            }
+            "content": { "application/json": { "schema": {} } }
           }
         }
       }
@@ -182,7 +197,7 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
-      "Notes": {
+      "Note": {
         "properties": {
           "title": { "type": "string", "title": "Title" },
           "content": { "type": "string", "title": "Content" },
@@ -192,7 +207,7 @@
         },
         "type": "object",
         "required": ["title", "content", "priority", "id", "complete"],
-        "title": "Notes",
+        "title": "Note",
         "example": {
           "complete": false,
           "content": "Learn Python programming language and its libraries.",
@@ -201,7 +216,7 @@
           "title": "Learn Python"
         }
       },
-      "NotesCreate": {
+      "NoteCreate": {
         "properties": {
           "title": { "type": "string", "minLength": 3, "title": "Title" },
           "content": {
@@ -219,14 +234,14 @@
         },
         "type": "object",
         "required": ["title", "content", "priority"],
-        "title": "NotesCreate",
+        "title": "NoteCreate",
         "example": {
           "content": "Learn Python programming language and its libraries.",
           "priority": 3,
           "title": "Learn Python"
         }
       },
-      "NotesUpdate": {
+      "NoteUpdate": {
         "properties": {
           "title": { "type": "string", "minLength": 3, "title": "Title" },
           "content": {
@@ -245,7 +260,7 @@
         },
         "type": "object",
         "required": ["title", "content", "priority", "complete"],
-        "title": "NotesUpdate",
+        "title": "NoteUpdate",
         "example": {
           "complete": true,
           "content": "Learn Python programming language and its libraries.",

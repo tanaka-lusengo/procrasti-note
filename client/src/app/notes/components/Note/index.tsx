@@ -2,11 +2,11 @@
 
 import { DeleteNote, ToggleCompleteNote } from '@/app/notes/components';
 import { Typography } from '@/components';
-import { type Notes } from '@/lib/openapi/generated';
+import { type Note as NoteModelType } from '@/lib/openapi/generated';
 
 import * as Styled from './index.styled';
 
-const Note = ({ note }: { note: Notes }) => {
+const Note = ({ note }: { note: NoteModelType }) => {
   const { id, title, priority } = note || {};
 
   return (
