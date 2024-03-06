@@ -6,13 +6,13 @@ import { useSearchParams } from 'next/navigation';
 
 import boredWoman from '@/../public/images/laying-bored-woman.svg';
 import { ButtonLink, Typography } from '@/components';
-import { type Notes } from '@/lib/openapi/generated';
+import { type Note as NoteModelType } from '@/lib/openapi/generated';
 
 import Note from '../Note';
 
 import * as Styled from './index.styled';
 
-const NotesContainer = ({ notes }: { notes: Notes[] }) => {
+const NotesContainer = ({ notes }: { notes: NoteModelType[] }) => {
   // useSearchParams hook to get the query params from the URL to render the modal for a clean Stateless, Route-Based Approach ✌🏾
   const searchParams = useSearchParams()?.get('show-form');
   const showForm = Boolean(searchParams);

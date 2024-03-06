@@ -2,29 +2,29 @@ import { SetStateAction } from 'react';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 import {
-  type Notes,
-  type NotesCreate,
-  type NotesUpdate,
+  type Note,
+  type NoteCreate,
+  type NoteUpdate,
 } from '@/lib/openapi/generated';
 import { logErrorMessage, toastNotifyError } from '@/utils';
 import { API_URL } from '@/utils/api';
 
 export const getAllNotes = async () => {
   try {
-    const notes: Notes[] = await fetch(`${API_URL}/api/notes`).then((res) =>
+    const notes: Note[] = await fetch(`${API_URL}/api/notes`).then((res) =>
       res.json(),
     );
 
     return notes;
   } catch (error) {
-    logErrorMessage(error, 'Failed to fetch notes');
+    logErrorMessage(error, 'Failed to fetch notes in getAllNotes');
     return [];
   }
 };
 
 export const getSingleNote = async (noteId: string) => {
   try {
-    const note: Notes = await fetch(`${API_URL}/api/notes/${noteId}`).then(
+    const note: Note = await fetch(`${API_URL}/api/note/${noteId}`).then(
       (res) => res.json(),
     );
 
@@ -35,19 +35,19 @@ export const getSingleNote = async (noteId: string) => {
 };
 
 export const handleCreateNote = async (
-  values: NotesCreate,
+  values: NoteCreate,
   router: AppRouterInstance,
 ) => {
   try {
     const { content, priority, title } = values || {};
 
-    const newNote: NotesCreate = {
+    const newNote: NoteCreate = {
       title,
       content,
       priority,
     };
 
-    await fetch(`${API_URL}/api/notes`, {
+    await fetch(`${API_URL}/api/note`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -65,21 +65,21 @@ export const handleCreateNote = async (
 };
 
 export const handleEditNote = async (
-  id: Notes['id'],
-  values: NotesUpdate,
+  id: Note['id'],
+  values: NoteUpdate,
   router: AppRouterInstance,
 ) => {
   try {
     const { title, priority, content, complete } = values || {};
 
-    const editNoteData: NotesUpdate = {
+    const editNoteData: NoteUpdate = {
       title,
       priority,
       content,
       complete,
     };
 
-    await fetch(`${API_URL}/api/notes/${id}`, {
+    await fetch(`${API_URL}/api/note/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -97,12 +97,12 @@ export const handleEditNote = async (
 };
 
 export const handleDelete = async (
-  id: Notes['id'],
+  id: Note['id'],
   router: AppRouterInstance,
   isDetailPage?: boolean,
 ) => {
   try {
-    await fetch(`${API_URL}/api/notes/${id}`, {
+    await fetch(`${API_URL}/api/note/${id}`, {
       method: 'DELETE',
     });
 
@@ -117,20 +117,20 @@ export const handleDelete = async (
 };
 
 export const handleIsCompleteClick = async (
-  id: Notes['id'],
-  note: Notes,
+  id: Note['id'],
+  note: Note,
   isComplete: boolean,
   setIsComplete: (value: SetStateAction<boolean>) => void,
 ) => {
   const toggleComplete = !isComplete;
 
   try {
-    const editNoteData: NotesUpdate = {
+    const editNoteData: NoteUpdate = {
       ...note,
       complete: toggleComplete,
     };
 
-    await fetch(`${API_URL}/api/notes/${id}`, {
+    await fetch(`${API_URL}/api/note/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
