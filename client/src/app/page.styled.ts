@@ -15,6 +15,10 @@ export const Section = styled.section`
     font-family: ${({ theme }) => theme.typography.fontFamily.slabo};
   }
 
+  h4 {
+    font-weight: 400;
+  }
+
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}px) {
     h1 {
       min-height: 0;
@@ -26,7 +30,6 @@ export const Section = styled.section`
 
     h4 {
       max-width: 60%;
-      font-weight: 400;
     }
   }
 `;

@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { handleDelete } from '@/services/notesServices';
+import { handleDelete } from '@/services/noteServices';
 
 import * as Styled from './index.styled';
 import { FaIconSize } from './types';

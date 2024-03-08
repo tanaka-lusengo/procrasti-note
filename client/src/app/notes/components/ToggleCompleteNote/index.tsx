@@ -6,7 +6,7 @@ import Image from 'next/image';
 import completeChecked from '@/../public/images/circle-check-solid.svg';
 import completeUnchecked from '@/../public/images/circle-regular.svg';
 import { type Note } from '@/lib/openapi/generated';
-import { handleIsCompleteClick } from '@/services/notesServices';
+import { handleToggleComplete } from '@/services/noteServices';
 
 import * as Styled from './index.styled';
 
@@ -19,7 +19,7 @@ const ToggleCompleteNote = ({ note }: { note: Note }) => {
     <Styled.CompleteButton
       $isComplete={isComplete}
       onClick={() => {
-        handleIsCompleteClick(id, note, isComplete, setIsComplete);
+        handleToggleComplete(id, note, isComplete, setIsComplete);
       }}
     >
       <Image
