@@ -1,5 +1,6 @@
 import { Slabo_27px, Ultra } from 'next/font/google';
 import { beforeAll, vi } from 'vitest';
+import createFetchMock from 'vitest-fetch-mock';
 
 import '@testing-library/jest-dom/vitest';
 import 'vitest-canvas-mock';
@@ -28,3 +29,7 @@ vi.mock('next/font/google', () => ({
     },
   }),
 }));
+
+// sets globalThis.fetch and globalThis.fetchMock to our mocked version of fetch
+const fetchMocker = createFetchMock(vi);
+fetchMocker.enableMocks();

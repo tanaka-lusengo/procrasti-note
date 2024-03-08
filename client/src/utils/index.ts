@@ -1,4 +1,4 @@
 export * from './convertStringToHTML';
+export * from './errorHandlers';
 export * from './formatDate';
-export * from './logErrorMessage';
 export * from './toastConfig';
