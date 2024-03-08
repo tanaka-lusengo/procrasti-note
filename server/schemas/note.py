@@ -25,8 +25,8 @@ class Note(NoteBase):
 
 
 class NoteCreate(NoteBase):
-    title: str = Field(min_length=3)
-    content: str = Field(min_length=3, max_length=100)
+    title: str = Field(min_length=1)
+    content: str = Field(min_length=1, max_length=100)
     priority: int = Field(ge=1, le=5)
 
     class Config:
@@ -41,8 +41,8 @@ class NoteCreate(NoteBase):
 
 
 class NoteUpdate(NoteBase):
-    title: str = Field(min_length=3)
-    content: str = Field(min_length=3, max_length=100)
+    title: str = Field(min_length=1)
+    content: str = Field(min_length=1, max_length=100)
     priority: int = Field(ge=1, le=5)
     complete: bool
 
