@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 
-import { getAllNotes } from '@/services/notesServices';
-import { logErrorMessage } from '@/utils';
+import { getAllNotes } from '@/services/noteServices';
 
 import { NotesContainer } from './components';
 
@@ -15,17 +14,9 @@ export const metadata: Metadata = {
 };
 
 const NotesPage = async () => {
-  try {
-    const notes = await getAllNotes();
+  const notes = await getAllNotes();
 
-    if (!notes) {
-      throw new Error('Failed to fetch notes in NotesPage');
-    }
-    return <NotesContainer notes={notes} />;
-  } catch (error) {
-    logErrorMessage(error, 'Failed to fetch notes in NotesPage');
-    return null;
-  }
+  return <NotesContainer notes={notes} />;
 };
 
 export default NotesPage;

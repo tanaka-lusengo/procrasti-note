@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import { Button, NoteForm } from '@/components';
 import { type Note, type NoteUpdate } from '@/lib/openapi/generated';
-import { handleEditNote } from '@/services/notesServices';
+import { handleEditNote } from '@/services/noteServices';
 
 import { CommonButtonsContainer } from '../common.styled';
 import CreateAndEditFormFields from '../CreateAndEditFormFields';

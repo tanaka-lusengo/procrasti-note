@@ -6,31 +6,27 @@ import {
   type NoteCreate,
   type NoteUpdate,
 } from '@/lib/openapi/generated';
-import { logErrorMessage, toastNotifyError } from '@/utils';
-import { API_URL } from '@/utils/api';
+import { notifyAndLogError } from '@/utils';
+import { API_URL, fetchWithErrors } from '@/utils/api';
 
 export const getAllNotes = async () => {
   try {
-    const notes: Note[] = await fetch(`${API_URL}/api/notes`).then((res) =>
-      res.json(),
-    );
+    const notes: Note[] = await fetchWithErrors(`${API_URL}/api/notes`);
 
     return notes;
   } catch (error) {
-    logErrorMessage(error, 'Failed to fetch notes in getAllNotes');
+    notifyAndLogError(error, 'fetching all notes 😿');
     return [];
   }
 };
 
 export const getSingleNote = async (noteId: string) => {
   try {
-    const note: Note = await fetch(`${API_URL}/api/note/${noteId}`).then(
-      (res) => res.json(),
-    );
+    const note: Note = await fetchWithErrors(`${API_URL}/api/note/${noteId}`);
 
     return note;
   } catch (error) {
-    logErrorMessage(error, 'Failed to fetch note in getSingleNote');
+    notifyAndLogError(error, 'fetching note 😿');
   }
 };
 
@@ -47,7 +43,7 @@ export const handleCreateNote = async (
       priority,
     };
 
-    await fetch(`${API_URL}/api/note`, {
+    await fetchWithErrors(`${API_URL}/api/note`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -56,11 +52,9 @@ export const handleCreateNote = async (
     });
 
     router.back();
-  } catch (error) {
-    toastNotifyError('creating note 😿');
-    logErrorMessage(error, 'creating note 😿');
-  } finally {
     router.refresh();
+  } catch (error) {
+    notifyAndLogError(error, 'creating note 😿');
   }
 };
 
@@ -79,7 +73,7 @@ export const handleEditNote = async (
       complete,
     };
 
-    await fetch(`${API_URL}/api/note/${id}`, {
+    await fetchWithErrors(`${API_URL}/api/note/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -88,11 +82,9 @@ export const handleEditNote = async (
     });
 
     router.back();
-  } catch (error) {
-    toastNotifyError('editing note 😿');
-    logErrorMessage(error, 'editing note 😿');
-  } finally {
     router.refresh();
+  } catch (error) {
+    notifyAndLogError(error, 'editing note 😿');
   }
 };
 
@@ -102,21 +94,22 @@ export const handleDelete = async (
   isDetailPage?: boolean,
 ) => {
   try {
-    await fetch(`${API_URL}/api/note/${id}`, {
+    await fetchWithErrors(`${API_URL}/api/note/${id}`, {
       method: 'DELETE',
     });
 
     if (isDetailPage) {
       router.push('/notes');
+      router.refresh();
     }
-  } catch (error) {
-    logErrorMessage(error, 'deleting note 😿');
-  } finally {
+
     router.refresh();
+  } catch (error) {
+    notifyAndLogError(error, `deleting note 😿`);
   }
 };
 
-export const handleIsCompleteClick = async (
+export const handleToggleComplete = async (
   id: Note['id'],
   note: Note,
   isComplete: boolean,
@@ -130,7 +123,7 @@ export const handleIsCompleteClick = async (
       complete: toggleComplete,
     };
 
-    await fetch(`${API_URL}/api/note/${id}`, {
+    await fetchWithErrors(`${API_URL}/api/note/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -140,6 +133,6 @@ export const handleIsCompleteClick = async (
 
     setIsComplete(toggleComplete);
   } catch (error) {
-    logErrorMessage(error, 'ticking off note 😿');
+    notifyAndLogError(error, `ticking off note 😿`);
   }
 };

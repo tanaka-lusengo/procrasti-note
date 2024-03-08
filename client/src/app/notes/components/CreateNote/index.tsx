@@ -4,7 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
 import { Button, NoteForm } from '@/components';
-import { handleCreateNote } from '@/services/notesServices';
+import { handleCreateNote } from '@/services/noteServices';
 
 import { CommonButtonsContainer } from '../common.styled';
 import CreateAndEditFormFields from '../CreateAndEditFormFields';
