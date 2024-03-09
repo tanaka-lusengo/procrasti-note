@@ -10,6 +10,7 @@ class NoteBase(BaseModel):
 class Note(NoteBase):
     id: int
     complete: bool
+    author_id: int
 
     class Config:
         from_attributes = True
@@ -19,7 +20,8 @@ class Note(NoteBase):
                 "title": "Learn Python",
                 "content": "Learn Python programming language and its libraries.",
                 "priority": 3,
-                "complete": False
+                "complete": False,
+                "author_id": 1
             }
         }
 
@@ -53,6 +55,6 @@ class NoteUpdate(NoteBase):
                 "title": "Learn Python",
                 "content": "Learn Python programming language and its libraries.",
                 "priority": 3,
-                "complete": True
+                "complete": True,
             }
         }
