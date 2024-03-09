@@ -6,16 +6,14 @@ from sqlalchemy.ext.declarative import declarative_base
 from typing import Annotated
 from dotenv import load_dotenv
 
-# Load the environment variables
 load_dotenv('.env')
 
-# Define the URI for the SQLite database
-SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
+# Define the URI for the postgres database
+POSTGRES_DATABASE_URI = os.environ.get('POSTGRES_DATABASE_URI')
 
 # Create the database engine and session
 try:
-    engine = create_engine(SQLALCHEMY_DATABASE_URI, echo=True,
-                           connect_args={'check_same_thread': False})
+    engine = create_engine(POSTGRES_DATABASE_URI)
 except Exception as e:
     print(f"Failed to create engine: {e}")
 
