@@ -42,7 +42,6 @@ async def update_user(user: user_dependency, db: db_dependency, user_update: Use
         user_model.last_name = user_update.last_name
         user_model.username = user_update.username
         user_model.email = user_update.email
-        user_model.admin = user_update.admin
         user_model.is_active = user_update.is_active
 
         db.add(user_model)

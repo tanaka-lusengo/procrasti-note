@@ -1,5 +1,3 @@
-import os
-from dotenv import load_dotenv
 from datetime import timedelta
 from typing import Annotated
 from fastapi import APIRouter, HTTPException, Depends
@@ -17,10 +15,6 @@ router = APIRouter(
     tags=['auth']
 )
 
-load_dotenv('.env')
-
-ADMIN_EMAIL = os.getenv("ADMIN_EMAIL")
-
 
 @router.post('', status_code=status.HTTP_201_CREATED)
 async def create_user(user_create: UserCreate, db: db_dependency):
@@ -31,7 +25,7 @@ async def create_user(user_create: UserCreate, db: db_dependency):
             last_name=user_create.last_name,
             email=user_create.email,
             hashed_password=bcrypt_context.hash(user_create.password),
-            admin=True if user_create.email == ADMIN_EMAIL else False,
+            admin=False,
             is_active=True
         )
         # default username as the email for oAuth2 integration

@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel, EmailStr, Field
 
 
@@ -12,6 +13,7 @@ class User(UserBase):
     username: str
     is_active: bool
     admin: bool
+    created_at: datetime
 
     class Config:
         from_attributes = True
@@ -23,7 +25,8 @@ class User(UserBase):
                 "username": "kevinheart",
                 "email": "kevin@heart.com",
                 "is_active": True,
-                "admin": False
+                "admin": False,
+                "created_at": "2024-03-10T18:33:02.306629"
             }
         }
 
@@ -51,7 +54,6 @@ class UserUpdate(UserBase):
     last_name: str = Field(min_length=2)
     username: str = Field(min_length=1)
     email: EmailStr
-    admin: bool
     is_active: bool
 
     class Config:
@@ -62,7 +64,6 @@ class UserUpdate(UserBase):
                 "last_name": "Glover",
                 "username": "donaldglover",
                 "email": "donald@glover.com",
-                "admin": True,
                 "is_active": False
             }
         }
