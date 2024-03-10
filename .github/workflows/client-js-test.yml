@@ -8,6 +8,7 @@ on:
       - "client/**/*.jsx"
       - "client/**/*.ts"
       - "client/**/*.tsx"
+      - "server/**/*.py"
 
 jobs:
   JsTest:
