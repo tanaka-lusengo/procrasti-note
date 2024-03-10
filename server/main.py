@@ -17,10 +17,10 @@ setup_cors(app)
 models.Base.metadata.create_all(bind=engine)
 
 # Import routers
-app.include_router(note.router)
-app.include_router(auth.router)
-app.include_router(admin.router)
 app.include_router(user.router)
+app.include_router(auth.router)
+app.include_router(note.router)
+app.include_router(admin.router)
 
 
 @app.get('/', status_code=status.HTTP_200_OK)
