@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 from fastapi.security import OAuth2PasswordBearer
 from typing import Annotated
 from fastapi import HTTPException, Depends
@@ -10,13 +9,11 @@ from models.models import User as UserModel
 from database import db_dependency
 from jose import jwt, JWTError
 
-load_dotenv('.env')
-
-SECRET_KEY = os.getenv("SECRET_KEY")
-ALGORITHM = os.getenv("ALGORITHM")
+SECRET_KEY = os.environ.get("SECRET_KEY")
+ALGORITHM = os.environ.get("ALGORITHM")
 
 # Define OAuth2 password bearer with token URL
-oauth2_bearer = OAuth2PasswordBearer(tokenUrl="auth/token")
+oauth2_bearer = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 
 # Function to verify if the provided plain password matches the hashed password

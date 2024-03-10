@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel, Field
 
 
@@ -11,6 +12,7 @@ class Note(NoteBase):
     id: int
     complete: bool
     author_id: int
+    created_at: datetime
 
     class Config:
         from_attributes = True
@@ -21,7 +23,8 @@ class Note(NoteBase):
                 "content": "Learn Python programming language and its libraries.",
                 "priority": 3,
                 "complete": False,
-                "author_id": 1
+                "author_id": 1,
+                "created_at": "2024-03-10T18:33:02.306629"
             }
         }
 
