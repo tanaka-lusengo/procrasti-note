@@ -1,10 +1,10 @@
-from typing import Annotated
-from fastapi import APIRouter, Depends, HTTPException, Path
+from fastapi import APIRouter, HTTPException, Path
 from starlette import status
+
 from database import db_dependency
-from schemas.note import Note, NoteCreate, NoteUpdate
 from models.models import Note as NoteModel
-from utils.auth_helpers import user_dependency
+from routers.auth import user_dependency
+from schemas.note import Note, NoteCreate, NoteUpdate
 
 router = APIRouter(
     tags=['notes']
@@ -12,13 +12,13 @@ router = APIRouter(
 
 
 @router.get('/notes', status_code=status.HTTP_200_OK, response_model=list[Note])
-async def get_all_notes(user: user_dependency, db: db_dependency):
+async def get_all_notes(db: db_dependency, user: user_dependency):
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Authorisation failed: User does not exist in the system")
 
     all_notes = db.query(NoteModel).filter(
-        NoteModel.author_id == user.get("id")).all()
+        NoteModel.author_id == user.id).all()
 
     if all_notes is not None:
         return all_notes
@@ -34,7 +34,7 @@ async def get_one_note(user: user_dependency, db: db_dependency, note_id: int = 
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Authorisation failed: User does not exist in the system")
 
     single_note = db.query(NoteModel).filter(NoteModel.id == note_id).filter(
-        NoteModel.author_id == user.get("id")).first()
+        NoteModel.author_id == user.id).first()
 
     if single_note is not None:
         return single_note
@@ -51,7 +51,7 @@ async def create_note(user: user_dependency, db: db_dependency, note_create: Not
 
     try:
         new_note_model = NoteModel(
-            **note_create.model_dump(), author_id=user.get("id"))
+            **note_create.model_dump(), author_id=user.id)
         db.add(new_note_model)
         db.commit()
         db.refresh(new_note_model)
@@ -69,7 +69,7 @@ async def update_note(user: user_dependency, db: db_dependency, note_update: Not
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Authorisation failed: User does not exist in the system")
 
     note_model = db.query(NoteModel).filter(
-        NoteModel.id == note_id).filter(NoteModel.author_id == user.get("id")).first()
+        NoteModel.id == note_id).filter(NoteModel.author_id == user.id).first()
 
     if note_model is None:
         raise HTTPException(
@@ -97,7 +97,7 @@ async def delete_one_note(user: user_dependency, db: db_dependency, note_id: int
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Authorisation failed: User does not exist in the system")
 
     single_note = db.query(NoteModel).filter(NoteModel.id == note_id).filter(
-        NoteModel.author_id == user.get("id")).first()
+        NoteModel.author_id == user.id).first()
 
     if single_note is None:
         raise HTTPException(
