@@ -1,9 +1,9 @@
-from typing import Annotated
 from fastapi import APIRouter, HTTPException, Path
 from starlette import status
+
 from database import db_dependency
-from schemas.note import Note
 from models.models import Note as NoteModel
+from schemas.note import Note
 from utils.auth_helpers import user_dependency
 
 router = APIRouter(
