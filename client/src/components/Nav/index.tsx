@@ -1,18 +1,23 @@
-'use client';
-
 import Link from 'next/link';
+
+import { getUserSession } from '@/actions/auth-actions';
+import { SignOut } from '@/app/(Auth)/components';
 
 import * as Styled from './index.styled';
 import { DropdownItem, NavItemDropdown } from './subComponents';
 
-const Nav = () => {
+const Nav = async () => {
+  const userSession = await getUserSession();
+
   return (
     <header>
       <Styled.Nav>
         <Styled.NavItemContainer>
           <NavItemDropdown title="Menu">
             <DropdownItem href={'/'}>Home</DropdownItem>
-            <DropdownItem href={'/notes'}>Notes</DropdownItem>
+            {userSession ? (
+              <DropdownItem href={'/notes'}>Notes</DropdownItem>
+            ) : null}
           </NavItemDropdown>
         </Styled.NavItemContainer>
 
@@ -22,7 +27,10 @@ const Nav = () => {
 
         <Styled.NavItemContainer>
           <NavItemDropdown title="Account">
-            <DropdownItem href={'/sign-in'}>Sign In</DropdownItem>
+            {!userSession ? (
+              <DropdownItem href={'/sign-in'}>Sign In</DropdownItem>
+            ) : null}
+            {userSession ? <SignOut /> : null}
           </NavItemDropdown>
         </Styled.NavItemContainer>
       </Styled.Nav>

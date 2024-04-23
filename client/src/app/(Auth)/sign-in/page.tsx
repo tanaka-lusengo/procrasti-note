@@ -1,64 +1,80 @@
 'use client';
 
-import { Toaster } from 'react-hot-toast';
-import { Field } from 'formik';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { type infer as ZodInfer } from 'zod';
 
-import { Button, NoteForm, Typography } from '@/components';
-import * as StyledFormik from '@/components/FormikUi';
+import { login } from '@/actions/auth-actions';
+import { Button } from '@/components';
+import { FormModal, InputField } from '@/components/FormComponents';
+import { signInValidationSchema } from '@/schemas';
+import { LowerButtonContainer, Title } from '@/styles/common.styled';
+import { handleError, toastNotifySuccess } from '@/utils';
 
 import * as Styled from './page.styled';
-import validationSchema from './validationSchema';
+
+type SignInForm = ZodInfer<typeof signInValidationSchema>;
 
 const SignInForm = () => {
-  return (
-    <NoteForm
-      initialValues={{
-        email: '',
-        password: '',
-      }}
-      validationSchema={validationSchema}
-      onSubmit={(values, formik) => {
-        // TODO: This is a temporary console.log
-        // eslint-disable-next-line no-console
-        console.log('Handle sign-in', values);
-        formik.resetForm();
-      }}
-    >
-      <Styled.Title>Sign in</Styled.Title>
+  const router = useRouter();
 
-      <Field
+  const {
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm<SignInForm>({
+    resolver: zodResolver(signInValidationSchema),
+    mode: 'all',
+  });
+
+  const handleAction = async (formData: FormData) => {
+    try {
+      await login(formData);
+      router.push('/notes');
+      toastNotifySuccess('Logged In Successfully 😸');
+    } catch (error) {
+      handleError('logging in 😿', error);
+    }
+  };
+
+  return (
+    <FormModal
+      action={async (formData: FormData) => await handleAction(formData)}
+    >
+      <Title>Sign in</Title>
+
+      <InputField
         label="Email"
         name="email"
         placeholder="example@gmail.com"
-        component={StyledFormik.TextField}
+        register={register}
+        errors={errors}
       />
 
-      <Field
-        label="Passowrd"
+      <InputField
+        label="Password"
         name="password"
-        component={StyledFormik.PasswordField}
+        type="password"
+        register={register}
+        errors={errors}
       />
 
       <Styled.UpperButtonContainer>
-        <Button $basefont type="submit">
-          Sign in!
+        <Button $basefont type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Loading...' : 'Sign in!'}
         </Button>
       </Styled.UpperButtonContainer>
 
       <Styled.Divider />
 
-      <Typography tag="p" textalign="end">
-        <i>Don&apos;t have an account?</i>
-      </Typography>
+      <Styled.Typography>Don&apos;t have an account?</Styled.Typography>
 
-      <Styled.LowerButtonContainer>
+      <LowerButtonContainer>
         <Link href={'/'}>Close</Link>
         <Link href={'/sign-up'}>Sign up</Link>
-      </Styled.LowerButtonContainer>
-
-      <Toaster />
-    </NoteForm>
+      </LowerButtonContainer>
+    </FormModal>
   );
 };
 

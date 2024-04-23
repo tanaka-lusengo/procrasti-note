@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
@@ -33,9 +35,11 @@ const NavItemDropdown = ({ title, children }: NavItemProps) => {
         {isOpen ? 'Back' : title}
       </Link>
 
-      <Styled.DropdownContainer $isOpen={isOpen}>
-        <ul>{children}</ul>
-      </Styled.DropdownContainer>
+      {isOpen !== null ? (
+        <Styled.DropdownContainer $isOpen={isOpen}>
+          <ul>{children}</ul>
+        </Styled.DropdownContainer>
+      ) : null}
     </>
   );
 };
