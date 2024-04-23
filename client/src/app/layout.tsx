@@ -1,8 +1,9 @@
-import type { Metadata } from 'next';
+import { type Metadata } from 'next';
 
 import Nav from '@/components/Nav';
 import Container from '@/components/ui/Container/index.styled';
 import Providers from '@/Providers';
+import Toaster from '@/utils/reactHotToast/Toaster';
 
 import { metadataContent, PreloadResources } from './preload-resources';
 
@@ -21,6 +22,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
           <main>{children}</main>
         </Container>
       </Providers>
+
+      <Toaster />
     </body>
 
     <PreloadResources />
