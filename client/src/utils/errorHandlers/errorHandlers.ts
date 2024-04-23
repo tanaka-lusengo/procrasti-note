@@ -1,35 +1,38 @@
-import toast from 'react-hot-toast';
+import { type ZodError } from 'zod';
 
-import { toastConfig } from '../toastConfig';
+import { toastNotifyError } from '../reactHotToast';
 
-type ErrorData = {
-  detail: {
-    msg: string;
-  }[];
-};
+type ParsedZodError = {
+  path: string[];
+  message: string;
+} & ZodError;
 
-export const readDatabaseError = async (response: Response) => {
-  const errorData: ErrorData = await response.json(); // Extract error data from response body
-  throw new Error(errorData.detail[0].msg); // Use the error message from the server
+const parseValidationErrorMessages = (error: unknown): string => {
+  if (error instanceof Error) {
+    try {
+      const errorArray = JSON.parse(error.message);
+      const errMessages = errorArray.map(
+        (error: ParsedZodError) => `${error.path[0]}: ${error.message}`,
+      );
+      return errMessages.join(', ');
+    } catch {
+      return error.message;
+    }
+  } else {
+    return 'Unknown error';
+  }
 };
 
 export const logErrorMessage = (error: unknown, errorDetail: string): void => {
-  if (error instanceof Error) {
-    console.error(`There was an error ${errorDetail} - ${error}`);
-  } else {
-    console.error(`Unknown error ${errorDetail}`, error);
-  }
+  console.error(
+    `There was an error ${errorDetail} - ${
+      error instanceof Error ? error.message : error
+    }`,
+  );
 };
 
-export const notifyAndLogError = (error: unknown, message: string) => {
-  if (error instanceof Error) {
-    toastNotifyError(`${message} - ${error}`);
-    logErrorMessage(error, message);
-  } else {
-    console.error(`Unknown error ${message}`, error);
-  }
+export const handleError = (message: string, error: unknown) => {
+  const errorMessage = parseValidationErrorMessages(error);
+  toastNotifyError(`There was an error ${message} - ${errorMessage}`);
+  logErrorMessage(error, message);
 };
-
-// Toast Notifications
-export const toastNotifyError = (message: string) =>
-  toast.error(`There was an error ${message}`, toastConfig);
