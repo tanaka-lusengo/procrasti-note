@@ -1,9 +1,7 @@
-'use client';
-
 import Link from 'next/link';
 import styled from 'styled-components';
 
-const ButtonLink = styled(Link)`
+export const ButtonLink = styled(Link)`
   display: inline-block;
 
   padding: 0.5rem 1rem;
@@ -22,5 +20,3 @@ const ButtonLink = styled(Link)`
     background-color: ${({ theme }) => theme.colors.secondary};
   }
 `;
-
-export default ButtonLink;

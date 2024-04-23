@@ -1,30 +1,33 @@
 import { CSSProperties } from 'react';
 
 import * as Styled from './index.styled';
-
-type TagVariants =
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'h6'
-  | 'p'
-  | 'span'
-  | 'li';
+import {
+  type ColorVariants,
+  type FontSizeVariants,
+  type TagVariants,
+} from './types';
 
 export type TypographyProps = {
-  tag: TagVariants;
   textalign?: CSSProperties['textAlign'];
+  tag?: TagVariants;
+  fontSize?: FontSizeVariants;
+  color?: ColorVariants;
   children: React.ReactNode;
 };
 
 const Typography = ({
-  tag = 'p',
   textalign = 'left',
+  tag = 'p',
+  fontSize,
+  color,
   children,
 }: TypographyProps) => (
-  <Styled.DynamicTypography tag={tag} textalign={textalign}>
+  <Styled.DynamicTypography
+    tag={tag}
+    textalign={textalign}
+    fontSize={fontSize}
+    color={color}
+  >
     {children}
   </Styled.DynamicTypography>
 );
