@@ -1,5 +1,3 @@
-'use client';
-
 import styled from 'styled-components';
 
 interface ButtonProps {
@@ -7,7 +5,7 @@ interface ButtonProps {
   $basefont?: boolean;
 }
 
-const Button = styled.button<ButtonProps>`
+export const Button = styled.button<ButtonProps>`
   cursor: pointer;
 
   display: inline-block;
@@ -29,10 +27,12 @@ const Button = styled.button<ButtonProps>`
 
   transition: 0.4s ease-in-out;
 
-  &:hover {
+  &:not(:disabled):hover {
     color: ${({ theme }) => theme.colors.primary};
     background-color: ${({ theme }) => theme.colors.secondary};
   }
-`;
 
-export default Button;
+  &:disabled {
+    filter: grayscale(0.8);
+  }
+`;
