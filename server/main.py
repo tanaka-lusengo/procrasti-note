@@ -1,14 +1,14 @@
 from fastapi import FastAPI
-from middleware import setup_cors
-from database import engine
 from starlette import status
+
+from database import engine
+from middleware import setup_cors
 from models import models
-from routers import note, auth, admin, user
+from routers import admin, auth, note, user
 
 
 # Create the FastAPI app
-app = FastAPI(title="Procrasti-not(e) API ☕️", description="A simple API to manage your notes",
-              version="0.1.0", root_path="/api")
+app = FastAPI(title="Procrasti-Not(e) API", version="0.1.0", root_path="/api")
 
 # Setup CORS middleware
 setup_cors(app)
