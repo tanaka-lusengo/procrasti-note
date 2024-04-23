@@ -1,57 +1,100 @@
 'use client';
 
-import { Toaster } from 'react-hot-toast';
-import { Field } from 'formik';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { type infer as ZodInfer } from 'zod';
 
-import { Button, NoteForm } from '@/components';
-import * as StyledFormik from '@/components/FormikUi';
+import { signUp } from '@/actions/auth-actions';
+import { Button } from '@/components';
+import { FormModal, InputField } from '@/components/FormComponents';
+import { signUpValidationSchema } from '@/schemas';
+import { LowerButtonContainer, Title } from '@/styles/common.styled';
+import {
+  handleError,
+  StatusCode,
+  toastNotifyError,
+  toastNotifySuccess,
+} from '@/utils';
 
-import * as Styled from './page.styled';
-import validationSchema from './validationSchema';
+type SignUpForm = ZodInfer<typeof signUpValidationSchema>;
 
 const SignUpForm = () => {
-  return (
-    <NoteForm
-      initialValues={{
-        email: '',
-        password: '',
-      }}
-      validationSchema={validationSchema}
-      onSubmit={async (values, formik) => {
-        // TODO: This is a temporary console.log
-        // eslint-disable-next-line no-console
-        console.log('Handle sign-up', values);
-        formik.resetForm();
-      }}
-    >
-      <Styled.Title>Sign up</Styled.Title>
+  const router = useRouter();
 
-      <Field
+  const {
+    register,
+    formState: { errors, isValid, isSubmitting },
+  } = useForm<SignUpForm>({
+    resolver: zodResolver(signUpValidationSchema),
+    mode: 'all',
+  });
+
+  const handleAction = async (formData: FormData) => {
+    try {
+      const data = await signUp(formData);
+
+      if (data?.status === StatusCode.SUCCESS) {
+        toastNotifySuccess('Sign up Success, now Sign in! 😸');
+        router.push('/sign-in');
+      } else {
+        toastNotifyError('Sign up failed 😿');
+      }
+    } catch (error) {
+      handleError('signing up 😿', error);
+    }
+  };
+
+  return (
+    <FormModal
+      action={async (formData: FormData) => await handleAction(formData)}
+    >
+      <Title>Sign up</Title>
+
+      <InputField
+        label="First Name"
+        name="firstName"
+        placeholder="Lewis"
+        register={register}
+        errors={errors}
+      />
+
+      <InputField
+        label="Last Name"
+        name="lastName"
+        placeholder="Hamilton"
+        register={register}
+        errors={errors}
+      />
+
+      <InputField
         label="Email"
         name="email"
+        type="email"
         placeholder="example@gmail.com"
-        component={StyledFormik.TextField}
+        register={register}
+        errors={errors}
       />
 
-      <Field
-        label="Passowrd"
+      <InputField
+        label="Password"
         name="password"
-        component={StyledFormik.PasswordField}
+        type="password"
+        register={register}
+        errors={errors}
       />
 
-      <Styled.LowerButtonContainer>
-        <Button $basefont type="submit">
-          Sign up!
+      <LowerButtonContainer>
+        <Button $basefont type="submit" disabled={isSubmitting || !isValid}>
+          {isSubmitting ? 'Loading...' : 'Sign up!'}
         </Button>
 
         <Link href={'/'} type="link">
           Close
         </Link>
-      </Styled.LowerButtonContainer>
-
-      <Toaster />
-    </NoteForm>
+      </LowerButtonContainer>
+    </FormModal>
   );
 };
 

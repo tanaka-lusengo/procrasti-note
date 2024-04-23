@@ -1,3 +1,5 @@
+'use client';
+
 import styled from 'styled-components';
 
 export const DropdownContainer = styled.div<{ $isOpen: boolean }>`
@@ -10,7 +12,11 @@ export const DropdownContainer = styled.div<{ $isOpen: boolean }>`
 
   text-align: center;
 
+  transition: opacity 0.5s;
   opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
+  transition-delay: 0.5s;
+
   background-color: ${({ theme }) => theme.colors.secondary};
 
   transition: opacity 500ms ease;
