@@ -30,6 +30,6 @@ export const DynamicTypography = styled(
     fontSize
       ? `${fontSizeMap[fontSize as keyof typeof fontSizeMap]}rem`
       : `${fontSizeMap[tag as keyof typeof fontSizeMap]}rem`};
-  text-align: ${({ textalign }) => textalign};
   color: ${({ color }) => theme.colors[color as keyof typeof theme.colors]};
+  text-align: ${({ textalign }) => textalign};
 `;

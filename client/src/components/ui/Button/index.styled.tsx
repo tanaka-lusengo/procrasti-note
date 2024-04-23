@@ -27,12 +27,12 @@ export const Button = styled.button<ButtonProps>`
 
   transition: 0.4s ease-in-out;
 
+  &:disabled {
+    filter: grayscale(0.8);
+  }
+
   &:not(:disabled):hover {
     color: ${({ theme }) => theme.colors.primary};
     background-color: ${({ theme }) => theme.colors.secondary};
-  }
-
-  &:disabled {
-    filter: grayscale(0.8);
   }
 `;
