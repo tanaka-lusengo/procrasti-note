@@ -1,51 +1,59 @@
-import { getAllNotes, getSingleNote } from '@/services/noteServices';
+import { redirect } from 'next/navigation';
+
+import { getAllNotes, getSingleNote } from '@/actions/note-actions';
+import { StatusCode } from '@/utils';
 
 import { NoteDetail } from './components';
-
-export const revalidate = 0;
 
 interface NoteDetailPageProps {
   params: { id: string };
 }
 
-// This function is used to generate the metadata for the note detail page
 export async function generateMetadata({ params }: NoteDetailPageProps) {
-  const note = await getSingleNote(params.id);
+  const { data, status } = await getSingleNote(params.id);
 
-  if (!note) {
-    return console.error('Failed to fetch note in generateMetadata');
+  if (!data || status === StatusCode.UNAUTHORIZED) {
+    console.error('Failed to fetch note and generate Metadata');
+    return;
   }
-  const { title, id } = note;
+
+  const { title, id } = data;
 
   return {
-    title: `${id}: ${title}`,
+    title: `Note: ${id} - ${title}`,
     description: "A single note's detail page.",
   };
 }
 
-// This function is used to generate the static paths/params for the note detail page
-export async function generateStaticParams() {
-  const notes = await getAllNotes();
-
-  return notes.map((note) => ({
-    params: { id: note.id.toString() },
-  }));
-}
-
-// This function is used to generate the static data for the note detail page based on the params
 const NoteDetailPage = async ({ params }: NoteDetailPageProps) => {
-  const [note, notes] = await Promise.all([
+  if (!params.id) {
+    console.error('No id found in params');
+    return;
+  }
+
+  const [singleNoteResponse, allNotesResponse] = await Promise.all([
     getSingleNote(params.id),
     getAllNotes(),
   ]);
 
-  if (!note || !notes) {
-    return console.error(
+  const { status: singleNoteStatus, data: singleNoteData } = singleNoteResponse;
+  const { status: allNotesStatus, data: allNotesData } = allNotesResponse;
+
+  if (!singleNoteData || !allNotesData) {
+    console.error(
       `Failed to fetch note with id ${params.id} or to get all notes in NoteDetailPage`,
     );
+    return;
   }
 
-  return <NoteDetail note={note} notes={notes} />;
+  if (
+    singleNoteStatus === StatusCode.UNAUTHORIZED ||
+    allNotesStatus === StatusCode.UNAUTHORIZED
+  ) {
+    redirect('/sign-in');
+  }
+
+  return <NoteDetail note={singleNoteData} notes={allNotesData} />;
 };
 
 export default NoteDetailPage;

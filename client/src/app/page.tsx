@@ -1,14 +1,14 @@
-'use client';
-
 import Image from 'next/image';
-import Typewriter from 'typewriter-effect';
 
 import coffeeGuy from '@/../public/images/coffee-guy.svg';
-import { ButtonLink, Typography } from '@/components';
+import { getUserSession } from '@/actions/auth-actions';
+import { ButtonLink, Typewriter, Typography } from '@/components/ui';
 
 import * as Styled from './page.styled';
 
-const Home = () => {
+const Home = async () => {
+  const userSession = await getUserSession();
+
   return (
     <Styled.Section>
       <Typography tag="h1" textalign="center">
@@ -24,20 +24,23 @@ const Home = () => {
       <Image
         src={coffeeGuy}
         width={350}
-        height={350}
+        style={{ height: 'auto' }}
         priority
         rel="preload"
         alt="Man hugging a giant cup of spilling coffee"
       />
 
-      <Typography tag="h4" textalign="center">
+      <Typography fontSize="h4" textalign="center">
         <b>Procrasti-Not(e)</b> is a simple and effective &quot;to-do&quot; list
-        and task manager app which helps you manage your time and, of course,{' '}
-        <b>not procrastinate</b> 😉
+        and task manager app which helps you manage your time and, of course,
+        helps you to <b>not procrastinate</b> 😉
       </Typography>
 
-      <ButtonLink href={'/notes'}>Lets get started!</ButtonLink>
+      <ButtonLink href={userSession ? '/notes' : '/sign-in'}>
+        Lets get started!
+      </ButtonLink>
     </Styled.Section>
   );
 };
+
 export default Home;

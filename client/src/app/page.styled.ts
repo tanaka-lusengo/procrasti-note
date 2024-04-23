@@ -1,3 +1,5 @@
+'use client';
+
 import styled from 'styled-components';
 
 export const Section = styled.section`
@@ -15,10 +17,6 @@ export const Section = styled.section`
     font-family: ${({ theme }) => theme.typography.fontFamily.slabo};
   }
 
-  h4 {
-    font-weight: 400;
-  }
-
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}px) {
     h1 {
       min-height: 0;
@@ -28,7 +26,7 @@ export const Section = styled.section`
   @media only screen and (min-width: ${({ theme }) => theme.breakpoints.lg}px) {
     gap: 4rem;
 
-    h4 {
+    p {
       max-width: 60%;
     }
   }

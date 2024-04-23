@@ -70,12 +70,6 @@ export const Wave = styled.span`
   animation: wave-animation 2.5s infinite;
 `;
 
-export const Number = styled.span`
-  font-size: ${({ theme }) => theme.typography.fontSize.h3}rem;
-  font-weight: bold;
-  color: ${({ theme }) => theme.colors.primary};
-`;
-
 export const List = styled.ul`
   overflow-y: scroll;
 

@@ -1,11 +1,14 @@
 'use client';
 
-import React, { useCallback, useMemo, useState } from 'react';
-import dynamic from 'next/dynamic';
+import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { DeleteNote, ToggleCompleteNote } from '@/app/notes/components';
+import {
+  DeleteNote,
+  EditNote,
+  ToggleCompleteNote,
+} from '@/app/notes/components';
 import { Button, Typography } from '@/components';
 import { type Note } from '@/lib/openapi/generated';
 import { convertStringToHTML } from '@/utils';
@@ -26,21 +29,15 @@ const NoteDetail = ({ note, notes }: NoteDetailProps) => {
   const searchParams = useSearchParams()?.get('show-edit-form');
   const showForm = Boolean(searchParams);
 
-  // Dynamic import of the `EditNote` modal to render only when needed
-  const EditNote = dynamic(() => import('../../../components/EditNote'), {
-    ssr: false,
-  });
-
   // Find the index of the current note
-  const initialNoteIndex = useMemo(
-    () => notes.findIndex((Arrnote) => Arrnote.id === note.id),
-    [notes, note],
+  const initialNoteIndex = notes.findIndex(
+    (noteIndex) => noteIndex.id === note.id,
   );
 
   // Initialize state to keep track of current note index
   const [currentNoteIndex, setCurrentNoteIndex] = useState(initialNoteIndex);
 
-  // Helper function to navigate to a prev or the next note
+  // Helper function to navigate to the prev or the next note
   const navigateToNote = useCallback(
     (direction: 'next' | 'prev') => {
       let newIndex;
@@ -54,10 +51,10 @@ const NoteDetail = ({ note, notes }: NoteDetailProps) => {
     [currentNoteIndex, notes, router],
   );
 
-  const handleGoBack = useCallback(() => {
+  const handleGoBack = () => {
     router.push('/notes');
     router.refresh();
-  }, [router]);
+  };
 
   return (
     <>
@@ -65,7 +62,7 @@ const NoteDetail = ({ note, notes }: NoteDetailProps) => {
         <Styled.TopContainer>
           <Styled.HiddenDiv />
 
-          <Typography tag="h3" textalign="center">
+          <Typography tag="h1" fontSize="h3" textalign="center">
             {title}
           </Typography>
 
@@ -73,7 +70,11 @@ const NoteDetail = ({ note, notes }: NoteDetailProps) => {
         </Styled.TopContainer>
 
         <Styled.MiddleContainter>
-          <Styled.IconButton $left onClick={() => navigateToNote('prev')}>
+          <Styled.IconButton
+            $left
+            aria-label="Chevron pointing left"
+            onClick={() => navigateToNote('prev')}
+          >
             <span
               className="fa-solid fa-chevron-left fa-2xl"
               about="A chevron icon pointing left"
@@ -81,15 +82,22 @@ const NoteDetail = ({ note, notes }: NoteDetailProps) => {
           </Styled.IconButton>
 
           <Styled.ContentContainter>
-            <Typography tag="h6" textalign="center">
-              ~ Priority Level: <b>{priority}</b> ~
+            <Typography fontSize="h5" textalign="center">
+              ~ Priority Level:{' '}
+              <Typography tag="span">
+                <b>{priority}</b>
+              </Typography>{' '}
+              ~
             </Typography>
-            <Typography tag="h5" textalign="center">
-              {convertStringToHTML(content)}
+            <Typography fontSize="h5" textalign="center">
+              <b>{convertStringToHTML(content)}</b>
             </Typography>
           </Styled.ContentContainter>
 
-          <Styled.IconButton onClick={() => navigateToNote('next')}>
+          <Styled.IconButton
+            aria-label="Chevron pointing right"
+            onClick={() => navigateToNote('next')}
+          >
             <span
               className="fa-solid fa-chevron-right fa-2xl"
               about="A chevron icon pointing right"
@@ -98,7 +106,7 @@ const NoteDetail = ({ note, notes }: NoteDetailProps) => {
         </Styled.MiddleContainter>
 
         <Styled.BottomContainer>
-          <Link href={'?show-edit-form=true'}>
+          <Link aria-label="Edit button icon" href={'?show-edit-form=true'}>
             <span
               className="fa-solid fa-pen-to-square fa-xl"
               about="Edit icon"
@@ -109,9 +117,9 @@ const NoteDetail = ({ note, notes }: NoteDetailProps) => {
         </Styled.BottomContainer>
       </Styled.NoteContainter>
 
-      {showForm ? <EditNote note={note} showForm={showForm} /> : null}
+      {showForm ? <EditNote note={note} /> : null}
     </>
   );
 };
 
-export default React.memo(NoteDetail);
+export default NoteDetail;

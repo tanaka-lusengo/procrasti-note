@@ -2,21 +2,23 @@
 
 import { DeleteNote, ToggleCompleteNote } from '@/app/notes/components';
 import { Typography } from '@/components';
-import { type Note as NoteModelType } from '@/lib/openapi/generated';
+import { type Note as NoteModel } from '@/lib/openapi/generated';
 
 import * as Styled from './index.styled';
 
-const Note = ({ note }: { note: NoteModelType }) => {
-  const { id, title, priority } = note || {};
+const Note = ({ note }: { note: NoteModel }) => {
+  const { id, title, priority } = note;
 
   return (
     <Styled.CardContainer>
       <ToggleCompleteNote note={note} />
 
       <Styled.CardContent href={`/notes/${id}`}>
-        <Typography tag="h4">{title}</Typography>
-        <Typography tag="h6">
-          -Priority level: <b>{priority}</b>
+        <Typography fontSize="h4">{title}</Typography>
+        <Typography>
+          <i>
+            -Priority level: <b>{priority}</b>
+          </i>
         </Typography>
       </Styled.CardContent>
 
