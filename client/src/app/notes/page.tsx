@@ -1,12 +1,10 @@
 import { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
-import { getAllNotes } from '@/services/noteServices';
+import { getAllNotes } from '@/actions/note-actions';
+import { StatusCode } from '@/utils';
 
 import { NotesContainer } from './components';
-
-// Disableing caching and background regeneration to ensure that the content is always up-to-date
-// with every user request due to the dynamic nature of this CRUD application.
-export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: 'Notes',
@@ -14,9 +12,15 @@ export const metadata: Metadata = {
 };
 
 const NotesPage = async () => {
-  const notes = await getAllNotes();
+  const { data, status } = await getAllNotes();
 
-  return <NotesContainer notes={notes} />;
+  if (status === StatusCode.UNAUTHORIZED) {
+    redirect('/sign-in');
+  } else if (!data) {
+    return <NotesContainer notes={[]} />;
+  } else if (status === StatusCode.SUCCESS) {
+    return <NotesContainer notes={data} />;
+  }
 };
 
 export default NotesPage;
