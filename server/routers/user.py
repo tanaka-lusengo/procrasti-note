@@ -1,9 +1,10 @@
 from fastapi import APIRouter, HTTPException
 from starlette import status
+
 from database import db_dependency
-from schemas.user import User, UserUpdate, UserUpdatePassword
 from models.models import User as UserModel
-from utils.auth_helpers import user_dependency
+from routers.auth import user_dependency
+from schemas.user import User, UserCreate, UserUpdate, UserUpdatePassword
 from utils.bcrypt_config import bcrypt_context
 
 router = APIRouter(
@@ -13,19 +14,51 @@ router = APIRouter(
 
 
 @router.get("", status_code=status.HTTP_200_OK, response_model=User)
-async def get_user(user: user_dependency, db: db_dependency):
-    if user is None:
+async def get_user(current_user: user_dependency, db: db_dependency):
+
+    if current_user is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Authorisation failed: User does not exist in the system")
 
     user_model = db.query(UserModel).filter(
-        UserModel.id == user.get("id")).first()
+        UserModel.id == current_user.id).first()
 
     if user_model is not None:
         return user_model
     else:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="User does not exist in the system")
+
+
+@router.post('', status_code=status.HTTP_201_CREATED)
+async def create_user(user_create: UserCreate, db: db_dependency):
+    try:
+        # Create a new user model with the provided data
+        new_user = UserModel(
+            first_name=user_create.first_name,
+            last_name=user_create.last_name,
+            email=user_create.email,
+            hashed_password=bcrypt_context.hash(user_create.password),
+            admin=False,
+            is_active=True
+        )
+        # default username as the email for oAuth2 integration
+        new_user.username = user_create.email
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+
+        # Convert the new_user object to a dictionary
+        new_user_dict = new_user.__dict__.copy()
+
+        # Remove the hashed_password key from the dictionary
+        new_user_dict.pop('hashed_password', None)
+
+        return new_user_dict
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=f"An error occurred while trying to create a new user: {str(e)}")
 
 
 @router.put("", status_code=status.HTTP_204_NO_CONTENT)
