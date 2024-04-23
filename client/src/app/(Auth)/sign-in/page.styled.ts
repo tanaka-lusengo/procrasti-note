@@ -20,8 +20,8 @@ export const Divider = styled.div`
 `;
 
 export const Typography = styled.p`
-  text-align: end;
-  color: ${({ theme }) => theme.colors.primary};
   font-weight: bold;
   font-style: italic;
+  color: ${({ theme }) => theme.colors.primary};
+  text-align: end;
 `;
