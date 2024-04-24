@@ -1,7 +1,7 @@
 import { type Metadata } from 'next';
 
 import Nav from '@/components/Nav';
-import Container from '@/components/ui/Container/index.styled';
+import Container from '@/components/UI/Container/index.styled';
 import Providers from '@/Providers';
 import Toaster from '@/utils/reactHotToast/Toaster';
 

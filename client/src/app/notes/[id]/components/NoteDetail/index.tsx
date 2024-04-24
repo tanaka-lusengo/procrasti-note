@@ -4,12 +4,8 @@ import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import {
-  DeleteNote,
-  EditNote,
-  ToggleCompleteNote,
-} from '@/app/notes/components';
 import { Button, Typography } from '@/components';
+import { DeleteNote, EditNote, ToggleComplete } from '@/components/Actions';
 import { type Note } from '@/lib/openapi/generated';
 import { convertStringToHTML } from '@/utils';
 
@@ -66,7 +62,7 @@ const NoteDetail = ({ note, notes }: NoteDetailProps) => {
             {title}
           </Typography>
 
-          <ToggleCompleteNote note={note} />
+          <ToggleComplete note={note} />
         </Styled.TopContainer>
 
         <Styled.MiddleContainter>

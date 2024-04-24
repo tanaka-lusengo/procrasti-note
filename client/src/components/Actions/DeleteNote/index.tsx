@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { deleteNote } from '@/actions/note-actions';
+import { deleteNote } from '@/server/actions/note-actions';
 import { handleError, StatusCode } from '@/utils';
 
 import * as Styled from './index.styled';

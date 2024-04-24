@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
 import coffeeGuy from '@/../public/images/coffee-guy.svg';
-import { getUserSession } from '@/actions/auth-actions';
-import { ButtonLink, Typewriter, Typography } from '@/components/ui';
+import { ButtonLink, Typewriter, Typography } from '@/components/UI';
+import { getUserSession } from '@/server/actions/auth-actions';
 
 import * as Styled from './page.styled';
 
@@ -24,7 +24,7 @@ const Home = async () => {
       <Image
         src={coffeeGuy}
         width={350}
-        style={{ height: 'auto' }}
+        height={350}
         priority
         rel="preload"
         alt="Man hugging a giant cup of spilling coffee"

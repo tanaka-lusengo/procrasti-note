@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import { getUserSession } from '@/actions/auth-actions';
-import { SignOut } from '@/app/(Auth)/components';
+import { SignOut } from '@/components/Auth';
+import { getUserSession } from '@/server/actions/auth-actions';
 
 import * as Styled from './index.styled';
 import { DropdownItem, NavItemDropdown } from './subComponents';

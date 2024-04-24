@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
-import { getAllNotes } from '@/actions/note-actions';
+import { getAllNotes } from '@/server/actions/note-actions';
 import { StatusCode } from '@/utils';
 
 import { NotesContainer } from './components';
