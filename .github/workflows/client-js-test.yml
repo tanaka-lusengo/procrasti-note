@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "20"
 
       # Ensures the entire repo is checked out (including tags)
       - name: Checkout repository
@@ -28,12 +28,14 @@ jobs:
           fetch-depth: 0
 
       # Cache and install node_modules
-      - name: Yarn install dependencies with caching
-        uses: bahmutov/npm-install@v1
+      - name: pnpm install dependencies with caching
+        uses: pnpm/action-setup@v3
         with:
-          install-command: yarn install --frozen-lockfile
-          working-directory: client
+          version: 8
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile]
 
       - name: GitHub Action for Javascript testing
-        run: yarn test
+        run: pnpm test
         working-directory: client

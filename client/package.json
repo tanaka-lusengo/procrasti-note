@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
-    "start": "concurrently \"cd ../server && uvicorn main:app --reload\" \"yarn dev\"",
+    "start": "concurrently \"cd ../server && uvicorn main:app --reload\" \"pnpm dev\"",
+    "preinstall": "npx only-allow pnpm",
     "generate-openapi-client": "openapi --input ./src/lib/openapi/openapi-spec.json --output ./src/lib/openapi/generated --useUnionTypes",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
@@ -61,14 +62,14 @@
     "typescript": "^5",
     "vite": "^5.0.12",
     "vite-tsconfig-paths": "^4.2.2",
-    "vitest": "^1.1.0",
+    "vitest": "^1.5.1",
     "vitest-canvas-mock": "^0.3.3",
     "vitest-fetch-mock": "^0.2.2"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
       "eslint --cache --fix",
-      "yarn format"
+      "pnpm format"
     ],
     "./src/**/*{styled.ts,styled.tsx}": "stylelint --cache --fix"
   }
