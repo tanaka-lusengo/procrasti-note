@@ -36,11 +36,11 @@ type ParsedToken =
 export const getCurrentUser = async (
   accessToken: string,
 ): Promise<ParsedToken> => {
-  try {
-    if (!accessToken) {
-      return null;
-    }
+  if (!accessToken) {
+    return null;
+  }
 
+  try {
     // TODO: Update to make request to the server to get the user data
     const decryptedToken = await decrypt(accessToken);
     const { id } = decryptedToken;

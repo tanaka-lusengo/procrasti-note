@@ -1,17 +1,15 @@
-'use client';
-
-import { DeleteNote, ToggleCompleteNote } from '@/app/notes/components';
 import { Typography } from '@/components';
+import { DeleteNote, ToggleComplete } from '@/components/Actions';
 import { type Note as NoteModel } from '@/lib/openapi/generated';
 
 import * as Styled from './index.styled';
 
-const Note = ({ note }: { note: NoteModel }) => {
+const Note = async ({ note }: { note: NoteModel }) => {
   const { id, title, priority } = note;
 
   return (
     <Styled.CardContainer>
-      <ToggleCompleteNote note={note} />
+      <ToggleComplete note={note} />
 
       <Styled.CardContent href={`/notes/${id}`}>
         <Typography fontSize="h4">{title}</Typography>

@@ -2,11 +2,11 @@
 
 import { useRouter } from 'next/navigation';
 
-import { logout } from '@/actions/auth-actions';
+import { logout } from '@/server/actions/auth-actions';
 
 import { ButtonText } from './index.styled';
 
-export const SignOut = () => {
+const SignOut = () => {
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -16,3 +16,5 @@ export const SignOut = () => {
 
   return <ButtonText onClick={handleLogout}>Sign Out</ButtonText>;
 };
+
+export default SignOut;

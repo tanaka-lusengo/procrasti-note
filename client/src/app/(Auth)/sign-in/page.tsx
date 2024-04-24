@@ -6,10 +6,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type infer as ZodInfer } from 'zod';
 
-import { login } from '@/actions/auth-actions';
 import { Button } from '@/components';
 import { FormModal, InputField } from '@/components/FormComponents';
 import { signInValidationSchema } from '@/schemas';
+import { login } from '@/server/actions/auth-actions';
 import { LowerButtonContainer, Title } from '@/styles/common.styled';
 import { handleError, toastNotifySuccess } from '@/utils';
 

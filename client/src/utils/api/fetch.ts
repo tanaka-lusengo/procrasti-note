@@ -1,4 +1,4 @@
-import { getAccessToken } from '@/actions/action-helpers';
+import { getAccessToken } from '@/server/actions/action-helpers';
 
 export const fetchWithErrors = async (url: string, options?: RequestInit) => {
   const accessToken = await getAccessToken();

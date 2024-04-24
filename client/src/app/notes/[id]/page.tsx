@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 
-import { getAllNotes, getSingleNote } from '@/actions/note-actions';
+import { getAllNotes, getSingleNote } from '@/server/actions/note-actions';
 import { StatusCode } from '@/utils';
 
 import { NoteDetail } from './components';

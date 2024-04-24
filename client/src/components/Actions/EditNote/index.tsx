@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { type infer as ZodInfer } from 'zod';
 
-import { createNote } from '@/actions/note-actions';
+import { PriorityValue } from '@/app/notes/components/types';
 import { Button } from '@/components';
 import {
   FormModal,
@@ -13,31 +13,33 @@ import {
   SelectField,
   TextareaField,
 } from '@/components/FormComponents';
+import { type Note } from '@/lib/openapi/generated';
 import { createAndEditNoteValidationSchema } from '@/schemas';
+import { editNote } from '@/server/actions/note-actions';
 import { ButtonsContainer, Title } from '@/styles/common.styled';
 import { handleError, StatusCode } from '@/utils';
 
-import { PriorityValue } from '../../types';
+type EditNoteForm = ZodInfer<typeof createAndEditNoteValidationSchema>;
 
-type CreateNoteForm = ZodInfer<typeof createAndEditNoteValidationSchema>;
+const EditNote = ({ note }: { note: Note }) => {
+  const { id, title, priority, content, complete } = note || {};
 
-const CreateNote = () => {
   const router = useRouter();
 
   const {
     register,
     formState: { errors, isSubmitting },
-  } = useForm<CreateNoteForm>({
+  } = useForm<EditNoteForm>({
     resolver: zodResolver(createAndEditNoteValidationSchema),
     mode: 'all',
   });
 
   const handleAction = async (formData: FormData) => {
     try {
-      const { status } = await createNote(formData);
+      const { status } = await editNote(id, complete, formData);
       if (status === StatusCode.SUCCESS) router.back();
     } catch (error) {
-      handleError('creating note 😿', error);
+      handleError('editing note 😿', error);
     }
   };
 
@@ -45,12 +47,13 @@ const CreateNote = () => {
     <FormModal
       action={async (formData: FormData) => await handleAction(formData)}
     >
-      <Title>Create a new note</Title>
+      <Title>Edit note</Title>
 
       <InputField
         label="Title"
         name="title"
         placeholder="Note Title"
+        defaultValue={title}
         register={register}
         errors={errors}
       />
@@ -58,6 +61,7 @@ const CreateNote = () => {
       <SelectField
         label="Priority"
         name="priority"
+        defaultValue={priority}
         register={register}
         errors={errors}
       >
@@ -74,13 +78,14 @@ const CreateNote = () => {
         label="Content"
         name="content"
         placeholder="So what's the plan ?"
+        defaultValue={content}
         register={register}
         errors={errors}
       />
 
       <ButtonsContainer>
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Loading...' : 'Add Note'}
+          {isSubmitting ? 'Loading...' : 'Edit Note'}
         </Button>
         <Button onClick={router.back}>Close</Button>
       </ButtonsContainer>
@@ -88,4 +93,4 @@ const CreateNote = () => {
   );
 };
 
-export default CreateNote;
+export default EditNote;

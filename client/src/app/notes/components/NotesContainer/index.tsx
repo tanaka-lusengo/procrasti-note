@@ -5,9 +5,9 @@ import { useSearchParams } from 'next/navigation';
 
 import boredWoman from '@/../public/images/laying-bored-woman.svg';
 import { ButtonLink, Typography } from '@/components';
+import { CreateNote } from '@/components/Actions';
 import { type Note as NoteModel } from '@/lib/openapi/generated';
 
-import CreateNote from '../Actions/CreateNote';
 import Note from '../Note';
 
 import * as Styled from './index.styled';
