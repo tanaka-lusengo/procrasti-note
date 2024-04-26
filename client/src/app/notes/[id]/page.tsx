@@ -17,10 +17,8 @@ export async function generateMetadata({ params }: NoteDetailPageProps) {
     return;
   }
 
-  const { title, id } = data;
-
   return {
-    title: `Note: ${id} - ${title}`,
+    title: `Note: ${data.id} - ${data.title}`,
     description: "A single note's detail page.",
   };
 }
@@ -39,18 +37,18 @@ const NoteDetailPage = async ({ params }: NoteDetailPageProps) => {
   const { status: singleNoteStatus, data: singleNoteData } = singleNoteResponse;
   const { status: allNotesStatus, data: allNotesData } = allNotesResponse;
 
-  if (!singleNoteData || !allNotesData) {
-    console.error(
-      `Failed to fetch note with id ${params.id} or to get all notes in NoteDetailPage`,
-    );
-    return;
-  }
-
   if (
     singleNoteStatus === StatusCode.UNAUTHORIZED ||
     allNotesStatus === StatusCode.UNAUTHORIZED
   ) {
     redirect('/sign-in');
+  }
+
+  if (!singleNoteData || !allNotesData) {
+    console.error(
+      `Failed to fetch note with id ${params.id} or to get all notes in NoteDetailPage`,
+    );
+    return;
   }
 
   return <NoteDetail note={singleNoteData} notes={allNotesData} />;

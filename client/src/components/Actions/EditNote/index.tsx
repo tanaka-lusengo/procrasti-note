@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { type infer as ZodInfer } from 'zod';
 
 import { PriorityValue } from '@/app/notes/components/types';
-import { Button } from '@/components';
+import { Button, Stack, Typography } from '@/components/Design';
 import {
   FormModal,
   InputField,
@@ -16,7 +16,6 @@ import {
 import { type Note } from '@/lib/openapi/generated';
 import { createAndEditNoteValidationSchema } from '@/schemas';
 import { editNote } from '@/server/actions/note-actions';
-import { ButtonsContainer, Title } from '@/styles/common.styled';
 import { handleError, StatusCode } from '@/utils';
 
 type EditNoteForm = ZodInfer<typeof createAndEditNoteValidationSchema>;
@@ -47,7 +46,9 @@ const EditNote = ({ note }: { note: Note }) => {
     <FormModal
       action={async (formData: FormData) => await handleAction(formData)}
     >
-      <Title>Edit note</Title>
+      <Typography marginTop="sm" marginBottom="md" textAlign="center">
+        Edit note
+      </Typography>
 
       <InputField
         label="Title"
@@ -83,12 +84,14 @@ const EditNote = ({ note }: { note: Note }) => {
         errors={errors}
       />
 
-      <ButtonsContainer>
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Loading...' : 'Edit Note'}
+      <Stack justifyContent="space-between" marginTop="md">
+        <Button type="submit" disabled={isSubmitting} fontSize="body2">
+          {isSubmitting ? 'Loading...' : 'Update'}
         </Button>
-        <Button onClick={router.back}>Close</Button>
-      </ButtonsContainer>
+        <Button type="button" onClick={router.back} fontSize="body2">
+          Close
+        </Button>
+      </Stack>
     </FormModal>
   );
 };

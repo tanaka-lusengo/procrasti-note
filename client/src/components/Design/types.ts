@@ -1,6 +1,8 @@
 import { type Theme } from '@/styles/styled';
 
-export type TagVariants =
+export type SpacingVariants = keyof Theme['spacing']['gap'];
+
+export type ComponentVariants =
   | 'h1'
   | 'h2'
   | 'h3'

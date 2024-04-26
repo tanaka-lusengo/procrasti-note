@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
 import boredWoman from '@/../public/images/laying-bored-woman.svg';
-import { ButtonLink, Typography } from '@/components';
 import { CreateNote } from '@/components/Actions';
+import { ButtonLink, Stack, Typography } from '@/components/Design';
 import { type Note as NoteModel } from '@/lib/openapi/generated';
 
 import Note from '../Note';
@@ -22,15 +22,23 @@ const NotesContainer = ({ notes }: { notes: NoteModel[] }) => {
   const notesCount = renderNotesCondition ? notes.length : '0 😢';
 
   return (
-    <Styled.Container>
+    <Stack
+      direction="column"
+      alignItems="center"
+      justifyContent="flex-start"
+      gap="md"
+      maxWidth={80}
+      marginTop="lg"
+      marginBottom="lg"
+    >
       <Styled.TopContainer>
         <div>
-          <Typography tag="h1">
+          <Typography component="h1">
             Hey You <Styled.Wave>👋🏾</Styled.Wave>
           </Typography>
           <Typography>
             You currently have{' '}
-            <Typography tag="span" fontSize="h3" color="primary">
+            <Typography component="span" fontSize="h3" color="primary">
               <b>{notesCount}</b>
             </Typography>{' '}
             Notes
@@ -55,13 +63,13 @@ const NotesContainer = ({ notes }: { notes: NoteModel[] }) => {
           ))}
         </Styled.List>
       ) : (
-        <Typography fontSize="h5" textalign="center">
+        <Typography fontSize="h5" textAlign="center">
           Oww... Looks like you have no notes yet 😞
         </Typography>
       )}
 
       {showForm ? <CreateNote /> : null}
-    </Styled.Container>
+    </Stack>
   );
 };
 

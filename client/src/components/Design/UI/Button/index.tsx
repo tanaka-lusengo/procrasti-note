@@ -2,21 +2,23 @@
 
 import { useFormStatus } from 'react-dom';
 
+import { FontSizeVariants } from '../../types';
+
 import * as Styled from './index.styled';
 
 type ButtonProps = {
   $secondary?: boolean;
   $basefont?: boolean;
+  fontSize?: FontSizeVariants;
   children: React.ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button = ({
   $basefont,
   $secondary,
-  type,
-  disabled,
-  onClick,
+  fontSize,
   children,
+  ...rest
 }: ButtonProps) => {
   const { pending } = useFormStatus();
 
@@ -24,9 +26,8 @@ const Button = ({
     <Styled.Button
       $basefont={$basefont}
       $secondary={$secondary}
-      type={type}
-      disabled={disabled}
-      onClick={onClick}
+      fontSize={fontSize}
+      {...rest}
     >
       {pending ? 'Loading...' : children}
     </Styled.Button>

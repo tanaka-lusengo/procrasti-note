@@ -1,2 +1,2 @@
 export { default as DropdownItem } from './DropdownItem';
-export { default as NavItemDropdown } from './NavItemDropdown';
+export { default as NavDropdown } from './NavDropdown';

@@ -13,7 +13,7 @@ export const ButtonLink = styled(Link)`
   background-color: ${({ theme }) => theme.colors.primary};
   border-radius: 1rem;
 
-  transition: 0.4s ease-in-out;
+  transition: 0.3s ease-in-out;
 
   &:hover {
     color: ${({ theme }) => theme.colors.primary};

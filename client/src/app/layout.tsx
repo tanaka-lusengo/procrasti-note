@@ -1,7 +1,7 @@
 import { type Metadata } from 'next';
 
+import { Container } from '@/components/Design';
 import Nav from '@/components/Nav';
-import Container from '@/components/UI/Container/index.styled';
 import Providers from '@/Providers';
 import Toaster from '@/utils/reactHotToast/Toaster';
 
@@ -17,7 +17,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="en">
     <body>
       <Providers>
-        <Container id={MAIN_CONTENT_ID}>
+        <Container component="section" id={MAIN_CONTENT_ID}>
           <Nav />
           <main>{children}</main>
         </Container>

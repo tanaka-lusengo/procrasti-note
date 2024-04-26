@@ -16,9 +16,8 @@ export const DropdownContainer = styled.div<{ $isOpen: boolean }>`
   opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
   background-color: ${({ theme }) => theme.colors.secondary};
 
-  transition: opacity 0.5s;
+  transition: opacity 0.3s;
   transition: opacity 500ms ease;
-  transition-delay: 0.5s;
 
   ul {
     display: flex;

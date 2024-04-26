@@ -2,32 +2,18 @@
 
 import styled from 'styled-components';
 
-export const Section = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  align-items: center;
-  justify-content: center;
+import { theme } from '@/styles';
 
-  margin: 1rem 0;
+const { spacing, typography } = theme;
 
-  h1 {
-    width: 100%;
-    min-height: 11rem;
-    font-family: ${({ theme }) => theme.typography.fontFamily.slabo};
-  }
+export const Subtitle = styled.p`
+  margin-bottom: ${spacing.gap.md}rem;
 
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}px) {
-    h1 {
-      min-height: 0;
-    }
-  }
+  text-align: center;
+  font-size: ${typography.fontSize.h5}rem;
 
-  @media only screen and (min-width: ${({ theme }) => theme.breakpoints.lg}px) {
-    gap: 4rem;
-
-    p {
-      max-width: 60%;
-    }
+  @media only screen and (min-width: ${spacing.breakpoints.md}px) {
+    max-width: 75%;
+    font-size: ${typography.fontSize.h4}rem;
   }
 `;

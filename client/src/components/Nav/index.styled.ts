@@ -2,6 +2,10 @@
 
 import styled from 'styled-components';
 
+import { theme } from '@/styles';
+
+const { breakpoints } = theme.spacing;
+
 export const Nav = styled.nav`
   display: flex;
   align-items: center;
@@ -19,12 +23,12 @@ export const Logo = styled.h1`
     color: ${({ theme }) => theme.colors.primary};
   }
 
-  @media only screen and (min-width: ${({ theme }) => theme.breakpoints.md}px) {
+  @media only screen and (min-width: ${breakpoints.md}px) {
     font-size: ${({ theme }) => theme.typography.fontSize.h3}rem;
   }
 `;
 
-export const NavItemContainer = styled.div`
+export const DropdownContainer = styled.div`
   a {
     display: block;
 
@@ -40,7 +44,7 @@ export const NavItemContainer = styled.div`
     }
   }
 
-  @media only screen and (min-width: ${({ theme }) => theme.breakpoints.md}px) {
+  @media only screen and (min-width: ${breakpoints.md}px) {
     a {
       font-size: ${({ theme }) => theme.typography.fontSize.h4}rem;
     }

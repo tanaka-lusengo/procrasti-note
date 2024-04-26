@@ -16,11 +16,13 @@ const NotesPage = async () => {
 
   if (status === StatusCode.UNAUTHORIZED) {
     redirect('/sign-in');
-  } else if (!data) {
-    return <NotesContainer notes={[]} />;
-  } else if (status === StatusCode.SUCCESS) {
-    return <NotesContainer notes={data} />;
   }
+
+  if (!data || status !== StatusCode.SUCCESS) {
+    return <NotesContainer notes={[]} />;
+  }
+
+  return <NotesContainer notes={data} />;
 };
 
 export default NotesPage;

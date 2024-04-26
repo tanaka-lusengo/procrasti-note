@@ -2,6 +2,10 @@
 
 import styled from 'styled-components';
 
+import { theme } from '@/styles';
+
+const { colors, typography } = theme;
+
 export const ButtonText = styled.button`
   cursor: pointer;
 
@@ -10,9 +14,9 @@ export const ButtonText = styled.button`
   padding: 0;
 
   font: inherit;
-  font-size: ${({ theme }) => theme.typography.fontSize.h4}rem;
+  font-size: ${typography.fontSize.h4}rem;
   font-weight: bold;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${colors.text};
 
   background: none;
   border: none;
@@ -20,6 +24,6 @@ export const ButtonText = styled.button`
   transition: 0.4s ease-in-out;
 
   &:hover {
-    color: ${({ theme }) => theme.colors.primary};
+    color: ${colors.primary};
   }
 `;

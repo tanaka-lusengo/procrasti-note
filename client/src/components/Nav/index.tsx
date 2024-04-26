@@ -4,7 +4,7 @@ import { SignOut } from '@/components/Auth';
 import { getUserSession } from '@/server/actions/auth-actions';
 
 import * as Styled from './index.styled';
-import { DropdownItem, NavItemDropdown } from './subComponents';
+import { DropdownItem, NavDropdown } from './subComponents';
 
 const Nav = async () => {
   const userSession = await getUserSession();
@@ -12,27 +12,27 @@ const Nav = async () => {
   return (
     <header>
       <Styled.Nav>
-        <Styled.NavItemContainer>
-          <NavItemDropdown title="Menu">
+        <Styled.DropdownContainer>
+          <NavDropdown title="Menu">
             <DropdownItem href={'/'}>Home</DropdownItem>
             {userSession ? (
               <DropdownItem href={'/notes'}>Notes</DropdownItem>
             ) : null}
-          </NavItemDropdown>
-        </Styled.NavItemContainer>
+          </NavDropdown>
+        </Styled.DropdownContainer>
 
         <Styled.Logo>
           <Link href={'/'}>Procrasti-Not(e)</Link>
         </Styled.Logo>
 
-        <Styled.NavItemContainer>
-          <NavItemDropdown title="Account">
+        <Styled.DropdownContainer>
+          <NavDropdown title="Account">
             {!userSession ? (
               <DropdownItem href={'/sign-in'}>Sign In</DropdownItem>
             ) : null}
             {userSession ? <SignOut /> : null}
-          </NavItemDropdown>
-        </Styled.NavItemContainer>
+          </NavDropdown>
+        </Styled.DropdownContainer>
       </Styled.Nav>
     </header>
   );
