@@ -4,8 +4,8 @@ import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { Button, Typography } from '@/components';
 import { DeleteNote, EditNote, ToggleComplete } from '@/components/Actions';
+import { Button, Divider, Stack, Typography } from '@/components/Design';
 import { type Note } from '@/lib/openapi/generated';
 import { convertStringToHTML } from '@/utils';
 
@@ -54,18 +54,31 @@ const NoteDetail = ({ note, notes }: NoteDetailProps) => {
 
   return (
     <>
-      <Styled.NoteContainter>
-        <Styled.TopContainer>
-          <Styled.HiddenDiv />
+      <Stack
+        component="section"
+        direction="column"
+        justifyContent="center"
+        gap="md"
+        marginTop="md"
+        marginBottom="md"
+        maxWidth={75}
+      >
+        <Stack alignItems="center" justifyContent="space-between" maxWidth={65}>
+          <Divider hidden />
 
-          <Typography tag="h1" fontSize="h3" textalign="center">
+          <Typography component="h1" fontSize="h3" textAlign="center">
             {title}
           </Typography>
 
           <ToggleComplete note={note} />
-        </Styled.TopContainer>
+        </Stack>
 
-        <Styled.MiddleContainter>
+        <Stack
+          component="section"
+          alignItems="center"
+          justifyContent="center"
+          maxWidth={75}
+        >
           <Styled.IconButton
             $left
             aria-label="Chevron pointing left"
@@ -78,14 +91,14 @@ const NoteDetail = ({ note, notes }: NoteDetailProps) => {
           </Styled.IconButton>
 
           <Styled.ContentContainter>
-            <Typography fontSize="h5" textalign="center">
+            <Typography fontSize="h5" textAlign="center">
               ~ Priority Level:{' '}
-              <Typography tag="span">
+              <Typography component="span">
                 <b>{priority}</b>
               </Typography>{' '}
               ~
             </Typography>
-            <Typography fontSize="h5" textalign="center">
+            <Typography fontSize="h5" textAlign="center">
               <b>{convertStringToHTML(content)}</b>
             </Typography>
           </Styled.ContentContainter>
@@ -99,7 +112,7 @@ const NoteDetail = ({ note, notes }: NoteDetailProps) => {
               about="A chevron icon pointing right"
             ></span>
           </Styled.IconButton>
-        </Styled.MiddleContainter>
+        </Stack>
 
         <Styled.BottomContainer>
           <Link aria-label="Edit button icon" href={'?show-edit-form=true'}>
@@ -111,7 +124,7 @@ const NoteDetail = ({ note, notes }: NoteDetailProps) => {
           <Button onClick={handleGoBack}>Go Back</Button>
           <DeleteNote id={id} isDetailPage iconSize="fa-xl" />
         </Styled.BottomContainer>
-      </Styled.NoteContainter>
+      </Stack>
 
       {showForm ? <EditNote note={note} /> : null}
     </>

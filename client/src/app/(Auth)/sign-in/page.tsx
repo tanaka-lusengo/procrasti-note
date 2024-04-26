@@ -6,14 +6,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type infer as ZodInfer } from 'zod';
 
-import { Button } from '@/components';
+import { Button, Divider, Stack, Typography } from '@/components/Design';
 import { FormModal, InputField } from '@/components/FormComponents';
 import { signInValidationSchema } from '@/schemas';
 import { login } from '@/server/actions/auth-actions';
-import { LowerButtonContainer, Title } from '@/styles/common.styled';
 import { handleError, toastNotifySuccess } from '@/utils';
-
-import * as Styled from './page.styled';
 
 type SignInForm = ZodInfer<typeof signInValidationSchema>;
 
@@ -42,7 +39,9 @@ const SignInForm = () => {
     <FormModal
       action={async (formData: FormData) => await handleAction(formData)}
     >
-      <Title>Sign in</Title>
+      <Typography marginTop="sm" marginBottom="md" textAlign="center">
+        Sign in
+      </Typography>
 
       <InputField
         label="Email"
@@ -60,20 +59,20 @@ const SignInForm = () => {
         errors={errors}
       />
 
-      <Styled.UpperButtonContainer>
-        <Button $basefont type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Loading...' : 'Sign in!'}
-        </Button>
-      </Styled.UpperButtonContainer>
+      <Button $basefont type="submit" disabled={isSubmitting}>
+        {isSubmitting ? 'Loading...' : 'Sign in!'}
+      </Button>
 
-      <Styled.Divider />
+      <Divider />
 
-      <Styled.Typography>Don&apos;t have an account?</Styled.Typography>
+      <Typography component="p" fontSize="h6" color="primary" textAlign="end">
+        <i>Don&apos;t have an account?</i>
+      </Typography>
 
-      <LowerButtonContainer>
+      <Stack alignItems="center" justifyContent="space-between" marginTop="md">
         <Link href={'/'}>Close</Link>
         <Link href={'/sign-up'}>Sign up</Link>
-      </LowerButtonContainer>
+      </Stack>
     </FormModal>
   );
 };

@@ -4,15 +4,17 @@ import { createGlobalStyle } from 'styled-components';
 
 import theme from './theme';
 
+const { spacing, colors, typography } = theme;
+
 const GlobalStyles = createGlobalStyle`
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: ${theme.typography.fontFamily.slabo};
-  color: ${theme.colors.text};
-  background-color: ${theme.colors.secondary};
+  font-family: ${typography.fontFamily.slabo};
+  color: ${colors.text};
+  background-color: ${colors.secondary};
 }
 
 html {
@@ -86,7 +88,7 @@ p {
   font-size: 1.6rem;
   line-height: 1.52;
 
-  @media (min-width: ${theme.breakpoints.sm}px) {
+  @media (min-width: ${spacing.breakpoints}px) {
     font-size: 1.8rem;
   }
 }
@@ -95,7 +97,7 @@ h1 {
   font-size: 3.6rem;
   line-height: 1.375;
 
-   @media (min-width: ${theme.breakpoints.sm}px) {
+   @media (min-width: ${spacing.breakpoints}px) {
     font-size: 4rem;
   }
 }
@@ -104,7 +106,7 @@ h2 {
   font-size: 2.8rem;
   line-height: 1.38;
 
-   @media (min-width: ${theme.breakpoints.sm}px) {
+   @media (min-width: ${spacing.breakpoints}px) {
     font-size: 3.6rem;
   }
 }
@@ -113,7 +115,7 @@ h3 {
   font-size: 2.2rem;
   line-height: 1.428;
 
-   @media (min-width: ${theme.breakpoints.sm}px) {
+   @media (min-width: ${spacing.breakpoints}px) {
     font-size: 2.8rem;
   }
 }
@@ -122,7 +124,7 @@ h4 {
   font-size: 1.8rem;
   line-height: 1.5;
 
-   @media (min-width: ${theme.breakpoints.sm}px) {
+   @media (min-width: ${spacing.breakpoints}px) {
     font-size: 2.2rem;
   }
 }
@@ -131,7 +133,7 @@ h5 {
   font-size: 1.6rem;
   line-height: 1.3;
 
-   @media (min-width: ${theme.breakpoints.sm}px) {
+   @media (min-width: ${spacing.breakpoints}px) {
     font-size: 1.8rem;
   }
 }

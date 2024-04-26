@@ -10,7 +10,7 @@ type NavItemProps = {
   children?: React.ReactNode;
 };
 
-const NavItemDropdown = ({ title, children }: NavItemProps) => {
+const NavDropdown = ({ title, children }: NavItemProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   // To close the dropdown when clicking outside of it
@@ -44,4 +44,4 @@ const NavItemDropdown = ({ title, children }: NavItemProps) => {
   );
 };
 
-export default NavItemDropdown;
+export default NavDropdown;

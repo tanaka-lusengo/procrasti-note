@@ -6,11 +6,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type infer as ZodInfer } from 'zod';
 
-import { Button } from '@/components';
+import { Button, Stack, Typography } from '@/components/Design';
 import { FormModal, InputField } from '@/components/FormComponents';
 import { signUpValidationSchema } from '@/schemas';
 import { signUp } from '@/server/actions/auth-actions';
-import { LowerButtonContainer, Title } from '@/styles/common.styled';
 import {
   handleError,
   StatusCode,
@@ -50,7 +49,9 @@ const SignUpForm = () => {
     <FormModal
       action={async (formData: FormData) => await handleAction(formData)}
     >
-      <Title>Sign up</Title>
+      <Typography marginTop="sm" marginBottom="md" textAlign="center">
+        Sign up
+      </Typography>
 
       <InputField
         label="First Name"
@@ -85,7 +86,7 @@ const SignUpForm = () => {
         errors={errors}
       />
 
-      <LowerButtonContainer>
+      <Stack alignItems="center" justifyContent="space-between" marginTop="md">
         <Button $basefont type="submit" disabled={isSubmitting || !isValid}>
           {isSubmitting ? 'Loading...' : 'Sign up!'}
         </Button>
@@ -93,7 +94,7 @@ const SignUpForm = () => {
         <Link href={'/'} type="link">
           Close
         </Link>
-      </LowerButtonContainer>
+      </Stack>
     </FormModal>
   );
 };

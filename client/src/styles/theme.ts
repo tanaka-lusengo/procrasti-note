@@ -1,11 +1,26 @@
 import { slabo, ultra } from './fonts';
 
 const theme = {
-  breakpoints: {
-    sm: 576,
-    md: 768,
-    lg: 992,
-    xl: 1200,
+  spacing: {
+    breakpoints: {
+      sm: 576,
+      md: 768,
+      lg: 992,
+      xl: 1200,
+    },
+    gap: {
+      xs: 0.4,
+      sm: 0.8,
+      md: 1.6,
+      lg: 3.2,
+      xl: 6.4,
+    },
+    pageMaxWidth: {
+      sm: 54,
+      md: 72,
+      lg: 96,
+      xl: 115,
+    },
   },
   typography: {
     fontFamily: {

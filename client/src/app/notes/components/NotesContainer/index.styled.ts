@@ -1,20 +1,8 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  align-items: center;
-  justify-content: flex-start;
+import { theme } from '@/styles';
 
-  max-width: 80rem;
-  margin: 4rem auto;
-
-  span {
-    font-weight: bold;
-    color: ${({ theme }) => theme.colors.primary};
-  }
-`;
+const { spacing } = theme;
 
 export const TopContainer = styled.div`
   display: flex;
@@ -25,7 +13,7 @@ export const TopContainer = styled.div`
   width: 100%;
   max-width: 65rem;
 
-  @media only screen and (min-width: ${({ theme }) => theme.breakpoints.md}px) {
+  @media only screen and (min-width: ${spacing.breakpoints.md}px) {
     flex-direction: row;
   }
 `;

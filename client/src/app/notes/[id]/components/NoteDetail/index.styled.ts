@@ -1,43 +1,8 @@
 import styled from 'styled-components';
 
-export const NoteContainter = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+import { theme } from '@/styles';
 
-  width: 100%;
-  max-width: 75rem;
-  margin: 2rem auto;
-
-  h6 {
-    font-weight: 400;
-  }
-`;
-
-export const TopContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  width: 100%;
-  max-width: 65rem;
-  margin: 0 auto;
-
-  @media only screen and (min-width: ${({ theme }) => theme.breakpoints.md}px) {
-    h3 {
-      font-size: ${({ theme }) => theme.typography.fontSize.h2}rem;
-    }
-  }
-`;
-
-export const MiddleContainter = styled.section`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  max-width: 75rem;
-`;
+const { colors, typography, spacing } = theme;
 
 export const IconButton = styled.button<{ $left?: boolean }>`
   cursor: pointer;
@@ -49,7 +14,7 @@ export const IconButton = styled.button<{ $left?: boolean }>`
     transition: 0.3s ease-in-out;
 
     &:hover {
-      color: ${({ theme }) => theme.colors.primary};
+      color: ${colors.primary};
     }
 
     &:active {
@@ -73,16 +38,12 @@ export const ContentContainter = styled.div`
   margin: 2rem 0;
   padding: 2rem;
 
-  background-color: ${({ theme }) => theme.colors.tertiary};
+  background-color: ${colors.tertiary};
   border-radius: 1rem;
 
-  @media only screen and (min-width: ${({ theme }) => theme.breakpoints.md}px) {
-    h6 {
-      font-size: ${({ theme }) => theme.typography.fontSize.h5}rem;
-    }
-
-    h5 {
-      font-size: ${({ theme }) => theme.typography.fontSize.h4}rem;
+  @media only screen and (min-width: ${spacing.breakpoints.md}px) {
+    p {
+      font-size: ${typography.fontSize.h4}rem;
     }
   }
 `;
@@ -98,15 +59,11 @@ export const BottomContainer = styled.div`
   padding: 0 2rem;
 
   svg {
-    color: ${({ theme }) => theme.colors.error};
+    color: ${colors.error};
     transition: 0.3s ease-in-out;
 
     &:hover {
       transform: translateY(-0.3rem);
     }
   }
-`;
-
-export const HiddenDiv = styled.div`
-  visibility: hidden;
 `;

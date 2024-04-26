@@ -33,9 +33,4 @@ export const CardContent = styled(Link)`
   &:hover {
     transform: scale(1.02);
   }
-
-  h6 {
-    font-weight: normal;
-    font-style: italic;
-  }
 `;

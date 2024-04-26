@@ -1,10 +1,10 @@
-import { Typography } from '@/components';
 import { DeleteNote, ToggleComplete } from '@/components/Actions';
+import { Typography } from '@/components/Design';
 import { type Note as NoteModel } from '@/lib/openapi/generated';
 
 import * as Styled from './index.styled';
 
-const Note = async ({ note }: { note: NoteModel }) => {
+const Note = ({ note }: { note: NoteModel }) => {
   const { id, title, priority } = note;
 
   return (
