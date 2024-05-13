@@ -21,8 +21,7 @@ router = APIRouter(
 # JWT expiration time
 SECRET_KEY = os.environ.get("SECRET_KEY")
 ALGORITHM = os.environ.get("ALGORITHM")
-ACCESS_TOKEN_EXPIRE_MINUTES = int(
-    os.environ.get("ACCESS_TOKEN_EXPIRE_MINUTES"))
+ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 # Define OAuth2 password bearer with token URL
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl="auth/token")
