@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from database import Base
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Boolean
 
@@ -14,7 +14,7 @@ class User(Base):
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
     admin = Column(Boolean, default=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.now(timezone.utc))
 
 
 class Note(Base):
@@ -25,6 +25,6 @@ class Note(Base):
     content = Column(String)
     priority = Column(Integer)
     complete = Column(Boolean, default=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.now(timezone.utc))
     author_id = Column(Integer, ForeignKey(
         'user.id', ondelete='CASCADE', onupdate='CASCADE'))
