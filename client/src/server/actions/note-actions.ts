@@ -44,7 +44,7 @@ export const createNote = async (formData: FormData) => {
   // Validate formData with zod schema
   const parsedData = createAndEditNoteValidationSchema.parse(creatFormvalues);
 
-  const newNoteData: NoteCreate = {
+  const createNoteData: NoteCreate = {
     title: parsedData.title,
     priority: Number(parsedData.priority),
     content: parsedData.content,
@@ -56,7 +56,7 @@ export const createNote = async (formData: FormData) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newNoteData),
+      body: JSON.stringify(createNoteData),
     });
 
     revalidatePath('/notes');

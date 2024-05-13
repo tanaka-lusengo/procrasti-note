@@ -1,7 +1,14 @@
-import { type JWTPayload, jwtVerify } from 'jose';
+import { jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 
-import { logErrorMessage, SECRET_KEY } from '@/utils';
+import { type User } from '@/lib/openapi/generated';
+import {
+  API_URL,
+  fetchWithErrors,
+  logErrorMessage,
+  SECRET_KEY,
+  StatusCode,
+} from '@/utils';
 
 const key = new TextEncoder().encode(SECRET_KEY);
 
@@ -27,30 +34,18 @@ export const getAccessToken = async () => {
   }
 };
 
-type ParsedToken =
-  | (JWTPayload & {
-      id: number;
-    })
-  | null;
-
-export const getCurrentUser = async (
-  accessToken: string,
-): Promise<ParsedToken> => {
-  if (!accessToken) {
-    return null;
-  }
-
+export const getCurrentUser = async (access_token: string) => {
   try {
-    // TODO: Update to make request to the server to get the user data
-    const decryptedToken = await decrypt(accessToken);
-    const { id } = decryptedToken;
+    const user: User = await fetchWithErrors(`${API_URL}/api/user`, {
+      method: 'GET',
+      headers: {
+        authorization: `Bearer ${access_token}`,
+      },
+    });
 
-    return {
-      ...decryptedToken,
-      id: id as number,
-    };
+    return { status: StatusCode.SUCCESS, data: user };
   } catch (error) {
     logErrorMessage(error, 'processing getCurrentUser');
-    return null;
+    return { status: StatusCode.NOT_FOUND, data: null };
   }
 };
