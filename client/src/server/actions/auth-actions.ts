@@ -2,6 +2,7 @@
 
 import { cookies } from 'next/headers';
 
+import { type UserCreate } from '@/lib/openapi/generated';
 import { signInValidationSchema, signUpValidationSchema } from '@/schemas';
 import {
   API_URL,
@@ -38,23 +39,24 @@ export const login = async (formData: FormData) => {
       throw new Error(`Login request failed: ${response.statusText}`);
     }
 
-    const data = await response.json();
+    const { access_token } = await response.json();
 
-    if (!data.access_token) {
+    if (!access_token) {
       throw new Error('Token not received');
     }
 
     // Save the JWT as a cookie
-    const { access_token } = data;
     const expires = new Date(Date.now() + COOKIE_EXPIRATION_TIME);
 
     cookies().set('access_token', access_token, { expires, httpOnly: true });
 
-    // TODO: Set user data in context e.g. React Context or Zustand... tbc 🤔
-    const user_session = await getCurrentUser(data.access_token);
+    const { status, data } = await getCurrentUser(access_token);
 
-    // eslint-disable-next-line no-console
-    console.log('user_session:', user_session);
+    if (status === StatusCode.NOT_FOUND || !data) {
+      throw new Error('Failed to fetch user data');
+    }
+
+    return { status: StatusCode.SUCCESS, data };
   } catch (error) {
     logErrorMessage(error, 'logging in (server) 😿');
     throw error;
@@ -71,14 +73,12 @@ export const signUp = async (formData: FormData) => {
   // Validate formData with zod schema
   const parsedData = signUpValidationSchema.parse(userData);
 
-  const parsedformBody = {
+  const createUserData: UserCreate = {
     first_name: parsedData.firstName,
     last_name: parsedData.lastName,
     email: parsedData.email,
     password: parsedData.password,
   };
-
-  const formBody = JSON.stringify(parsedformBody);
 
   try {
     const response = await fetch(`${API_URL}/api/user`, {
@@ -86,7 +86,7 @@ export const signUp = async (formData: FormData) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: formBody,
+      body: JSON.stringify(createUserData),
     });
 
     if (!response.ok) {
@@ -95,10 +95,7 @@ export const signUp = async (formData: FormData) => {
 
     const data = await response.json();
 
-    return {
-      status: StatusCode.SUCCESS,
-      data,
-    };
+    return { status: StatusCode.SUCCESS, data };
   } catch (error) {
     logErrorMessage(error, 'signing up (server) 😿');
   }

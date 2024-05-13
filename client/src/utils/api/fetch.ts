@@ -20,7 +20,9 @@ export const fetchWithErrors = async (url: string, options?: RequestInit) => {
 
   // Check if the response is not ok and throw an error with the error message from the server
   if (!response.ok) {
-    throw new Error(`Request failed: ${response.statusText}`);
+    throw new Error(
+      `Request failed: ${response.statusText} | Status: ${response.status}`,
+    );
   }
 
   // Check if the response has a body before trying to parse it due to the possibility of an empty body on a successful response with status 204
