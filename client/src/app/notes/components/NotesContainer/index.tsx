@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import boredWoman from '@/../public/images/laying-bored-woman.svg';
 import { CreateNote } from '@/components/Actions';
 import { ButtonLink, Stack, Typography } from '@/components/Design';
+import { useUser } from '@/context/UserContext';
 import { type Note as NoteModel } from '@/lib/openapi/generated';
 
 import Note from '../Note';
@@ -21,6 +22,8 @@ const NotesContainer = ({ notes }: { notes: NoteModel[] }) => {
 
   const notesCount = renderNotesCondition ? notes.length : '0 😢';
 
+  const { user } = useUser();
+
   return (
     <Stack
       direction="column"
@@ -34,7 +37,7 @@ const NotesContainer = ({ notes }: { notes: NoteModel[] }) => {
       <Styled.TopContainer>
         <div>
           <Typography component="h1">
-            Hey You <Styled.Wave>👋🏾</Styled.Wave>
+            Hey {user?.username ?? 'You'} <Styled.Wave>👋🏾</Styled.Wave>
           </Typography>
           <Typography>
             You currently have{' '}
