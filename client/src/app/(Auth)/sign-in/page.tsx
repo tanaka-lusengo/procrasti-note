@@ -8,13 +8,15 @@ import { type infer as ZodInfer } from 'zod';
 
 import { Button, Divider, Stack, Typography } from '@/components/Design';
 import { FormModal, InputField } from '@/components/FormComponents';
+import { useUser } from '@/context/UserContext';
 import { signInValidationSchema } from '@/schemas';
 import { login } from '@/server/actions/auth-actions';
-import { handleError, toastNotifySuccess } from '@/utils';
+import { handleError, StatusCode, toastNotifySuccess } from '@/utils';
 
 type SignInForm = ZodInfer<typeof signInValidationSchema>;
 
 const SignInForm = () => {
+  const { setUser } = useUser();
   const router = useRouter();
 
   const {
@@ -27,9 +29,12 @@ const SignInForm = () => {
 
   const handleAction = async (formData: FormData) => {
     try {
-      await login(formData);
-      router.push('/notes');
-      toastNotifySuccess('Logged In Successfully 😸');
+      const { status, data } = await login(formData);
+      if (status === StatusCode.SUCCESS && data) {
+        setUser(data);
+        toastNotifySuccess('Logged In Successfully 😸');
+        router.push('/notes');
+      }
     } catch (error) {
       handleError('logging in 😿', error);
     }
