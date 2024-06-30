@@ -22,18 +22,15 @@ export const DynamicTypography = styled(
     ...props
   }: TypographyProps) => createElement(component, props, children),
 )`
+  margin-top: ${({ marginTop }) =>
+    marginTop ? `${SPACING_MAP[marginTop]}rem` : `0`};
+  margin-bottom: ${({ marginBottom }) =>
+    marginBottom ? `${SPACING_MAP[marginBottom]}rem` : `0`};
+
   font-size: ${({ component = 'p', fontSize }) =>
     fontSize
       ? `${FONTSIZE_MAP[fontSize]}rem`
       : `${FONTSIZE_MAP[component]}rem`};
-
   color: ${({ color }) => (color ? theme.colors[color] : theme.colors.text)};
-
   text-align: ${({ textAlign }) => textAlign};
-
-  margin-top: ${({ marginTop }) =>
-    marginTop ? `${SPACING_MAP[marginTop]}rem` : `0`};
-
-  margin-bottom: ${({ marginBottom }) =>
-    marginBottom ? `${SPACING_MAP[marginBottom]}rem` : `0`};
 `;

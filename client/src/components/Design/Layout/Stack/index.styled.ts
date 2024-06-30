@@ -25,18 +25,14 @@ export const DynamicStack = styled(
     ...props
   }: StackProps) => createElement(component, props, children),
 )`
-  width: 100%;
-  max-width: ${({ maxWidth }) => maxWidth && `${maxWidth}rem`};
-
   display: flex;
-
   flex-direction: ${({ direction }) => direction};
-
+  gap: ${({ gap = 'sm' }) => `${SPACING_MAP[gap]}rem`};
+  align-items: ${({ alignItems }) => alignItems};
   justify-content: ${({ justifyContent }) => justifyContent};
 
-  align-items: ${({ alignItems }) => alignItems};
-
-  gap: ${({ gap = 'sm' }) => `${SPACING_MAP[gap]}rem`};
+  width: 100%;
+  max-width: ${({ maxWidth }) => maxWidth && `${maxWidth}rem`};
 
   /* Margin */
 

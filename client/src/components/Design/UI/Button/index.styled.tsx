@@ -20,19 +20,15 @@ export const Button = styled.button<ButtonProps>`
     $basefont
       ? theme.typography.fontFamily.slabo
       : theme.typography.fontFamily.ultra};
-
   font-size: ${({ theme, fontSize }) =>
     fontSize
       ? `${FONTSIZE_MAP[fontSize]}rem`
       : `${theme.typography.fontSize.h5}rem`};
-
   font-weight: bold;
-
   color: ${({ theme }) => theme.colors.secondary};
 
   background-color: ${({ theme, $secondary }) =>
     $secondary ? theme.colors.tertiaryDark : theme.colors.primary};
-
   border: none;
   border-radius: 1rem;
 

@@ -1,13 +1,11 @@
 {
   "extends": ["stylelint-config-standard", "stylelint-config-clean-order"],
   "customSyntax": "postcss-styled-syntax",
-  "processors": [
-    [
-      "stylelint-processor-styled-components",
-      {
-        "moduleName": "styled-components"
-      }
-    ]
+  "overrides": [
+    {
+      "files": ["*.{styled.ts,styled.tsx}"],
+      "processor": "stylelint-processor-styled-components"
+    }
   ],
   "rules": {
     "media-query-no-invalid": null

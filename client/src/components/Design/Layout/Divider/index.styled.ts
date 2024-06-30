@@ -4,8 +4,8 @@ export const Divider = styled.div`
   ${({ hidden }) =>
     hidden
       ? css`
-          visibility: hidden;
           display: block;
+          visibility: hidden;
         `
       : css`
           margin: 2rem 0;

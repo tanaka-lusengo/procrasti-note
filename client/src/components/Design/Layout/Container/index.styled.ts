@@ -16,18 +16,15 @@ export const DynamicContainer = styled(
   ({ component = 'div', maxWidth, children, ...props }: ContainerProps) =>
     createElement(component, props, children),
 )`
-  margin: 0 auto;
-  ${({ margin }) => margin && `margin: ${SPACING_MAP[margin]}rem;`}
-  ${({ padding }) => padding && `padding: ${SPACING_MAP[padding]}rem;`}
-  
   width: 100%;
-
   ${({ maxWidth }) =>
     maxWidth &&
     css`
       max-width: ${`${maxWidth}rem`};
     `}
-
+  margin: 0 auto;
+  ${({ margin }) => margin && `margin: ${SPACING_MAP[margin]}rem;`}
+  ${({ padding }) => padding && `padding: ${SPACING_MAP[padding]}rem;`}
   background-color: transparent;
 
   /* Breakpoints */
