@@ -30,7 +30,7 @@ async def get_user(current_user: user_dependency, db: db_dependency):
             status_code=status.HTTP_404_NOT_FOUND, detail="User does not exist in the system")
 
 
-@router.post('', status_code=status.HTTP_201_CREATED)
+@router.post("", status_code=status.HTTP_201_CREATED)
 async def create_user(user_create: UserCreate, db: db_dependency):
     try:
         # Create a new user model with the provided data
