@@ -8,11 +8,13 @@ on:
       - "client/src/**/*.jsx"
       - "client/src/**/*.ts"
       - "client/src/**/*.tsx"
+      - "api/**/*"
 
 jobs:
   JsTest:
     name: Run javascript tests
     runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.changed_files != 0 }} # Ensure the job runs only if there are changes in the PR
 
     steps:
       - name: Setup Node.js environment
