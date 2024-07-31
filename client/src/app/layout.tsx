@@ -1,3 +1,4 @@
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { type Metadata } from 'next';
 
 import { Container } from '@/components/Design';
@@ -24,6 +25,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
       </Providers>
 
       <Toaster />
+      <SpeedInsights />
     </body>
 
     <PreloadResources />
