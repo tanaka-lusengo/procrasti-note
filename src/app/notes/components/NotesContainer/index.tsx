@@ -18,9 +18,9 @@ const NotesContainer = ({ notes }: { notes: NoteModel[] }) => {
   const searchParams = useSearchParams()?.get('show-form');
   const showForm = Boolean(searchParams);
 
-  const renderNotesCondition = notes && notes.length != 0;
+  const showNotes = notes && notes.length != 0;
 
-  const notesCount = renderNotesCondition ? notes.length : '0 😢';
+  const notesCount = showNotes ? notes.length : '0 😢';
 
   const { user } = useUser();
 
@@ -59,7 +59,7 @@ const NotesContainer = ({ notes }: { notes: NoteModel[] }) => {
 
       <ButtonLink href={'?show-form=true'}>New Note</ButtonLink>
 
-      {renderNotesCondition ? (
+      {showNotes ? (
         <Styled.List>
           {notes.map((note) => (
             <Note key={note.id} note={note} />

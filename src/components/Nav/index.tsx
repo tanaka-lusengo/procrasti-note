@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { SignOut } from '@/components/Auth';
+import { SignOut } from '@/components/Actions';
 import { getUserSession } from '@/server/actions/auth-actions';
 
 import * as Styled from './index.styled';
