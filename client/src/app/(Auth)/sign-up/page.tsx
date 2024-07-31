@@ -9,7 +9,8 @@ import { type infer as ZodInfer } from 'zod';
 import { Button, Stack, Typography } from '@/components/Design';
 import { FormModal, InputField } from '@/components/FormComponents';
 import { signUpValidationSchema } from '@/schemas';
-import { handleError, toastNotifySuccess } from '@/utils';
+import { signUp } from '@/server/actions/auth-actions';
+import { handleError, StatusCode, toastNotifySuccess } from '@/utils';
 
 type SignUpForm = ZodInfer<typeof signUpValidationSchema>;
 
@@ -26,18 +27,11 @@ const SignUpForm = () => {
 
   const handleAction = async (formData: FormData) => {
     try {
-      const response = await fetch('/api/sign-up', {
-        method: 'POST',
-        body: formData,
-      });
+      const { status } = await signUp(formData);
 
-      await response.json();
-
-      if (response.ok) {
+      if (status === StatusCode.SUCCESS) {
         toastNotifySuccess('Sign up Success, now sign in! 😸');
         router.push('/sign-in');
-      } else {
-        handleError('signing up 😿', response.statusText);
       }
     } catch (error) {
       handleError('signing up 😿', error);

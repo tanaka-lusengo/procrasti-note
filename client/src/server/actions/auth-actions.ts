@@ -56,7 +56,7 @@ export const signIn = async (formData: FormData) => {
       throw new Error('Failed to fetch user data');
     }
 
-    return data;
+    return { status: StatusCode.SUCCESS, data };
   } catch (error) {
     logErrorMessage(error, 'logging in (server) 😿');
     throw error;
@@ -93,11 +93,10 @@ export const signUp = async (formData: FormData) => {
       throw new Error(`Signup request failed: ${response.statusText}`);
     }
 
-    const data = await response.json();
-
-    return data;
+    return { status: StatusCode.SUCCESS };
   } catch (error) {
     logErrorMessage(error, 'signing up (server) 😿');
+    throw error;
   }
 };
 
