@@ -1,5 +1,6 @@
 export * from './api';
 export * from './convertStringToHTML';
+export * from './environments';
 export * from './errorHandlers';
 export * from './formatDate';
 export * from './reactHotToast';

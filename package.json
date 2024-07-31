@@ -7,6 +7,7 @@
     "next-dev": "next dev",
     "dev": "concurrently \"pnpm run fastapi-dev\" \"pnpm run next-dev --turbo\"",
     "build": "next build",
+    "start": "next start",
     "preinstall": "npx only-allow pnpm",
     "generate-openapi-client": "openapi --input ./src/lib/openapi/openapi-spec.json --output ./src/lib/openapi/generated --useUnionTypes",
     "test": "vitest",
