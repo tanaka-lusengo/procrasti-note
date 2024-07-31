@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { type Metadata } from 'next';
 
@@ -17,6 +18,9 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="en">
     <body>
+      <Analytics />
+      <SpeedInsights />
+
       <Providers>
         <Container component="section" id={MAIN_CONTENT_ID}>
           <Nav />
@@ -25,7 +29,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
       </Providers>
 
       <Toaster />
-      <SpeedInsights />
     </body>
 
     <PreloadResources />
