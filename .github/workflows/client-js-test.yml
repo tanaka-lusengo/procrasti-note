@@ -3,12 +3,11 @@ name: js-test
 on:
   pull_request:
     paths:
-      - '.github/workflows/js-test.yml'
-      - 'src/**/*.js'
-      - 'src/**/*.jsx'
-      - 'src/**/*.ts'
-      - 'src/**/*.tsx'
-      - 'api/**/*.py'
+      - ".github/workflows/js-test.yml"
+      - "client/src/**/*.js"
+      - "client/src/**/*.jsx"
+      - "client/src/**/*.ts"
+      - "client/src/**/*.tsx"
 
 jobs:
   JsTest:
@@ -19,7 +18,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       # Ensures the entire repo is checked out (including tags)
       - name: Checkout repository
@@ -28,13 +27,15 @@ jobs:
           fetch-depth: 0
 
       # Cache and install node_modules
-      - name: pnpm install dependencies with caching
+      - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
           version: 8
-          run_install: |
-            - recursive: true
-              args: [--frozen-lockfile]
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --recursive
+        working-directory: client
 
       - name: GitHub Action for Javascript testing
         run: pnpm test
+        working-directory: client
