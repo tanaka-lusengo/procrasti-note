@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 
 import { type User } from '@/lib/openapi/generated';
 import {
+  ALGORITHM,
   API_URL,
   fetchWithErrors,
   logErrorMessage,
@@ -14,7 +15,7 @@ const key = new TextEncoder().encode(SECRET_KEY);
 
 export const decrypt = async (token: string) => {
   const { payload } = await jwtVerify(token, key, {
-    algorithms: ['HS256'],
+    algorithms: [ALGORITHM],
   });
   return payload;
 };

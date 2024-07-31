@@ -1,20 +1,14 @@
-import { getAccessToken } from '@/server/actions/action-helpers';
+import { StatusCode } from '@/utils/api/constants';
 
 export const fetchWithErrors = async (url: string, options?: RequestInit) => {
-  const accessToken = await getAccessToken();
-
   const response = await fetch(url, {
     ...options,
     credentials: 'include',
     cache: 'no-cache',
-    headers: {
-      ...options?.headers,
-      ...(accessToken && { authorization: `Bearer ${accessToken}` }),
-    },
   });
 
   // Check if the user is authenticated, if not, throw an "Unauthorized" error
-  if (response.status === 401) {
+  if (response.status === StatusCode.UNAUTHORIZED) {
     throw new Error(response.statusText);
   }
 
