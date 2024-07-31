@@ -10,13 +10,21 @@ import {
 import { createAndEditNoteValidationSchema } from '@/schemas';
 import { API_URL, fetchWithErrors, logErrorMessage, StatusCode } from '@/utils';
 
+import { getAccessToken } from './action-helpers';
+
 export const getAllNotes = async () => {
   try {
-    const notes: Note[] = await fetchWithErrors(`${API_URL}/api/notes`);
+    const accessToken = await getAccessToken();
+
+    const notes: Note[] = await fetchWithErrors(`${API_URL}/api/notes`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
     return { status: StatusCode.SUCCESS, data: notes };
   } catch (error) {
-    if (error instanceof Error && error.message === StatusCode.UNAUTHORIZED) {
+    if (error instanceof Error && error.message === 'Unauthorized') {
       return { status: error.message, data: [] };
     }
     logErrorMessage(error, 'fetching notes in getAllNotes 😿');
@@ -26,11 +34,17 @@ export const getAllNotes = async () => {
 
 export const getSingleNote = async (noteId: string) => {
   try {
-    const note: Note = await fetchWithErrors(`${API_URL}/api/note/${noteId}`);
+    const accessToken = await getAccessToken();
+
+    const note: Note = await fetchWithErrors(`${API_URL}/api/note/${noteId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
     return { status: StatusCode.SUCCESS, data: note };
   } catch (error) {
-    if (error instanceof Error && error.message === StatusCode.UNAUTHORIZED) {
+    if (error instanceof Error && error.message === 'Unauthorized') {
       return { status: error.message, data: undefined };
     }
     logErrorMessage(error, 'fetching note in getSingleNote 😿');
@@ -51,10 +65,13 @@ export const createNote = async (formData: FormData) => {
   };
 
   try {
+    const accessToken = await getAccessToken();
+
     await fetchWithErrors(`${API_URL}/api/note`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(createNoteData),
     });
@@ -86,10 +103,13 @@ export const editNote = async (
   };
 
   try {
+    const accessToken = await getAccessToken();
+
     await fetchWithErrors(`${API_URL}/api/note/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(editNoteData),
     });
@@ -104,8 +124,13 @@ export const editNote = async (
 
 export const deleteNote = async (id: Note['id'], isDetailPage?: boolean) => {
   try {
+    const accessToken = await getAccessToken();
+
     await fetchWithErrors(`${API_URL}/api/note/${id}`, {
       method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
 
     if (isDetailPage) {
@@ -131,10 +156,13 @@ export const toggleComplete = async (
   };
 
   try {
+    const accessToken = await getAccessToken();
+
     await fetchWithErrors(`${API_URL}/api/note/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(editNoteData),
     });

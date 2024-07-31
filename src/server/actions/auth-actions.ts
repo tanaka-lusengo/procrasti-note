@@ -13,7 +13,7 @@ import {
 
 import { decrypt, getCurrentUser } from './action-helpers';
 
-export const login = async (formData: FormData) => {
+export const signIn = async (formData: FormData) => {
   const userData = Object.fromEntries(formData.entries());
 
   // Validate formData with zod schema
@@ -56,7 +56,7 @@ export const login = async (formData: FormData) => {
       throw new Error('Failed to fetch user data');
     }
 
-    return { status: StatusCode.SUCCESS, data };
+    return data;
   } catch (error) {
     logErrorMessage(error, 'logging in (server) 😿');
     throw error;
@@ -95,7 +95,7 @@ export const signUp = async (formData: FormData) => {
 
     const data = await response.json();
 
-    return { status: StatusCode.SUCCESS, data };
+    return data;
   } catch (error) {
     logErrorMessage(error, 'signing up (server) 😿');
   }
@@ -111,7 +111,7 @@ export const getUserSession = async () => {
 
     return await decrypt(accessToken);
   } catch (error) {
-    logErrorMessage(error, 'with getUserSession 😿');
+    logErrorMessage(error, 'processing getUserSession');
     return null;
   }
 };
