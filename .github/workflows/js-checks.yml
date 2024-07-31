@@ -1,20 +1,18 @@
-name: js-lint
+name: js-checks
 
 on:
   pull_request:
     paths:
-      - ".github/workflows/js-lint.yml"
-      - "client/src/**/*.js"
-      - "client/src/**/*.jsx"
-      - "client/src/**/*.ts"
-      - "client/src/**/*.tsx"
-      - "api/**/*"
+      - ".github/workflows/js-checks.yml"
+      - "**/*.js"
+      - "**/*.jsx"
+      - "**/*.ts"
+      - "**/*.tsx"
 
 jobs:
-  JsLint:
-    name: Lint javascript and typescript files
+  JsChecks:
+    name: Run Javascript linting and tests
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.changed_files != 0 }} # Ensure the job runs only if there are changes in the PR
 
     steps:
       - name: Setup Node.js environment
@@ -38,6 +36,11 @@ jobs:
         run: pnpm install --frozen-lockfile --recursive
         working-directory: client
 
+        # Run linting and testing scripts
       - name: GitHub Action for Javascript linting
         run: pnpm lint:fix
+        working-directory: client
+
+      - name: GitHub Action for Javascript testing
+        run: pnpm test
         working-directory: client
