@@ -10,8 +10,7 @@ import { Button, Divider, Stack, Typography } from '@/components/Design';
 import { FormModal, InputField } from '@/components/FormComponents';
 import { useUser } from '@/context/UserContext';
 import { signInValidationSchema } from '@/schemas';
-import { login } from '@/server/actions/auth-actions';
-import { handleError, StatusCode, toastNotifySuccess } from '@/utils';
+import { handleError, toastNotifySuccess } from '@/utils';
 
 type SignInForm = ZodInfer<typeof signInValidationSchema>;
 
@@ -29,11 +28,19 @@ const SignInForm = () => {
 
   const handleAction = async (formData: FormData) => {
     try {
-      const { status, data } = await login(formData);
-      if (status === StatusCode.SUCCESS && data) {
-        setUser(data);
+      const response = await fetch('/api/sign-in', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setUser(result.data);
         toastNotifySuccess('Logged In Successfully 😸');
         router.push('/notes');
+      } else {
+        handleError('logging in 😿', response.statusText);
       }
     } catch (error) {
       handleError('logging in 😿', error);
