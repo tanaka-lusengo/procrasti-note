@@ -11,6 +11,7 @@ on:
 
 jobs:
   JsChecks:
+    if: ${{ github.actor != 'dependabot[bot]' }}
     name: Run Javascript linting and tests
     runs-on: ubuntu-latest
 
