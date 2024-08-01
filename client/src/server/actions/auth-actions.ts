@@ -1,62 +1,52 @@
 'use server';
 
+import bcrypt from 'bcrypt';
 import { cookies } from 'next/headers';
 
-import { type UserCreate } from '@/lib/openapi/generated';
+import { prisma } from '@/lib';
 import { signInValidationSchema, signUpValidationSchema } from '@/schemas';
-import {
-  API_URL,
-  COOKIE_EXPIRATION_TIME,
-  logErrorMessage,
-  StatusCode,
-} from '@/utils';
+import type { UserCreate } from '@/types';
+import { COOKIE_EXPIRATION_TIME, logErrorMessage, StatusCode } from '@/utils';
 
-import { decrypt, getCurrentUser } from './action-helpers';
+import { encrypt } from './helpers';
 
 export const signIn = async (formData: FormData) => {
   const userData = Object.fromEntries(formData.entries());
 
-  // Validate formData with zod schema
-  const parsedData = signInValidationSchema.parse(userData);
-
-  const parsedFormBody = {
-    username: parsedData.email,
-    password: parsedData.password,
-  };
-
-  const formBody = new URLSearchParams(parsedFormBody).toString();
-
   try {
-    const response = await fetch(`${API_URL}/api/auth/token`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: formBody,
+    // Validate formData with zod schema
+    const parsedData = signInValidationSchema.parse(userData);
+
+    const user = await prisma.user.findUnique({
+      where: { email: parsedData.email },
     });
 
-    if (!response.ok) {
-      throw new Error(`Login request failed: ${response.statusText}`);
+    if (!user) {
+      throw new Error('User not found');
     }
 
-    const { access_token } = await response.json();
+    // Compare the hashed password
+    const isPasswordValid = await bcrypt.compare(
+      parsedData.password,
+      user.password,
+    );
 
-    if (!access_token) {
-      throw new Error('Token not received');
+    if (!isPasswordValid) {
+      throw new Error('Invalid password');
     }
 
-    // Save the JWT as a cookie
+    // Remove the password from the user object
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...userWithoutPassword } = user;
+
+    // Create accessToken and save a JWT as a cookie
+    const encodedUser = { id: user.id, email: user.email };
     const expires = new Date(Date.now() + COOKIE_EXPIRATION_TIME);
+    const accessToken = await encrypt({ ...encodedUser, expires });
 
-    cookies().set('access_token', access_token, { expires, httpOnly: true });
+    cookies().set('access_token', accessToken, { expires, httpOnly: true });
 
-    const { status, data } = await getCurrentUser(access_token);
-
-    if (status === StatusCode.NOT_FOUND || !data) {
-      throw new Error('Failed to fetch user data');
-    }
-
-    return { status: StatusCode.SUCCESS, data };
+    return { status: StatusCode.SUCCESS, data: userWithoutPassword };
   } catch (error) {
     logErrorMessage(error, 'logging in (server) 😿');
     throw error;
@@ -64,53 +54,36 @@ export const signIn = async (formData: FormData) => {
 };
 
 export const logout = async () => {
-  cookies().set('access_token', '', { expires: new Date(0).getTime() });
+  try {
+    cookies().set('access_token', '', { expires: new Date(0) });
+  } catch (error) {
+    logErrorMessage(error, 'logging out (server) 😿');
+    throw error;
+  }
 };
 
 export const signUp = async (formData: FormData) => {
   const userData = Object.fromEntries(formData.entries());
 
-  // Validate formData with zod schema
-  const parsedData = signUpValidationSchema.parse(userData);
-
-  const createUserData: UserCreate = {
-    first_name: parsedData.firstName,
-    last_name: parsedData.lastName,
-    email: parsedData.email,
-    password: parsedData.password,
-  };
-
   try {
-    const response = await fetch(`${API_URL}/api/user`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(createUserData),
-    });
+    // Validate formData with zod schema
+    const parsedData = signUpValidationSchema.parse(userData);
 
-    if (!response.ok) {
-      throw new Error(`Signup request failed: ${response.statusText}`);
-    }
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(parsedData.password, 10);
+
+    const createUserData: UserCreate = {
+      first_name: parsedData.firstName,
+      last_name: parsedData.lastName,
+      email: parsedData.email,
+      password: hashedPassword,
+    };
+
+    await prisma.user.create({ data: createUserData });
 
     return { status: StatusCode.SUCCESS };
   } catch (error) {
     logErrorMessage(error, 'signing up (server) 😿');
     throw error;
-  }
-};
-
-export const getUserSession = async () => {
-  try {
-    const accessToken = cookies().get('access_token')?.value;
-
-    if (!accessToken) {
-      return null;
-    }
-
-    return await decrypt(accessToken);
-  } catch (error) {
-    logErrorMessage(error, 'processing getUserSession');
-    return null;
   }
 };
