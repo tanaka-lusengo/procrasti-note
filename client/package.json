@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "preinstall": "npx only-allow pnpm",
+    "postinstall": "prisma generate",
     "generate-openapi-client": "openapi --input ./src/lib/openapi/openapi-spec.json --output ./src/lib/openapi/generated --useUnionTypes",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
