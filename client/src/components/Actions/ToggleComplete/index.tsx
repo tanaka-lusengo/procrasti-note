@@ -5,13 +5,13 @@ import Image from 'next/image';
 
 import completeChecked from '@/../public/images/circle-check-solid.svg';
 import completeUnchecked from '@/../public/images/circle-regular.svg';
-import { type Note } from '@/lib/openapi/generated';
 import { toggleComplete } from '@/server/actions/note-actions';
+import { type NoteModel } from '@/types';
 import { handleError, StatusCode } from '@/utils';
 
 import * as Styled from './index.styled';
 
-const ToggleComplete = ({ note }: { note: Note }) => {
+const ToggleComplete = ({ note }: { note: NoteModel }) => {
   const { id, complete } = note || {};
 
   const [isComplete, setIsComplete] = useState(complete);

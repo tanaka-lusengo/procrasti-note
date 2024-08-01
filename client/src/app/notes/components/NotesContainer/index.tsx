@@ -7,7 +7,7 @@ import boredWoman from '@/../public/images/laying-bored-woman.svg';
 import { CreateNote } from '@/components/Actions';
 import { ButtonLink, Stack, Typography } from '@/components/Design';
 import { useUser } from '@/context/UserContext';
-import { type Note as NoteModel } from '@/lib/openapi/generated';
+import { type NoteModel } from '@/types';
 
 import Note from '../Note';
 

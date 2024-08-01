@@ -13,14 +13,14 @@ import {
   SelectField,
   TextareaField,
 } from '@/components/FormComponents';
-import { type Note } from '@/lib/openapi/generated';
 import { createAndEditNoteValidationSchema } from '@/schemas';
 import { editNote } from '@/server/actions/note-actions';
+import { type NoteModel } from '@/types';
 import { handleError, StatusCode } from '@/utils';
 
 type EditNoteForm = ZodInfer<typeof createAndEditNoteValidationSchema>;
 
-const EditNote = ({ note }: { note: Note }) => {
+const EditNote = ({ note }: { note: NoteModel }) => {
   const { id, title, priority, content, complete } = note || {};
 
   const router = useRouter();

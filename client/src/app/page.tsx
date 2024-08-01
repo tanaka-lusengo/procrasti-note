@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import coffeeGuy from '@/../public/images/coffee-guy.svg';
 import { ButtonLink, Stack, Typewriter, Typography } from '@/components/Design';
-import { getUserSession } from '@/server/actions/auth-actions';
+import { getUserSession } from '@/server/actions/helpers';
 
 import { Subtitle } from './page.styled';
 
