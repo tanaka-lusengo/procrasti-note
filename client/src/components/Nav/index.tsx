@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { SignOut } from '@/components/Actions';
-import { getUserSession } from '@/server/actions/auth-actions';
+import { getUserSession } from '@/server/actions/helpers';
 
 import * as Styled from './index.styled';
 import { DropdownItem, NavDropdown } from './subComponents';

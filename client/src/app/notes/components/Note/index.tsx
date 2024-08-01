@@ -1,6 +1,6 @@
 import { DeleteNote, ToggleComplete } from '@/components/Actions';
 import { Typography } from '@/components/Design';
-import { type Note as NoteModel } from '@/lib/openapi/generated';
+import { type NoteModel } from '@/types';
 
 import * as Styled from './index.styled';
 

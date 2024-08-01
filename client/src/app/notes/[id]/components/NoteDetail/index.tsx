@@ -6,14 +6,14 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { DeleteNote, EditNote, ToggleComplete } from '@/components/Actions';
 import { Button, Divider, Stack, Typography } from '@/components/Design';
-import { type Note } from '@/lib/openapi/generated';
+import { type NoteModel } from '@/types';
 import { convertStringToHTML } from '@/utils';
 
 import * as Styled from './index.styled';
 
 interface NoteDetailProps {
-  note: Note;
-  notes: Note[];
+  note: NoteModel;
+  notes: NoteModel[];
 }
 
 const NoteDetail = ({ note, notes }: NoteDetailProps) => {
