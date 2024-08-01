@@ -3,15 +3,14 @@ name: js-checks
 on:
   pull_request:
     paths:
-      - ".github/workflows/js-checks.yml"
-      - "**/*.js"
-      - "**/*.jsx"
-      - "**/*.ts"
-      - "**/*.tsx"
+      - '.github/workflows/js-checks.yml'
+      - '**/*.js'
+      - '**/*.jsx'
+      - '**/*.ts'
+      - '**/*.tsx'
 
 jobs:
   JsChecks:
-    if: ${{ github.actor != 'dependabot[bot]' }}
     name: Run Javascript linting and tests
     runs-on: ubuntu-latest
 
@@ -19,7 +18,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: '20'
 
       # Ensures the entire repo is checked out (including tags)
       - name: Checkout repository
@@ -35,13 +34,10 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --recursive
-        working-directory: client
 
         # Run linting and testing scripts
       - name: GitHub Action for Javascript linting
         run: pnpm lint:fix
-        working-directory: client
 
       - name: GitHub Action for Javascript testing
         run: pnpm test
-        working-directory: client

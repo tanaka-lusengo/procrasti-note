@@ -1,7 +1,7 @@
 'use server';
 
 import type { Note } from '@prisma/client';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, unstable_cache as cache } from 'next/cache';
 
 import { prisma } from '@/lib';
 import { createAndEditNoteValidationSchema } from '@/schemas';
@@ -16,57 +16,59 @@ interface ActionResponse<T = any> {
   error?: unknown | string;
 }
 
-export const getAllNotes = async (): Promise<ActionResponse<NoteModel[]>> => {
-  try {
-    const userSession = await getUserSession();
+export const getAllNotes = cache(
+  async (): Promise<ActionResponse<NoteModel[]>> => {
+    try {
+      const userSession = await getUserSession();
 
-    if (!userSession) {
-      return { status: StatusCode.UNAUTHORIZED, error: 'Unauthorized' };
+      if (!userSession) {
+        return { status: StatusCode.UNAUTHORIZED, error: 'Unauthorized' };
+      }
+
+      const notes: NoteModel[] = await prisma.note.findMany({
+        where: {
+          author_id: userSession.id as number,
+        },
+      });
+
+      if (!notes) {
+        return { status: StatusCode.NOT_FOUND, error: 'Notes not found' };
+      }
+
+      return { status: StatusCode.SUCCESS, data: notes };
+    } catch (error) {
+      logErrorMessage(error, 'fetching notes in getAllNotes 😿');
+      return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
     }
+  },
+);
 
-    const notes: NoteModel[] = await prisma.note.findMany({
-      where: {
-        author_id: userSession.id as number,
-      },
-    });
+export const getSingleNote = cache(
+  async (noteId: string): Promise<ActionResponse<Note>> => {
+    try {
+      const userSession = await getUserSession();
 
-    if (!notes) {
-      return { status: StatusCode.NOT_FOUND, error: 'Notes not found' };
+      if (!userSession) {
+        return { status: StatusCode.UNAUTHORIZED, error: 'Unauthorized' };
+      }
+
+      const note = await prisma.note.findUnique({
+        where: {
+          id: Number(noteId),
+        },
+      });
+
+      if (!note) {
+        return { status: StatusCode.NOT_FOUND, error: 'Note not found' };
+      }
+
+      return { status: StatusCode.SUCCESS, data: note };
+    } catch (error) {
+      logErrorMessage(error, 'fetching note in getSingleNote 😿');
+      return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
     }
-
-    return { status: StatusCode.SUCCESS, data: notes };
-  } catch (error) {
-    logErrorMessage(error, 'fetching notes in getAllNotes 😿');
-    return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
-  }
-};
-
-export const getSingleNote = async (
-  noteId: string,
-): Promise<ActionResponse<Note>> => {
-  try {
-    const userSession = await getUserSession();
-
-    if (!userSession) {
-      return { status: StatusCode.UNAUTHORIZED, error: 'Unauthorized' };
-    }
-
-    const note = await prisma.note.findUnique({
-      where: {
-        id: Number(noteId),
-      },
-    });
-
-    if (!note) {
-      return { status: StatusCode.NOT_FOUND, error: 'Note not found' };
-    }
-
-    return { status: StatusCode.SUCCESS, data: note };
-  } catch (error) {
-    logErrorMessage(error, 'fetching note in getSingleNote 😿');
-    return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
-  }
-};
+  },
+);
 
 export const createNote = async (
   formData: FormData,
