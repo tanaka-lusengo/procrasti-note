@@ -1,58 +1,76 @@
 'use server';
 
+import type { Note } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 
-import {
-  type Note,
-  type NoteCreate,
-  type NoteUpdate,
-} from '@/lib/openapi/generated';
+import { prisma } from '@/lib';
 import { createAndEditNoteValidationSchema } from '@/schemas';
-import { API_URL, fetchWithErrors, logErrorMessage, StatusCode } from '@/utils';
+import type { NoteCreate, NoteModel, NoteUpdate } from '@/types';
+import { logErrorMessage, StatusCode } from '@/utils';
 
-import { getAccessToken } from './action-helpers';
+import { getUserSession } from './helpers';
 
-export const getAllNotes = async () => {
+interface ActionResponse<T = any> {
+  status: StatusCode;
+  data?: T;
+  error?: unknown | string;
+}
+
+export const getAllNotes = async (): Promise<ActionResponse<NoteModel[]>> => {
   try {
-    const accessToken = await getAccessToken();
+    const userSession = await getUserSession();
 
-    const notes: Note[] = await fetchWithErrors(`${API_URL}/api/notes`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+    if (!userSession) {
+      return { status: StatusCode.UNAUTHORIZED, error: 'Unauthorized' };
+    }
+
+    const notes: NoteModel[] = await prisma.note.findMany({
+      where: {
+        author_id: userSession.id as number,
       },
     });
+
+    if (!notes) {
+      return { status: StatusCode.NOT_FOUND, error: 'Notes not found' };
+    }
 
     return { status: StatusCode.SUCCESS, data: notes };
   } catch (error) {
-    if (error instanceof Error && error.message === 'Unauthorized') {
-      return { status: error.message, data: [] };
-    }
     logErrorMessage(error, 'fetching notes in getAllNotes 😿');
-    throw error;
+    return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
   }
 };
 
-export const getSingleNote = async (noteId: string) => {
+export const getSingleNote = async (
+  noteId: string,
+): Promise<ActionResponse<Note>> => {
   try {
-    const accessToken = await getAccessToken();
+    const userSession = await getUserSession();
 
-    const note: Note = await fetchWithErrors(`${API_URL}/api/note/${noteId}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+    if (!userSession) {
+      return { status: StatusCode.UNAUTHORIZED, error: 'Unauthorized' };
+    }
+
+    const note = await prisma.note.findUnique({
+      where: {
+        id: Number(noteId),
       },
     });
 
+    if (!note) {
+      return { status: StatusCode.NOT_FOUND, error: 'Note not found' };
+    }
+
     return { status: StatusCode.SUCCESS, data: note };
   } catch (error) {
-    if (error instanceof Error && error.message === 'Unauthorized') {
-      return { status: error.message, data: undefined };
-    }
     logErrorMessage(error, 'fetching note in getSingleNote 😿');
-    throw error;
+    return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
   }
 };
 
-export const createNote = async (formData: FormData) => {
+export const createNote = async (
+  formData: FormData,
+): Promise<ActionResponse> => {
   const creatFormvalues = Object.fromEntries(formData.entries());
 
   // Validate formData with zod schema
@@ -65,22 +83,24 @@ export const createNote = async (formData: FormData) => {
   };
 
   try {
-    const accessToken = await getAccessToken();
+    const userSession = await getUserSession();
 
-    await fetchWithErrors(`${API_URL}/api/note`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
+    if (!userSession) {
+      return { status: StatusCode.UNAUTHORIZED, error: 'Unauthorized' };
+    }
+
+    await prisma.note.create({
+      data: {
+        ...createNoteData,
+        author_id: userSession.id as number,
       },
-      body: JSON.stringify(createNoteData),
     });
 
     revalidatePath('/notes');
     return { status: StatusCode.SUCCESS };
   } catch (error) {
     logErrorMessage(error, 'creating note (server) 😿');
-    throw error;
+    return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
   }
 };
 
@@ -88,7 +108,7 @@ export const editNote = async (
   id: Note['id'],
   complete: boolean,
   formData: FormData,
-) => {
+): Promise<ActionResponse> => {
   // Extract and convert formData to object
   const editFormvalues = Object.fromEntries(formData.entries());
 
@@ -103,33 +123,41 @@ export const editNote = async (
   };
 
   try {
-    const accessToken = await getAccessToken();
+    const userSession = await getUserSession();
 
-    await fetchWithErrors(`${API_URL}/api/note/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
+    if (!userSession) {
+      return { status: StatusCode.UNAUTHORIZED, error: 'Unauthorized' };
+    }
+
+    await prisma.note.update({
+      where: {
+        id,
       },
-      body: JSON.stringify(editNoteData),
+      data: editNoteData,
     });
 
     revalidatePath(`/notes/${id}`);
     return { status: StatusCode.SUCCESS };
   } catch (error) {
     logErrorMessage(error, 'editing note (server) 😿');
-    throw error;
+    return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
   }
 };
 
-export const deleteNote = async (id: Note['id'], isDetailPage?: boolean) => {
+export const deleteNote = async (
+  id: Note['id'],
+  isDetailPage?: boolean,
+): Promise<ActionResponse> => {
   try {
-    const accessToken = await getAccessToken();
+    const userSession = await getUserSession();
 
-    await fetchWithErrors(`${API_URL}/api/note/${id}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+    if (!userSession) {
+      return { status: StatusCode.UNAUTHORIZED, error: 'Unauthorized' };
+    }
+
+    await prisma.note.delete({
+      where: {
+        id,
       },
     });
 
@@ -141,7 +169,7 @@ export const deleteNote = async (id: Note['id'], isDetailPage?: boolean) => {
     return { status: StatusCode.SUCCESS };
   } catch (error) {
     logErrorMessage(error, `deleting note (server) 😿`);
-    throw error;
+    return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
   }
 };
 
@@ -149,27 +177,29 @@ export const toggleComplete = async (
   id: Note['id'],
   note: Note,
   complete: boolean,
-) => {
+): Promise<ActionResponse> => {
   const editNoteData: NoteUpdate = {
     ...note,
     complete: !complete,
   };
 
   try {
-    const accessToken = await getAccessToken();
+    const userSession = await getUserSession();
 
-    await fetchWithErrors(`${API_URL}/api/note/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
+    if (!userSession) {
+      return { status: StatusCode.UNAUTHORIZED, error: 'Unauthorized' };
+    }
+
+    await prisma.note.update({
+      where: {
+        id,
       },
-      body: JSON.stringify(editNoteData),
+      data: editNoteData,
     });
 
     return { status: StatusCode.SUCCESS };
   } catch (error) {
     logErrorMessage(error, `ticking off the note (server) 😿`);
-    throw error;
+    return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
   }
 };
