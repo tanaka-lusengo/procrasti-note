@@ -8,6 +8,8 @@ import { signInValidationSchema, signUpValidationSchema } from '@/schemas';
 import type { UserCreate } from '@/types';
 import { COOKIE_EXPIRATION_TIME, logErrorMessage, StatusCode } from '@/utils';
 
+import { InvalidPasswordError, UserNotFoundError } from '../errors';
+
 import { encrypt } from './helpers';
 
 export const signIn = async (formData: FormData) => {
@@ -22,7 +24,7 @@ export const signIn = async (formData: FormData) => {
     });
 
     if (!user) {
-      throw new Error('User not found');
+      throw new UserNotFoundError();
     }
 
     // Compare the hashed password
@@ -32,7 +34,7 @@ export const signIn = async (formData: FormData) => {
     );
 
     if (!isPasswordValid) {
-      throw new Error('Invalid password');
+      throw new InvalidPasswordError();
     }
 
     // Remove the password from the user object

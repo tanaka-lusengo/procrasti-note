@@ -11,6 +11,7 @@ import { FormModal, InputField } from '@/components/FormComponents';
 import { useUser } from '@/context/UserContext';
 import { signInValidationSchema } from '@/schemas';
 import { signIn } from '@/server/actions/auth-actions';
+import { InvalidPasswordError, UserNotFoundError } from '@/server/errors';
 import { handleError, StatusCode, toastNotifySuccess } from '@/utils';
 
 type SignInForm = ZodInfer<typeof signInValidationSchema>;
@@ -37,7 +38,14 @@ const SignInForm = () => {
         router.push('/notes');
       }
     } catch (error) {
-      handleError('logging in 😿', error);
+      if (
+        error instanceof UserNotFoundError ||
+        error instanceof InvalidPasswordError
+      ) {
+        handleError('logging in 😿', error);
+      } else {
+        handleError('logging in 😿', error);
+      }
     }
   };
 
@@ -45,7 +53,12 @@ const SignInForm = () => {
     <FormModal
       action={async (formData: FormData) => await handleAction(formData)}
     >
-      <Typography marginTop="sm" marginBottom="md" textAlign="center">
+      <Typography
+        component="h4"
+        marginTop="sm"
+        marginBottom="md"
+        textAlign="center"
+      >
         Sign in
       </Typography>
 
@@ -71,7 +84,7 @@ const SignInForm = () => {
 
       <Divider />
 
-      <Typography component="p" fontSize="h6" color="primary" textAlign="end">
+      <Typography component="p" color="primary" textAlign="end">
         <i>Don&apos;t have an account?</i>
       </Typography>
 
