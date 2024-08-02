@@ -32,7 +32,7 @@ const InputField = <TFormValues extends FieldValues>({
 }: InputFieldProps<TFormValues>) => {
   return (
     <Styled.InputContainer>
-      <label htmlFor={name}>{label}</label>
+      <Styled.Label htmlFor={name}>{label}</Styled.Label>
       <Styled.InputField
         type={type}
         placeholder={placeholder}

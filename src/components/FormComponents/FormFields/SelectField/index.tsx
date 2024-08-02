@@ -29,7 +29,7 @@ const SelectField = <TFormValues extends FieldValues>({
 }: SelectFieldProps<TFormValues>) => {
   return (
     <Styled.InputContainer>
-      <label htmlFor={name}>{label}</label>
+      <Styled.Label htmlFor={name}>{label}</Styled.Label>
       <Styled.SelectField
         defaultValue={defaultValue}
         {...register(name as Path<TFormValues>, {

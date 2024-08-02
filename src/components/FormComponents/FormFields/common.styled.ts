@@ -18,6 +18,10 @@ export const InputContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
+export const Label = styled.label`
+  font-size: ${({ theme }) => theme.typography.fontSize.body1}rem;
+`;
+
 export const InputField = styled.input`
   padding: 0.5rem;
   border: 1px solid ${({ theme }) => theme.colors.grey};

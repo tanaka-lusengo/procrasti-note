@@ -22,7 +22,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
       <SpeedInsights />
 
       <Providers>
-        <Container component="section" id={MAIN_CONTENT_ID}>
+        <Container id={MAIN_CONTENT_ID} component="section" padding="md">
           <Nav />
           <main>{children}</main>
         </Container>
