@@ -22,7 +22,10 @@ export const signIn = async (formData: FormData) => {
     });
 
     if (!user) {
-      return { status: StatusCode.NOT_FOUND, message: 'User not found' };
+      return {
+        status: StatusCode.NOT_FOUND,
+        error: 'There was an error logging in 😿 - User not found',
+      };
     }
 
     // Compare the hashed password
@@ -32,7 +35,10 @@ export const signIn = async (formData: FormData) => {
     );
 
     if (!isPasswordValid) {
-      return { status: StatusCode.UNAUTHORIZED, message: 'Invalid password' };
+      return {
+        status: StatusCode.UNAUTHORIZED,
+        error: 'There was an error logging in 😿 - Invalid password',
+      };
     }
 
     // Remove the password from the user object
@@ -49,7 +55,7 @@ export const signIn = async (formData: FormData) => {
     return { status: StatusCode.SUCCESS, data: userWithoutPassword };
   } catch (error) {
     logErrorMessage(error, 'logging in (server) 😿');
-    throw error;
+    return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
   }
 };
 

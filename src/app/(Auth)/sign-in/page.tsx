@@ -11,7 +11,12 @@ import { FormModal, InputField } from '@/components/FormComponents';
 import { useUser } from '@/context/UserContext';
 import { signInValidationSchema } from '@/schemas';
 import { signIn } from '@/server/actions/auth-actions';
-import { handleError, StatusCode, toastNotifySuccess } from '@/utils';
+import {
+  handleError,
+  StatusCode,
+  toastNotifyError,
+  toastNotifySuccess,
+} from '@/utils';
 
 type SignInForm = ZodInfer<typeof signInValidationSchema>;
 
@@ -29,7 +34,15 @@ const SignInForm = () => {
 
   const handleAction = async (formData: FormData) => {
     try {
-      const { status, data } = await signIn(formData);
+      const { status, error, data } = await signIn(formData);
+
+      if (status === StatusCode.NOT_FOUND) {
+        toastNotifyError(`${error}`);
+      }
+
+      if (status === StatusCode.UNAUTHORIZED) {
+        toastNotifyError(`${error}`);
+      }
 
       if (status === StatusCode.SUCCESS) {
         setUser(data);
