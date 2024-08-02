@@ -11,7 +11,6 @@ import { FormModal, InputField } from '@/components/FormComponents';
 import { useUser } from '@/context/UserContext';
 import { signInValidationSchema } from '@/schemas';
 import { signIn } from '@/server/actions/auth-actions';
-import { InvalidPasswordError, UserNotFoundError } from '@/server/errors';
 import { handleError, StatusCode, toastNotifySuccess } from '@/utils';
 
 type SignInForm = ZodInfer<typeof signInValidationSchema>;
@@ -38,14 +37,7 @@ const SignInForm = () => {
         router.push('/notes');
       }
     } catch (error) {
-      if (
-        error instanceof UserNotFoundError ||
-        error instanceof InvalidPasswordError
-      ) {
-        handleError('logging in 😿', error);
-      } else {
-        handleError('logging in 😿', error);
-      }
+      handleError('logging in 😿', error);
     }
   };
 

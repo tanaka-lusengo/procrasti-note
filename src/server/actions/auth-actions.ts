@@ -8,8 +8,6 @@ import { signInValidationSchema, signUpValidationSchema } from '@/schemas';
 import type { UserCreate } from '@/types';
 import { COOKIE_EXPIRATION_TIME, logErrorMessage, StatusCode } from '@/utils';
 
-import { InvalidPasswordError, UserNotFoundError } from '../errors';
-
 import { encrypt } from './helpers';
 
 export const signIn = async (formData: FormData) => {
@@ -24,7 +22,7 @@ export const signIn = async (formData: FormData) => {
     });
 
     if (!user) {
-      throw new UserNotFoundError();
+      return { status: StatusCode.NOT_FOUND, message: 'User not found' };
     }
 
     // Compare the hashed password
@@ -34,7 +32,7 @@ export const signIn = async (formData: FormData) => {
     );
 
     if (!isPasswordValid) {
-      throw new InvalidPasswordError();
+      return { status: StatusCode.UNAUTHORIZED, message: 'Invalid password' };
     }
 
     // Remove the password from the user object
@@ -60,7 +58,10 @@ export const logout = async () => {
     cookies().set('access_token', '', { expires: new Date(0) });
   } catch (error) {
     logErrorMessage(error, 'logging out (server) 😿');
-    throw error;
+    return {
+      status: StatusCode.INTERNAL_SERVER_ERROR,
+      message: 'An unexpected error occurred',
+    };
   }
 };
 
@@ -86,6 +87,6 @@ export const signUp = async (formData: FormData) => {
     return { status: StatusCode.SUCCESS };
   } catch (error) {
     logErrorMessage(error, 'signing up (server) 😿');
-    throw error;
+    return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
   }
 };
