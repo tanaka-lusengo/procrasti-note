@@ -18,7 +18,7 @@ const ToggleComplete = ({ note }: { note: NoteModel }) => {
 
   const handleAction = async () => {
     try {
-      const { status } = await toggleComplete(id, note, complete);
+      const { status } = await toggleComplete(id, complete);
       if (status === StatusCode.SUCCESS) setIsComplete(!isComplete);
     } catch (error) {
       handleError('ticking off the note 😿', error);

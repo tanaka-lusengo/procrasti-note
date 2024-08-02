@@ -1,7 +1,6 @@
 'use server';
 
-import type { Note } from '@prisma/client';
-import { revalidatePath, unstable_cache as cache } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 
 import { prisma } from '@/lib';
 import { createAndEditNoteValidationSchema } from '@/schemas';
@@ -16,59 +15,53 @@ interface ActionResponse<T = any> {
   error?: unknown | string;
 }
 
-export const getAllNotes = cache(
-  async (): Promise<ActionResponse<NoteModel[]>> => {
-    try {
-      const userSession = await getUserSession();
+export const getAllNotes = async (): Promise<ActionResponse<NoteModel[]>> => {
+  try {
+    const userSession = await getUserSession();
 
-      if (!userSession) {
-        return { status: StatusCode.UNAUTHORIZED, error: 'Unauthorized' };
-      }
-
-      const notes: NoteModel[] = await prisma.note.findMany({
-        where: {
-          author_id: userSession.id as number,
-        },
-      });
-
-      if (!notes) {
-        return { status: StatusCode.NOT_FOUND, error: 'Notes not found' };
-      }
-
-      return { status: StatusCode.SUCCESS, data: notes };
-    } catch (error) {
-      logErrorMessage(error, 'fetching notes in getAllNotes 😿');
-      return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
+    if (!userSession) {
+      return { status: StatusCode.UNAUTHORIZED, error: 'Unauthorized' };
     }
-  },
-);
 
-export const getSingleNote = cache(
-  async (noteId: string): Promise<ActionResponse<Note>> => {
-    try {
-      const userSession = await getUserSession();
+    const notes: NoteModel[] = await prisma.note.findMany({
+      where: { author_id: userSession.id as number },
+    });
 
-      if (!userSession) {
-        return { status: StatusCode.UNAUTHORIZED, error: 'Unauthorized' };
-      }
-
-      const note = await prisma.note.findUnique({
-        where: {
-          id: Number(noteId),
-        },
-      });
-
-      if (!note) {
-        return { status: StatusCode.NOT_FOUND, error: 'Note not found' };
-      }
-
-      return { status: StatusCode.SUCCESS, data: note };
-    } catch (error) {
-      logErrorMessage(error, 'fetching note in getSingleNote 😿');
-      return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
+    if (!notes) {
+      return { status: StatusCode.NOT_FOUND, error: 'Notes not found' };
     }
-  },
-);
+
+    return { status: StatusCode.SUCCESS, data: notes };
+  } catch (error) {
+    logErrorMessage(error, 'fetching notes in getAllNotes 😿');
+    return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
+  }
+};
+
+export const getSingleNote = async (
+  noteId: string,
+): Promise<ActionResponse<NoteModel>> => {
+  try {
+    const userSession = await getUserSession();
+
+    if (!userSession) {
+      return { status: StatusCode.UNAUTHORIZED, error: 'Unauthorized' };
+    }
+
+    const note = await prisma.note.findUnique({
+      where: { id: Number(noteId) },
+    });
+
+    if (!note) {
+      return { status: StatusCode.NOT_FOUND, error: 'Note not found' };
+    }
+
+    return { status: StatusCode.SUCCESS, data: note };
+  } catch (error) {
+    logErrorMessage(error, 'fetching note in getSingleNote 😿');
+    return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
+  }
+};
 
 export const createNote = async (
   formData: FormData,
@@ -107,8 +100,8 @@ export const createNote = async (
 };
 
 export const editNote = async (
-  id: Note['id'],
-  complete: boolean,
+  id: NoteModel['id'],
+  complete: NoteModel['complete'],
   formData: FormData,
 ): Promise<ActionResponse> => {
   // Extract and convert formData to object
@@ -132,9 +125,7 @@ export const editNote = async (
     }
 
     await prisma.note.update({
-      where: {
-        id,
-      },
+      where: { id },
       data: editNoteData,
     });
 
@@ -147,7 +138,7 @@ export const editNote = async (
 };
 
 export const deleteNote = async (
-  id: Note['id'],
+  id: NoteModel['id'],
   isDetailPage?: boolean,
 ): Promise<ActionResponse> => {
   try {
@@ -158,9 +149,7 @@ export const deleteNote = async (
     }
 
     await prisma.note.delete({
-      where: {
-        id,
-      },
+      where: { id },
     });
 
     if (isDetailPage) {
@@ -176,15 +165,9 @@ export const deleteNote = async (
 };
 
 export const toggleComplete = async (
-  id: Note['id'],
-  note: Note,
-  complete: boolean,
+  id: NoteModel['id'],
+  complete: NoteModel['complete'],
 ): Promise<ActionResponse> => {
-  const editNoteData: NoteUpdate = {
-    ...note,
-    complete: !complete,
-  };
-
   try {
     const userSession = await getUserSession();
 
@@ -193,10 +176,8 @@ export const toggleComplete = async (
     }
 
     await prisma.note.update({
-      where: {
-        id,
-      },
-      data: editNoteData,
+      where: { id },
+      data: { complete: !complete },
     });
 
     return { status: StatusCode.SUCCESS };
