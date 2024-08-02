@@ -46,7 +46,12 @@ const EditNote = ({ note }: { note: NoteModel }) => {
     <FormModal
       action={async (formData: FormData) => await handleAction(formData)}
     >
-      <Typography marginTop="sm" marginBottom="md" textAlign="center">
+      <Typography
+        component="h4"
+        marginTop="sm"
+        marginBottom="md"
+        textAlign="center"
+      >
         Edit note
       </Typography>
 

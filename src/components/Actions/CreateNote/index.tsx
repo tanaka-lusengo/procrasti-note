@@ -43,7 +43,12 @@ const CreateNote = () => {
     <FormModal
       action={async (formData: FormData) => await handleAction(formData)}
     >
-      <Typography marginTop="sm" marginBottom="md" textAlign="center">
+      <Typography
+        component="h4"
+        marginTop="sm"
+        marginBottom="md"
+        textAlign="center"
+      >
         Create a new note
       </Typography>
 

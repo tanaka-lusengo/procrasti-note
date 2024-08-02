@@ -17,7 +17,7 @@ const Home = async () => {
       gap="md"
       marginTop="md"
     >
-      <Typography component="h1" textAlign="center">
+      <Typography component="h2" fontSize="h3" textAlign="center">
         <Typewriter
           options={{
             strings: ['Time to get organised!'],

@@ -28,8 +28,8 @@ html {
   - Improve text rendering
 */
 body {
-  /* 16px */
-  font-size: 1.6rem;
+  /* 18px */
+  font-size: 1.8rem;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
@@ -85,12 +85,7 @@ h6 {
 
 /* Add accessible font styles */
 p {
-  font-size: 1.6rem;
   line-height: 1.52;
-
-  @media (min-width: ${spacing.breakpoints}px) {
-    font-size: 1.8rem;
-  }
 }
 
 h1 {
