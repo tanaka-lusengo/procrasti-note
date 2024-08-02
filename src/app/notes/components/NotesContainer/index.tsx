@@ -1,10 +1,11 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
 import boredWoman from '@/../public/images/laying-bored-woman.svg';
-import { CreateNote } from '@/components/Actions';
+import { SuspenseLoader } from '@/components';
 import { ButtonLink, Stack, Typography } from '@/components/Design';
 import { useUser } from '@/context/UserContext';
 import { type NoteModel } from '@/types';
@@ -12,6 +13,14 @@ import { type NoteModel } from '@/types';
 import Note from '../Note';
 
 import * as Styled from './index.styled';
+
+const DynamicCreateNote = dynamic(
+  () => import('@/components/Actions/CreateNote'),
+  {
+    loading: () => <SuspenseLoader />,
+    ssr: false, // Lazy load on client side only
+  },
+);
 
 const NotesContainer = ({ notes }: { notes: NoteModel[] }) => {
   // useSearchParams hook to get the query params from the URL to render the modal for a clean Stateless, Route-Based Approach ✌🏾
@@ -71,7 +80,7 @@ const NotesContainer = ({ notes }: { notes: NoteModel[] }) => {
         </Typography>
       )}
 
-      {showForm ? <CreateNote /> : null}
+      {showForm ? <DynamicCreateNote /> : null}
     </Stack>
   );
 };
