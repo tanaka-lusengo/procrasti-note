@@ -1,10 +1,15 @@
 import { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import { redirect } from 'next/navigation';
 
+import { SuspenseLoader } from '@/components';
 import { getAllNotes } from '@/server/actions/note-actions';
 import { StatusCode } from '@/utils';
 
-import { NotesContainer } from './components';
+const DynamicNotesContainer = dynamic(
+  () => import('./components/NotesContainer'),
+  { loading: () => <SuspenseLoader /> },
+);
 
 export const metadata: Metadata = {
   title: 'Notes',
@@ -19,10 +24,10 @@ const NotesPage = async () => {
   }
 
   if (!data || status !== StatusCode.SUCCESS) {
-    return <NotesContainer notes={[]} />;
+    return <DynamicNotesContainer notes={[]} />;
   }
 
-  return <NotesContainer notes={data} />;
+  return <DynamicNotesContainer notes={data} />;
 };
 
 export default NotesPage;

@@ -1,15 +1,22 @@
 'use client';
 
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { DeleteNote, EditNote, ToggleComplete } from '@/components/Actions';
+import { SuspenseLoader } from '@/components';
+import { DeleteNote, ToggleComplete } from '@/components/Actions';
 import { Button, Divider, Stack, Typography } from '@/components/Design';
 import { type NoteModel } from '@/types';
 import { convertStringToHTML } from '@/utils';
 
 import * as Styled from './index.styled';
+
+const DynamicEditNote = dynamic(() => import('@/components/Actions/EditNote'), {
+  loading: () => <SuspenseLoader />,
+  ssr: false, // Lazy load on client side only
+});
 
 interface NoteDetailProps {
   note: NoteModel;
@@ -126,7 +133,7 @@ const NoteDetail = ({ note, notes }: NoteDetailProps) => {
         </Styled.BottomContainer>
       </Stack>
 
-      {showForm ? <EditNote note={note} /> : null}
+      {showForm ? <DynamicEditNote note={note} /> : null}
     </>
   );
 };

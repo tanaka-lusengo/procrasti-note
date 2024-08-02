@@ -4,9 +4,6 @@ import styled from 'styled-components';
 
 export const DropdownContainer = styled.div<{ $isOpen: boolean }>`
   position: absolute;
-  top: 5rem;
-
-  overflow: hidden;
 
   padding-top: 1.5rem;
 
