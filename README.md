@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Procrasti-Note
 
-## Getting Started
+A simple (yet scalable and maintainable 😎) full-stack notes taking app!
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Next.js**: A powerful framework for server-rendered React applications.
+- **TypeScript**: Ensures a robust and maintainable codebase.
+- **Styled-components**: For styling components.
+- **Context-API**: Manages the User state effectively across the application.
+- **JWT as cookies**: Implements authentication with secure cookies.
+- **bcrypt**: Provides secure password hashing for authentication.
+- **Server-action**: Facilitates server-side logic and interactions.
+- **Prisma**: Provides an ORM for the Supabase database.
+- **Supabase**: Supplies a backend-as-a-service.
+- **react-hook-form**: For handling form state management and validation.
+- **Zod-validation**: Provides type-safe schema validation.
+- **Vitest**: Ensures reliable testing of components and functionality.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To get started with Procrasti-Note, follow these steps:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. **Clone the repository**:
 
-## Learn More
+   ```bash
+   git clone https://github.com/your-username/procrasti-note.git
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Navigate to the project directory**:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   cd procrasti-note
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+3. **Install dependencies**:
 
-## Deploy on Vercel
+   ```bash
+   pnpm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. **Set up environment variables**:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   Copy the `.env.example` file and create a `.env` file and fill in the necessary values. (Available upon request ✌🏾)
+
+5. **Run the application**:
+
+   ```bash
+   pnpm dev
+   ```
+
+   The application will be available at `http://localhost:3000`.
+
+## Contact
+
+For any enquiries, feel free to reach out to me on [LinkedIn](https://www.linkedin.com/in/tanakalusengo/) 🤓.
