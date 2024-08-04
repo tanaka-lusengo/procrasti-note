@@ -16,7 +16,7 @@ import {
 import { createAndEditNoteValidationSchema } from '@/schemas';
 import { editNote } from '@/server/actions/note-actions';
 import { type NoteModel } from '@/types';
-import { handleError, StatusCode } from '@/utils';
+import { handleError, StatusCode, toastNotifyError } from '@/utils';
 
 type EditNoteForm = ZodInfer<typeof createAndEditNoteValidationSchema>;
 
@@ -35,7 +35,12 @@ const EditNote = ({ note }: { note: NoteModel }) => {
 
   const handleAction = async (formData: FormData) => {
     try {
-      const { status } = await editNote(id, complete, formData);
+      const { status, error } = await editNote(id, complete, formData);
+
+      if (status === StatusCode.BAD_REQUEST) {
+        toastNotifyError(`${error}`);
+      }
+
       if (status === StatusCode.SUCCESS) router.back();
     } catch (error) {
       handleError('editing note 😿', error);
