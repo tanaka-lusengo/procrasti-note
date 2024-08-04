@@ -71,7 +71,7 @@ const CreateNote = () => {
         register={register}
         errors={errors}
       >
-        <option value="">Priority Level?</option>
+        <option value="">Select Priority Level?</option>
         <hr />
         <option value={PriorityValue.ONE}>1</option>
         <option value={PriorityValue.TWO}>2</option>

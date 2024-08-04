@@ -76,8 +76,6 @@ const EditNote = ({ note }: { note: NoteModel }) => {
         register={register}
         errors={errors}
       >
-        <option value="">Priority Level?</option>
-        <hr />
         <option value={PriorityValue.ONE}>1</option>
         <option value={PriorityValue.TWO}>2</option>
         <option value={PriorityValue.THREE}>3</option>
