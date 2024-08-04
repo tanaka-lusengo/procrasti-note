@@ -8,23 +8,11 @@ export const metadataContent: Metadata = {
     default: 'Procrasti-Not(e)',
   },
   description:
-    'A simple (over engineered or scalable? 😏) draggable notes taking app',
+    'A simple (yet scalable and maintainable 😎) full-stack notes taking app!',
   generator: 'Next.js',
   applicationName: 'Procrasti-Not(e)',
   referrer: 'origin-when-cross-origin',
-  keywords: [
-    'Notes',
-    'Productivity',
-    'Procrastination',
-    'Next.js',
-    'React',
-    'TypeScript',
-    'Styled Components',
-    'Vitest',
-    'React Testing Library',
-    'FastAPI',
-    'Python',
-  ],
+  keywords: ['Notes', 'Productivity', 'Procrastination'],
   authors: [
     {
       name: 'Tanaka Lusengo',
@@ -32,6 +20,17 @@ export const metadataContent: Metadata = {
     },
   ],
   creator: 'Tanaka Lusengo',
+  publisher: 'Tanaka Lusengo',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: `${process.env.FRONTEND_BASE_URL_PROD}`,
+    siteName: 'Procrasti-Not(e)',
+    title: 'Procrasti-Not(e)',
+    description:
+      'A simple (yet scalable and maintainable 😎) full-stack notes taking app!',
+  },
+  metadataBase: new URL(`${process.env.FRONTEND_BASE_URL_PROD}`),
 };
 
 // Below are metadata types the do not currently have built-in support (as of Next "14.0.4"). However, they can still be rendered in the layout or page itself ✌🏾
