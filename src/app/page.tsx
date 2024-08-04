@@ -43,7 +43,7 @@ const Home = async () => {
       </Subtitle>
 
       <ButtonLink href={userSession ? '/notes' : '/sign-in'}>
-        Lets get started!
+        Let&apos;s get started!
       </ButtonLink>
     </Stack>
   );
