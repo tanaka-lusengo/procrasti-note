@@ -2,7 +2,7 @@
 
 # Procrasti-Not(e)
 
-A simple (yet scalable and maintainable 😎) full-stack notes taking app!
+A simple (yet scalable and maintainable 😎) full-stack note-taking app!
 
 ## Features
 
@@ -43,7 +43,7 @@ To get started with Procrasti-Note, follow these steps:
 
 4. **Set up environment variables**:
 
-   Copy the `.env.example` file and create a `.env` file and fill in the necessary values. (Available upon request ✌🏾)
+   Copy the `.env.example` file, create a `.env` file, and fill in the necessary values. (Available upon request)
 
 5. **Run the application**:
 
@@ -55,4 +55,4 @@ To get started with Procrasti-Note, follow these steps:
 
 ## Contact
 
-For any enquiries, feel free to reach out to me on [LinkedIn](https://www.linkedin.com/in/tanakalusengo/) 🤓.
+For any enquiries, feel free to contact me on [LinkedIn](https://www.linkedin.com/in/tanakalusengo/) 🤓.
