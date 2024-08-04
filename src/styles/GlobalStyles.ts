@@ -12,6 +12,7 @@ html,
 body {
   padding: 0;
   margin: 0;
+  height: 100%;
   font-family: ${typography.fontFamily.slabo};
   color: ${colors.text};
   background-color: ${colors.secondary};
