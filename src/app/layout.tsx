@@ -2,14 +2,12 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { type Metadata } from 'next';
 
-import { Container } from '@/components/Design';
-import Nav from '@/components/Nav';
+import { Footer, Nav } from '@/components';
 import Providers from '@/Providers';
 import Toaster from '@/utils/reactHotToast/Toaster';
 
+import { LayoutContainer } from './layout.styled';
 import { metadataContent, PreloadResources } from './preload-resources';
-
-const MAIN_CONTENT_ID = 'main-app-content';
 
 export const metadata: Metadata = {
   ...metadataContent,
@@ -22,10 +20,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
       <SpeedInsights />
 
       <Providers>
-        <Container id={MAIN_CONTENT_ID} component="section" padding="md">
+        <LayoutContainer component="section">
           <Nav />
           <main>{children}</main>
-        </Container>
+          <Footer />
+        </LayoutContainer>
       </Providers>
 
       <Toaster />
