@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { ZodError } from 'zod';
 
 import { prisma } from '@/lib';
 import { createAndEditNoteValidationSchema } from '@/schemas';
@@ -68,16 +69,16 @@ export const createNote = async (
 ): Promise<ActionResponse> => {
   const creatFormvalues = Object.fromEntries(formData.entries());
 
-  // Validate formData with zod schema
-  const parsedData = createAndEditNoteValidationSchema.parse(creatFormvalues);
-
-  const createNoteData: NoteCreate = {
-    title: parsedData.title,
-    priority: Number(parsedData.priority),
-    content: parsedData.content,
-  };
-
   try {
+    // Validate formData with zod schema
+    const parsedData = createAndEditNoteValidationSchema.parse(creatFormvalues);
+
+    const createNoteData: NoteCreate = {
+      title: parsedData.title,
+      priority: Number(parsedData.priority),
+      content: parsedData.content,
+    };
+
     const userSession = await getUserSession();
 
     if (!userSession) {
@@ -95,6 +96,14 @@ export const createNote = async (
     return { status: StatusCode.SUCCESS };
   } catch (error) {
     logErrorMessage(error, 'creating note (server) 😿');
+
+    if (error instanceof ZodError) {
+      return {
+        status: StatusCode.BAD_REQUEST,
+        error: 'Please complete all required fields ☝🏾',
+      };
+    }
+
     return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
   }
 };
@@ -107,17 +116,17 @@ export const editNote = async (
   // Extract and convert formData to object
   const editFormvalues = Object.fromEntries(formData.entries());
 
-  // Validate formData with zod schema
-  const parsedData = createAndEditNoteValidationSchema.parse(editFormvalues);
-
-  const editNoteData: NoteUpdate = {
-    title: parsedData.title,
-    priority: Number(parsedData.priority),
-    content: parsedData.content,
-    complete: complete,
-  };
-
   try {
+    // Validate formData with zod schema
+    const parsedData = createAndEditNoteValidationSchema.parse(editFormvalues);
+
+    const editNoteData: NoteUpdate = {
+      title: parsedData.title,
+      priority: Number(parsedData.priority),
+      content: parsedData.content,
+      complete: complete,
+    };
+
     const userSession = await getUserSession();
 
     if (!userSession) {
@@ -133,6 +142,14 @@ export const editNote = async (
     return { status: StatusCode.SUCCESS };
   } catch (error) {
     logErrorMessage(error, 'editing note (server) 😿');
+
+    if (error instanceof ZodError) {
+      return {
+        status: StatusCode.BAD_REQUEST,
+        error: 'Please complete all required fields ☝🏾',
+      };
+    }
+
     return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
   }
 };
