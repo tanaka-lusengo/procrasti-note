@@ -1,4 +1,6 @@
-# Procrasti-Note
+![Procrasti-Note Logo](https://img.icons8.com/?size=100&id=55fqUsmHwQDN&format=png&color=000000)
+
+# Procrasti-Not(e)
 
 A simple (yet scalable and maintainable 😎) full-stack notes taking app!
 
