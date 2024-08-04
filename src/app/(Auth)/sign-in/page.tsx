@@ -26,7 +26,7 @@ const SignInForm = () => {
 
   const {
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = useForm<SignInForm>({
     resolver: zodResolver(signInValidationSchema),
     mode: 'all',
@@ -83,7 +83,7 @@ const SignInForm = () => {
         errors={errors}
       />
 
-      <Button $basefont type="submit" disabled={isSubmitting}>
+      <Button $basefont type="submit" disabled={!isValid || isSubmitting}>
         {isSubmitting ? 'Loading...' : 'Sign in!'}
       </Button>
 

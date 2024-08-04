@@ -27,7 +27,7 @@ const EditNote = ({ note }: { note: NoteModel }) => {
 
   const {
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = useForm<EditNoteForm>({
     resolver: zodResolver(createAndEditNoteValidationSchema),
     mode: 'all',
@@ -76,7 +76,7 @@ const EditNote = ({ note }: { note: NoteModel }) => {
         register={register}
         errors={errors}
       >
-        <option value="">Priority Level 👇🏾</option>
+        <option value="">Priority Level?</option>
         <hr />
         <option value={PriorityValue.ONE}>1</option>
         <option value={PriorityValue.TWO}>2</option>
@@ -95,7 +95,11 @@ const EditNote = ({ note }: { note: NoteModel }) => {
       />
 
       <Stack justifyContent="space-between" marginTop="md">
-        <Button type="submit" disabled={isSubmitting} fontSize="body2">
+        <Button
+          type="submit"
+          fontSize="body2"
+          disabled={!isValid || isSubmitting}
+        >
           {isSubmitting ? 'Loading...' : 'Update'}
         </Button>
         <Button type="button" onClick={router.back} fontSize="body2">

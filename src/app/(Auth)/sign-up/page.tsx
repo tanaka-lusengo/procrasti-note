@@ -85,7 +85,7 @@ const SignUpForm = () => {
       />
 
       <Stack alignItems="center" justifyContent="space-between" marginTop="md">
-        <Button $basefont type="submit" disabled={isSubmitting || !isValid}>
+        <Button $basefont type="submit" disabled={!isValid || isSubmitting}>
           {isSubmitting ? 'Loading...' : 'Sign up!'}
         </Button>
 
