@@ -4,16 +4,16 @@ export type UserModel = User;
 
 export type UserCreate = Pick<
   User,
-  'first_name' | 'last_name' | 'email' | 'password'
+  'firstName' | 'lastName' | 'email' | 'password'
 >;
 
 export type UserUpdate = Pick<
   User,
-  'first_name' | 'last_name' | 'email' | 'username' | 'is_active'
+  'firstName' | 'lastName' | 'email' | 'username' | 'isActive'
 >;
 
 export type UserUpdatePassword = {
-  old_password: string;
-  new_password: string;
-  confirm_new_password: string;
+  oldPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
 };

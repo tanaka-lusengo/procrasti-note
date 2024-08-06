@@ -82,8 +82,8 @@ export const signUp = async (formData: FormData) => {
     const hashedPassword = await bcrypt.hash(parsedData.password, 10);
 
     const createUserData: UserCreate = {
-      first_name: parsedData.firstName,
-      last_name: parsedData.lastName,
+      firstName: parsedData.firstName,
+      lastName: parsedData.lastName,
       email: parsedData.email,
       password: hashedPassword,
     };
