@@ -9,7 +9,7 @@ const Note = ({ note }: { note: NoteModel }) => {
 
   return (
     <Styled.CardContainer>
-      <ToggleComplete note={note} />
+      <ToggleComplete note={note} isInNotes={true} />
 
       <Styled.CardContent href={`/notes/${id}`}>
         <Typography fontSize="h4">{title}</Typography>
