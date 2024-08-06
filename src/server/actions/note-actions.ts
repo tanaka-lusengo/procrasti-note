@@ -25,7 +25,7 @@ export const getAllNotes = async (): Promise<ActionResponse<NoteModel[]>> => {
     }
 
     const notes: NoteModel[] = await prisma.note.findMany({
-      where: { author_id: userSession.id as number },
+      where: { authorId: userSession.id as number },
     });
 
     if (!notes) {
@@ -88,7 +88,7 @@ export const createNote = async (
     await prisma.note.create({
       data: {
         ...createNoteData,
-        author_id: userSession.id as number,
+        authorId: userSession.id as number,
       },
     });
 

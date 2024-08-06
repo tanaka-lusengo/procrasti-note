@@ -46,7 +46,7 @@ const NotesContainer = ({ notes }: { notes: NoteModel[] }) => {
       <Styled.TopContainer>
         <div>
           <Typography component="h1">
-            Hey {user?.username ?? 'You'} <Styled.Wave>👋🏾</Styled.Wave>
+            Hey {user?.firstName ?? 'You'} <Styled.Wave>👋🏾</Styled.Wave>
           </Typography>
           <Typography>
             You currently have{' '}

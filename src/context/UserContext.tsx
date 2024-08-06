@@ -8,21 +8,21 @@ import {
   useState,
 } from 'react';
 
-import { type User } from '@/lib/openapi/generated';
+import { type UserModel } from '@/types';
 
 type UserContextProviderProps = {
   children: React.ReactNode;
 };
 
 type UserContextType = {
-  user: User | null;
-  setUser: Dispatch<SetStateAction<User | null>>;
+  user: UserModel | null;
+  setUser: Dispatch<SetStateAction<UserModel | null>>;
 };
 
 const UserContext = createContext<UserContextType | null>(null);
 
 export const UserContextProvider = ({ children }: UserContextProviderProps) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserModel | null>(null);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
