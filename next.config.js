@@ -1,4 +1,8 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+const securityHeaders = require('./securityHeaders.js');
+
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   reactStrictMode: true,
   compiler: {
@@ -10,6 +14,17 @@ const nextConfig = {
   },
   typescript: {
     ignoreBuildErrors: true,
+  },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          // Security Headers
+          ...securityHeaders,
+        ],
+      },
+    ];
   },
 };
 
