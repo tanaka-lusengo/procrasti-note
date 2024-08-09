@@ -16,11 +16,6 @@ module.exports = [
     value: 'SAMEORIGIN', // Don't allow other browsers to put us in a frame
   },
   {
-    key: 'Content-Security-Policy',
-    value:
-      "default-src 'self'; img-src 'self' https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';", // Limits sources of content to prevent various attacks like XSS
-  },
-  {
     key: 'Strict-Transport-Security',
     value: 'max-age=63072000; includeSubDomains; preload', // Ensures the site is accessed over HTTPS
   },
