@@ -29,7 +29,7 @@ const SignUpForm = () => {
     try {
       const { status } = await signUp(formData);
 
-      if (status === StatusCode.SUCCESS) {
+      if (status === StatusCode.NO_CONTENT) {
         toastNotifySuccess('Sign up Success, now sign in! 😸');
         router.push('/sign-in');
       }

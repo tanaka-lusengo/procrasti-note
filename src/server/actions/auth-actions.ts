@@ -24,6 +24,7 @@ export const signIn = async (formData: FormData) => {
     if (!user) {
       return {
         status: StatusCode.NOT_FOUND,
+        data: null,
         error: 'There was an error logging in 😿 - User not found',
       };
     }
@@ -37,6 +38,7 @@ export const signIn = async (formData: FormData) => {
     if (!isPasswordValid) {
       return {
         status: StatusCode.UNAUTHORIZED,
+        data: null,
         error: 'There was an error logging in 😿 - Invalid password',
       };
     }
@@ -52,22 +54,27 @@ export const signIn = async (formData: FormData) => {
 
     cookies().set('access_token', accessToken, { expires, httpOnly: true });
 
-    return { status: StatusCode.SUCCESS, data: userWithoutPassword };
+    return {
+      status: StatusCode.SUCCESS,
+      data: userWithoutPassword,
+      error: null,
+    };
   } catch (error) {
     logErrorMessage(error, 'logging in (server) 😿');
-    return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
+    return { status: StatusCode.INTERNAL_SERVER_ERROR, data: null, error };
   }
 };
 
 export const logout = async () => {
   try {
     cookies().set('access_token', '', { expires: new Date(0) });
+    return {
+      status: StatusCode.NO_CONTENT,
+      message: 'Logged out successfully',
+    };
   } catch (error) {
     logErrorMessage(error, 'logging out (server) 😿');
-    return {
-      status: StatusCode.INTERNAL_SERVER_ERROR,
-      message: 'An unexpected error occurred',
-    };
+    return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
   }
 };
 
@@ -90,7 +97,7 @@ export const signUp = async (formData: FormData) => {
 
     await prisma.user.create({ data: createUserData });
 
-    return { status: StatusCode.SUCCESS };
+    return { status: StatusCode.NO_CONTENT, error: null };
   } catch (error) {
     logErrorMessage(error, 'signing up (server) 😿');
     return { status: StatusCode.INTERNAL_SERVER_ERROR, error };
