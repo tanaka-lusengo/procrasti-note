@@ -1,6 +1,6 @@
 import { User } from '@prisma/client';
 
-export type UserModel = User;
+export type UserModel = Omit<User, 'password'>;
 
 export type UserCreate = Pick<
   User,
