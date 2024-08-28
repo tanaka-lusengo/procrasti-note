@@ -24,10 +24,13 @@ const UserContext = createContext<UserContextType | null>(null);
 export const UserContextProvider = ({ children }: UserContextProviderProps) => {
   const [user, setUser] = useState<UserModel | null>(null);
 
+  const contextValue = {
+    user,
+    setUser,
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
   );
 };
 
