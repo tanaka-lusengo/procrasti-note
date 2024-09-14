@@ -43,7 +43,8 @@ const SignUpForm = () => {
       action={async (formData: FormData) => await handleAction(formData)}
     >
       <Typography
-        component="h4"
+        component="h1"
+        fontSize="h4"
         marginTop="sm"
         marginBottom="md"
         textAlign="center"
@@ -89,8 +90,8 @@ const SignUpForm = () => {
           {isSubmitting ? 'Loading...' : 'Sign up!'}
         </Button>
 
-        <Link href={'/'} type="link">
-          Close
+        <Link href={'/sign-in'} type="link">
+          Back to Sign in
         </Link>
       </Stack>
     </FormModal>

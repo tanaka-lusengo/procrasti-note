@@ -1,3 +1,6 @@
+export {
+  forgotPasswordValidationSchema,
+  signInValidationSchema,
+  signUpValidationSchema,
+} from './authValidationSchemas';
 export { createAndEditNoteValidationSchema } from './createAndEditNoteValidationSchema';
-export { signInValidationSchema } from './signInValidationSchema';
-export { signUpValidationSchema } from './signUpValidationSchema';
