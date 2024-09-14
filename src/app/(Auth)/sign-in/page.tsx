@@ -59,7 +59,8 @@ const SignInForm = () => {
       action={async (formData: FormData) => await handleAction(formData)}
     >
       <Typography
-        component="h4"
+        component="h1"
+        fontSize="h4"
         marginTop="sm"
         marginBottom="md"
         textAlign="center"
@@ -83,9 +84,12 @@ const SignInForm = () => {
         errors={errors}
       />
 
-      <Button $basefont type="submit" disabled={!isValid || isSubmitting}>
-        {isSubmitting ? 'Loading...' : 'Sign in!'}
-      </Button>
+      <Stack alignItems="flex-start" justifyContent="space-between">
+        <Button $basefont type="submit" disabled={!isValid || isSubmitting}>
+          {isSubmitting ? 'Loading...' : 'Sign in!'}
+        </Button>
+        <Link href={'/forgot-password'}>Forgot password?</Link>
+      </Stack>
 
       <Divider />
 
