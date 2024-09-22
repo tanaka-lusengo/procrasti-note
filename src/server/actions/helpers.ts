@@ -4,7 +4,13 @@ import { jwtVerify, SignJWT } from 'jose';
 import { cookies } from 'next/headers';
 import postmark from 'postmark';
 
-import { ALGORITHM, domainUrl, logErrorMessage, SECRET_KEY } from '@/utils';
+import {
+  ALGORITHM,
+  domainUrl,
+  logErrorMessage,
+  POSTMARK_SERVER_TOKEN,
+  SECRET_KEY,
+} from '@/utils';
 
 const key = new TextEncoder().encode(SECRET_KEY);
 
@@ -47,9 +53,7 @@ export const sendPasswordResetEmail = async (
   userEmail: string,
 ) => {
   // Send email with Postmark
-  const client = new postmark.ServerClient(
-    process.env.POSTMARK_SERVER_TOKEN as string,
-  );
+  const client = new postmark.ServerClient(POSTMARK_SERVER_TOKEN);
 
   // Create the email body
   const htmlBody = `

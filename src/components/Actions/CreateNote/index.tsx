@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { type infer as ZodInfer } from 'zod';
 
 import { PriorityValue } from '@/app/notes/components/types';
-import { Button, Stack, Typography } from '@/components/Design';
+import { Button, ButtonLink, Stack, Typography } from '@/components/Design';
 import {
   FormModal,
   InputField,
@@ -94,11 +94,11 @@ const CreateNote = () => {
           fontSize="body2"
           disabled={!isValid || isSubmitting}
         >
-          {isSubmitting ? 'Loading...' : 'Add Note'}
+          Create
         </Button>
-        <Button type="button" onClick={router.back} fontSize="body2">
+        <ButtonLink href="/notes" fontSize="body2">
           Close
-        </Button>
+        </ButtonLink>
       </Stack>
     </FormModal>
   );

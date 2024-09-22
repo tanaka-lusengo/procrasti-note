@@ -2,11 +2,10 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type infer as ZodInfer } from 'zod';
 
-import { Button, Stack, Typography } from '@/components/Design';
+import { Button, ButtonLink, Stack, Typography } from '@/components/Design';
 import { FormModal, InputField } from '@/components/FormComponents';
 import { signUpValidationSchema } from '@/schemas';
 import { signUp } from '@/server/actions/auth-actions';
@@ -87,12 +86,12 @@ const SignUpForm = () => {
 
       <Stack alignItems="center" justifyContent="space-between" marginTop="md">
         <Button $basefont type="submit" disabled={!isValid || isSubmitting}>
-          {isSubmitting ? 'Loading...' : 'Sign up!'}
+          Sign up!
         </Button>
 
-        <Link href={'/sign-in'} type="link">
-          Back to Sign in
-        </Link>
+        <ButtonLink $basefont href="/sign-in">
+          Go Back
+        </ButtonLink>
       </Stack>
     </FormModal>
   );
