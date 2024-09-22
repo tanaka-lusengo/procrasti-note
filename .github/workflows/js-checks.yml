@@ -11,7 +11,7 @@ on:
 
 jobs:
   JsChecks:
-    name: Run Javascript linting and tests
+    name: Run Javascript linting, type checks and tests
     runs-on: ubuntu-latest
 
     steps:
@@ -38,6 +38,9 @@ jobs:
         # Run linting and testing scripts
       - name: GitHub Action for Javascript linting
         run: pnpm lint:fix
+
+      - name: GitHub Action for TypeScript type checking
+        run: pnpm type-check
 
       - name: GitHub Action for Javascript testing
         run: pnpm test

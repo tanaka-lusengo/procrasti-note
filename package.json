@@ -17,6 +17,7 @@
     "lint:fix": "next lint --fix",
     "lint:css": "stylelint './src/**/*.{styled.ts,styled.tsx}'",
     "lint:css:fix": "stylelint --fix './src/**/*.{styled.ts,styled.tsx}'",
+    "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write --ignore-path .gitignore \"**/*.{ts,tsx,js,jsx,md}\" \"!**/pb_migrations/**\"",
     "execute-husky": "npx husky install && npx husky add .husky/pre-commit \"npx --no-install lint-staged\"",
     "migrate:create": "prisma migrate dev --create-only",
