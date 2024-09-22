@@ -1,11 +1,11 @@
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
-    "username" TEXT NOT NULL,
+    "username" TEXT,
     "first_name" TEXT NOT NULL,
     "last_name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "hashed_password" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "is_active" BOOLEAN NOT NULL DEFAULT true,
     "admin" BOOLEAN NOT NULL DEFAULT false,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
