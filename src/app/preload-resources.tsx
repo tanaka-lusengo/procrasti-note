@@ -24,13 +24,13 @@ export const metadataContent: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: `${process.env.FRONTEND_BASE_URL_PROD}`,
+    url: `${process.env.PRODUCTION_BASE_URL}`,
     siteName: 'Procrasti-Not(e)',
     title: 'Procrasti-Not(e)',
     description:
       'A simple (yet scalable and maintainable 😎) full-stack notes taking app!',
   },
-  metadataBase: new URL(`${process.env.FRONTEND_BASE_URL_PROD}`),
+  metadataBase: new URL(`${process.env.PRODUCTION_BASE_URL}`),
 };
 
 // Below are metadata types the do not currently have built-in support (as of Next "14.0.4"). However, they can still be rendered in the layout or page itself ✌🏾

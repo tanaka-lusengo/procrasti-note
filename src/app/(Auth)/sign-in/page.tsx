@@ -86,9 +86,9 @@ const SignInForm = () => {
 
       <Stack alignItems="flex-start" justifyContent="space-between">
         <Button $basefont type="submit" disabled={!isValid || isSubmitting}>
-          {isSubmitting ? 'Loading...' : 'Sign in!'}
+          Sign in!
         </Button>
-        <Link href={'/forgot-password'}>Forgot password?</Link>
+        <Link href="/forgot-password">Forgot password?</Link>
       </Stack>
 
       <Divider />
@@ -98,8 +98,8 @@ const SignInForm = () => {
       </Typography>
 
       <Stack alignItems="center" justifyContent="space-between" marginTop="md">
-        <Link href={'/'}>Close</Link>
-        <Link href={'/sign-up'}>Sign up</Link>
+        <Link href="/">Close</Link>
+        <Link href="/sign-up">Sign up</Link>
       </Stack>
     </FormModal>
   );
