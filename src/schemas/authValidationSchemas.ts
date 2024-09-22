@@ -23,3 +23,17 @@ export const signUpValidationSchema = z.object({
 export const forgotPasswordValidationSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
 });
+
+export const resetPasswordValidationSchema = z
+  .object({
+    newPassword: z.string().min(8, {
+      message: 'Password must be at least 8 characters',
+    }),
+    confirmPassword: z.string().min(8, {
+      message: 'Password must be at least 8 characters',
+    }),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'Passwords must match',
+    path: ['confirmPassword'], // Specify the path to show the error message
+  });
