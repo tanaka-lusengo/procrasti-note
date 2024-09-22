@@ -10,16 +10,17 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String?  @unique
-  firstName String   @map("first_name")
-  lastName  String   @map("last_name")
-  email     String   @unique
-  password  String
-  isActive  Boolean  @default(true) @map("is_active")
-  admin     Boolean  @default(false)
-  createdAt DateTime @default(now()) @map("created_at")
-  notes     Note[]
+  id                 Int                  @id @default(autoincrement())
+  username           String?              @unique
+  firstName          String               @map("first_name")
+  lastName           String               @map("last_name")
+  email              String               @unique
+  password           String
+  isActive           Boolean              @default(true) @map("is_active")
+  admin              Boolean              @default(false)
+  createdAt          DateTime             @default(now()) @map("created_at")
+  notes              Note[]
+  PasswordResetToken PasswordResetToken[]
 }
 
 model Note {
@@ -31,4 +32,13 @@ model Note {
   createdAt DateTime @default(now()) @map("created_at")
   authorId  Int      @map("author_id")
   author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model PasswordResetToken {
+  id        Int       @id @default(autoincrement())
+  token     String    @unique
+  createdAt DateTime  @default(now()) @map("created_at")
+  resetAt   DateTime? @map("reset_at")
+  userId    Int       @map("user_id")
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
