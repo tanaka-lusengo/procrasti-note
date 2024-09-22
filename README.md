@@ -12,7 +12,8 @@ A simple (yet scalable and maintainable 😎) full-stack note-taking app!
 - **Context-API**: Manages the User state effectively across the application.
 - **JWT as cookies**: Implements authentication with secure cookies.
 - **bcrypt**: Provides secure password hashing for authentication.
-- **Server-action**: Facilitates server-side logic and interactions.
+- **Postmark**: Service for sending transactional emails, such as password reset flows.
+- **Server-actions**: Facilitates server-side logic and interactions.
 - **Prisma**: Provides an ORM for the Supabase database.
 - **Supabase**: Supplies a backend-as-a-service.
 - **react-hook-form**: For handling form state management and validation.
