@@ -1,20 +1,32 @@
 'use client';
 
-import { useFormStatus } from 'react-dom';
+import { FontSizeVariants } from '../../types';
 
 import * as Styled from './index.styled';
 
 interface ButtonLinkProps {
-  children: React.ReactNode;
+  $basefont?: boolean;
+  fontSize?: FontSizeVariants;
   href: string;
+  onClick?: () => void;
+  children: React.ReactNode;
 }
 
-const ButtonLink = ({ children, href }: ButtonLinkProps) => {
-  const { pending } = useFormStatus();
-
+const ButtonLink = ({
+  $basefont,
+  fontSize,
+  href,
+  onClick,
+  children,
+}: ButtonLinkProps) => {
   return (
-    <Styled.ButtonLink href={href}>
-      {pending ? 'Loading...' : children}
+    <Styled.ButtonLink
+      $basefont={$basefont}
+      fontSize={fontSize}
+      href={href}
+      onClick={onClick}
+    >
+      {children}
     </Styled.ButtonLink>
   );
 };
