@@ -9,11 +9,13 @@ const theme = {
       xl: 1200,
     },
     gap: {
+      xxs: 0.2,
       xs: 0.4,
       sm: 0.8,
       md: 1.6,
       lg: 3.2,
       xl: 6.4,
+      xxl: 12.8,
     },
     pageMaxWidth: {
       sm: 54,

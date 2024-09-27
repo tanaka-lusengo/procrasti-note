@@ -15,9 +15,11 @@ export const FONTSIZE_MAP = {
 } as const satisfies Record<string, number>;
 
 export const SPACING_MAP = {
+  xxs: theme.spacing.gap.xxs,
   xs: theme.spacing.gap.xs,
   sm: theme.spacing.gap.sm,
   md: theme.spacing.gap.md,
   lg: theme.spacing.gap.lg,
   xl: theme.spacing.gap.xl,
+  xxl: theme.spacing.gap.xxl,
 } as const satisfies Record<string, number>;
