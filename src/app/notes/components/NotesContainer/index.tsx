@@ -10,7 +10,7 @@ import { ButtonLink, Stack, Typography } from '@/components/Design';
 import { useUser } from '@/context/UserContext';
 import { type NoteModel } from '@/types';
 
-import Note from '../Note';
+import NotesList from '../NotesList';
 
 import * as Styled from './index.styled';
 
@@ -68,17 +68,7 @@ const NotesContainer = ({ notes }: { notes: NoteModel[] }) => {
 
       <ButtonLink href={'?show-form=true'}>New Note</ButtonLink>
 
-      {showNotes ? (
-        <Styled.List>
-          {notes.map((note) => (
-            <Note key={note.id} note={note} />
-          ))}
-        </Styled.List>
-      ) : (
-        <Typography fontSize="h5" textAlign="center">
-          Oww... Looks like you have no notes yet 😞
-        </Typography>
-      )}
+      <NotesList notes={notes} />
 
       {showForm ? <DynamicCreateNote /> : null}
     </Stack>

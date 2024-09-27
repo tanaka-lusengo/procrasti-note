@@ -57,15 +57,3 @@ export const Wave = styled.span`
   display: inline-block;
   animation: wave-animation 2.5s infinite;
 `;
-
-export const List = styled.ul`
-  overflow-y: scroll;
-
-  width: 100%;
-  max-width: 55rem;
-  max-height: 50vh;
-  padding: 1rem;
-
-  border: 1px transparent solid;
-  border-radius: 1rem;
-`;

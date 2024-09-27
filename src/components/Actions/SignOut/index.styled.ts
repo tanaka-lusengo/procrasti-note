@@ -11,6 +11,7 @@ export const ButtonText = styled.button`
 
   display: inline-block;
 
+  width: 8rem;
   padding: 0;
 
   font: inherit;
