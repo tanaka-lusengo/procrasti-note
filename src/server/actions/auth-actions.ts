@@ -54,7 +54,7 @@ export const signIn = async (formData: FormData) => {
     const { password, ...userWithoutPassword } = user;
 
     // Create accessToken and save a JWT as a cookie
-    const encodedUser = { id: user.id, email: user.email };
+    const encodedUser = { ...userWithoutPassword };
     const expires = new Date(Date.now() + COOKIE_EXPIRATION_TIME);
     const accessToken = await encrypt({ ...encodedUser, expires });
 
