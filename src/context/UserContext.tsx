@@ -5,10 +5,13 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
+  useEffect,
   useState,
 } from 'react';
 
+import { getUserSession } from '@/server/actions/helpers';
 import { type UserModel } from '@/types';
+import { logErrorMessage } from '@/utils';
 
 type UserContextProviderProps = {
   children: React.ReactNode;
@@ -23,6 +26,20 @@ const UserContext = createContext<UserContextType | null>(null);
 
 export const UserContextProvider = ({ children }: UserContextProviderProps) => {
   const [user, setUser] = useState<UserModel | null>(null);
+
+  useEffect(() => {
+    // Fetch user data from the cookie when the provider initializes
+    const fetchUser = async () => {
+      try {
+        const userSession = await getUserSession();
+        setUser(userSession);
+      } catch (error) {
+        logErrorMessage(error, 'fetching user session in UserContextProvider');
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const contextValue = {
     user,

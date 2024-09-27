@@ -1,9 +1,11 @@
 'use server';
 
-import { jwtVerify, SignJWT } from 'jose';
+import { type JWTPayload, jwtVerify, SignJWT } from 'jose';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import postmark from 'postmark';
 
+import { type UserModel } from '@/types';
 import {
   ALGORITHM,
   domainUrl,
@@ -14,7 +16,7 @@ import {
 
 const key = new TextEncoder().encode(SECRET_KEY);
 
-export const encrypt = async (payload: any) => {
+export const encrypt = async (payload: JWTPayload) => {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: ALGORITHM })
     .setIssuedAt()
@@ -29,17 +31,16 @@ export const decrypt = async (token: string) => {
   return payload;
 };
 
-export const getUserSession = async () => {
+export const getUserSession = async (): Promise<UserModel | null> => {
   try {
     const accessToken = cookies().get('access_token')?.value;
 
     if (!accessToken) {
-      return null;
+      redirect('/sign-in');
     }
 
     const decryptedToken = await decrypt(accessToken);
 
-    // Ensure the decrypted token is a plain object
     return JSON.parse(JSON.stringify(decryptedToken));
   } catch (error) {
     logErrorMessage(error, 'processing getUserSession');
