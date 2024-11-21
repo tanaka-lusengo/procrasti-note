@@ -4,6 +4,8 @@
 
 A simple (yet scalable and maintainable 😎) full-stack note-taking app!
 
+See the live site here: [procrasti-note](https://procrasti-note.vercel.app/) 🤓
+
 ## Features
 
 - **Next.js**: A powerful framework for server-rendered React applications.
